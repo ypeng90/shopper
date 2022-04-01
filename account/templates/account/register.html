@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+    <style>
+        #container {
+            width: 520px;
+            margin: 10px auto;
+        }
+        .input {
+            margin: 10px 0;
+            width: 460px;
+            height: 50px;
+        }
+        .input>label {
+            display: inline-block;
+            width: 180px;
+            text-align: right;
+        }
+        .input>img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 52%;
+        }
+        form+div {
+            margin-top: 20px;
+        }
+        form+div>a {
+            text-decoration: none;
+            color: darkcyan;
+            font-size: 1.2em;
+        }
+        .button {
+            width: 500px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .hint {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    {% csrf_token %}
+    <div id="container">
+        <h1>用户注册</h1>
+        <hr>
+        {% verbatim %}
+        <form>
+            <fieldset>
+                <legend>用户信息</legend>
+                <div class="input">
+                    <label>用户名：&nbsp;</label>
+                    <input type="text" v-model="username">
+                </div>
+                <div class="input" v-if="username">
+                    <label>密&nbsp;&nbsp;&nbsp;&nbsp;码：&nbsp;</label>
+                    <input type="password" v-model="password_1">
+                </div>
+                <div class="input" v-if="password_1">
+                    <label>再输入：&nbsp;</label>
+                    <input type="password" v-model="password_2">
+                </div>
+                <div class="input" v-if="password_2">
+                    <img :src="imgCode" alt="" height="40">
+                </div>
+                <div class="input" v-if="password_2">
+                    <label>验证码：&nbsp;</label>
+                    <input type="text" v-model="captcha">
+                </div>
+            </fieldset>
+            <div class="button">
+                <input type="submit" value="注册" @click.prevent="register">
+                <div>
+                    <input type="checkbox" v-model="agreement">
+                    我已经同意网站<a href="">用户协议及隐私政策</a>
+                </div>
+            </div>
+        </form>
+        {% endverbatim %}
+        <div>
+            <a href="/login/">登录</a>
+        </div>
+    </div>
+    <script src="https://unpkg.com/vue@2.6.12/dist/vue.min.js"></script>
+    <script>
+        let app = new Vue({
+            el: '#container',
+            data: {
+                imgCode: '/account/api/captcha/',
+                username: '',
+                password_1: '',
+                password_2: '',
+                agreement: '',
+                captcha: ''
+            },
+            methods: {
+                register() {
+                    fetch('/account/api/register/', {
+                        method: 'post',
+                        mode: 'same-origin',
+                        body: JSON.stringify({
+                            username: this.username,
+                            password_1: this.password_1,
+                            password_2: this.password_2,
+                            agreement: this.agreement,
+                            captcha: this.captcha
+                        }),
+                        headers: {
+                            'content-type': 'application/json',
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        }
+                    })
+                    .then(resp => resp.json())
+                    .then(json => {
+                        if (json.code === 30000) {
+                            location.href = '/account/login/'
+                        } else {
+                            alert(json.mesg),
+                            this.imgCode += '?',
+<!--                            this.password_1 = '',-->
+<!--                            this.password_2 = '',-->
+                            this.captcha = ''
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>

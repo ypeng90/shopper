@@ -1,0 +1,240 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+        <title>Simple Map</title>
+        <style>
+            #products, #cart, #products_all {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            #products td, #products th, #cart td, #cart th, #products_all td, #products_all th {
+                text-align: center;
+                border: 1px solid #ddd;
+                padding: 1px;
+            }
+
+<!--            #products tr: nth-child(even) {background-color: #f2f2f2;}-->
+<!--            #cart tr: nth-child(even) {background-color: #f2f2f2;}-->
+
+<!--            #products tr: hover {background-color: #ddd;}-->
+<!--            #cart tr: hover {background-color: #ddd;}-->
+
+            #products th, #products_all th, #cart th {
+                padding-top: 6px;
+                padding-bottom: 6px;
+                background-color: #4CAF50;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        {% csrf_token %}
+
+        <!--Show all products-->
+        <div id='bulk' style="max-width: 954px; margin-left: auto; margin-right: auto">
+            <button type="button" @click.prevent="toggle" style="display: block; margin: auto">My Products</button>
+            <div v-if="enabled">
+                {% verbatim %}
+                <p v-if="message">{{ message }}</p>
+                <br>
+                <table id="products_all">
+                    <tr>
+                        <th>SKU</th>
+                        <th>Name</th>
+                        <th>Store</th>
+                        <th>Track</th>
+                        <th>Update</th>
+                    </tr>
+                    <tr v-for="(product, index) in products" :key="index">
+                        <td>{{product.sku}}</td>
+                        <td>{{product.name}}</td>
+                        <td>{{product.store}}</td>
+                        <td>
+                            <input type="checkbox" v-model="product.track"
+                                   :checked="product.track" true-value="1" false-value="0">
+                        </td>
+                        <td>
+                            <button type="button" @click.prevent="update(product)">Submit</button>
+                        </td>
+                    </tr>
+                </table>
+                {% endverbatim %}
+            </div>
+        </div>
+
+        <br>
+        <br>
+
+        <!--Add new SKU-->
+        <div id='add' style="max-width: 954px; margin-left: auto; margin-right: auto">
+            <button type="button" @click.prevent="toggle" style="display: block; margin: auto">Add New SKU</button>
+            <div v-if="enabled">
+                {% verbatim %}
+                <p v-if="message">{{ message }}</p>
+                <div class="input">
+                    <label>Keyword</label>
+                    <input type="text" v-model="keyword" minlength="9"
+                           maxlength="12" placeholder="8-digit SKU, 9-digit DPCI or 12/13-digit UPC" size="45">
+                    <a v-if="keyword" href="" @click.prevent="search">Search</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a v-if="keyword" :href="'https://www.target.com/s?searchTerm=' + keyword"
+                       target="_blank">Manual</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span v-if="Object.keys(product).length">Matched!</span>
+                    <span v-if="fetched == 1 && !Object.keys(product).length">No match.</span>
+                </div>
+                <div>
+                </div>
+                <div v-if="Object.keys(product).length">
+                    <label>SKU</label>
+                    <input type="text" v-model="product.sku" size="20" readonly>
+                    <br>
+                    <label>Name</label>
+                    <input type="text" v-model="product.name" size="64">
+                    <div class="button">
+                        <input type="submit" value="Submit" @click.prevent="add">
+                        <input type="reset" value="Reset" @click.prevent="clear">
+                    </div>
+                </div>
+                {% endverbatim %}
+                <hr style="max-width: 948px; margin-left: auto; margin-right: auto">
+            </div>
+        </div>
+
+        <script src="https://unpkg.com/vue@2.6.12/dist/vue.min.js"></script>
+
+        <script>
+            var bulk = new Vue({
+                el: '#bulk',
+                data: {
+                    enabled: 1,
+                    message: '',
+                    keyword: '',
+                    products: []
+                },
+                created() {
+                    fetch('/api/list_all/', {
+                        method: 'post',
+                        body: JSON.stringify({
+                            'keyword': this.keyword
+                        }),
+                        headers: {
+                            'content-type': 'application/json',
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        }
+                    })
+                    .then(resp => resp.json())
+                    .then(json => {
+                        if (json.authenticated) {
+                            this.products = json.products
+                        } else {
+                            location.href = '/account/login/'
+                        }
+                    })
+                },
+                methods: {
+                    toggle() {
+                        this.enabled = this.enabled ^ 1,
+                        this.message = '',
+                        this.keyword = ''
+                    },
+                    update(product) {
+                        fetch('/api/update_product/', {
+                            method: 'post',
+                            body: JSON.stringify({
+                                'product': product
+                            }),
+                            headers: {
+                                'content-type': 'application/json',
+                                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                            }
+                        })
+                        .then(resp => resp.json())
+                        .then(json => {
+                            if (json.authenticated) {
+                                this.message = json.message
+                            } else {
+                                location.href = '/account/login/'
+                            }
+                        })
+                    }
+                }
+            })
+        </script>
+
+        <script>
+            var add = new Vue({
+                el: '#add',
+                data: {
+                    store: 'tgt',
+                    enabled: 0,
+                    message: '',
+                    keyword: '',
+                    fetched: 0,
+                    product: {}
+                },
+                methods: {
+                    toggle() {
+                        this.enabled = this.enabled ^ 1,
+                        this.clear()
+                    },
+                    search() {
+                        this.message = '',
+                        this.fetched = 0,
+                        this.product = {},
+                        fetch('/api/search_product/', {
+                            method: 'post',
+                            body: JSON.stringify({
+                                'store': this.store,
+                                'keyword': this.keyword
+                            }),
+                            headers: {
+                                'content-type': 'application/json',
+                                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                            }
+                        })
+                        .then(resp => resp.json())
+                        .then(json => {
+                            if (json.authenticated) {
+                                this.fetched = 1,
+                                this.product = json.product
+                            } else {
+                                location.href = '/account/login/'
+                            }
+                        })
+                    },
+                    add() {
+                        fetch('/api/add_product/', {
+                            method: 'post',
+                            body: JSON.stringify({
+                                'store': this.store,
+                                'product': this.product
+                            }),
+                            headers: {
+                                'content-type': 'application/json',
+                                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                            }
+                        })
+                        .then(resp => resp.json())
+                        .then(json => {
+                            if (json.authenticated) {
+                                this.message = json.message
+                            } else {
+                                location.href = '/account/login/'
+                            }
+                        })
+                    },
+                    clear() {
+                        this.message = '',
+                        this.keyword = '',
+                        this.fetched = 0,
+                        this.product = {}
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

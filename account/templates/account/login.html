@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <style>
+        #container {
+            width: 520px;
+            margin: 10px auto;
+        }
+        .input {
+            margin: 10px 0;
+            width: 460px;
+            height: 50px;
+        }
+        .input>label {
+            display: inline-block;
+            width: 180px;
+            text-align: right;
+        }
+        .input>img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 52%;
+        }
+        form+div {
+            margin-top: 20px;
+        }
+        form+div>a {
+            text-decoration: none;
+            color: darkcyan;
+            font-size: 1.2em;
+        }
+        .button {
+            width: 500px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .hint {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    {% csrf_token %}
+    <div id="container">
+        <h1>用户登录</h1>
+        <hr>
+        <form>
+            <fieldset>
+                <legend>用户信息</legend>
+                <div class="input">
+                    <label>用户名：&nbsp;</label>
+                    <input type="text" v-model="username">
+                </div>
+                <div class="input">
+                    <label>密&nbsp;&nbsp;&nbsp;&nbsp;码：&nbsp;</label>
+                    <input type="password" v-model="password">
+                </div>
+                <div class="input">
+                    <img :src="imgCode" alt="" height="40">
+                </div>
+                <div class="input">
+                    <label>验证码：&nbsp;</label>
+                    <input type="text" v-model="captcha">
+                </div>
+            </fieldset>
+            <div class="button">
+                <input type="submit" value="登录" @click.prevent="login">
+            </div>
+        </form>
+        <div>
+            <a href="/account/register/">注册</a>
+        </div>
+    </div>
+     <script src="https://unpkg.com/vue@2.6.12/dist/vue.min.js"></script>
+    <script>
+        let app = new Vue({
+            el: '#container',
+            data: {
+                imgCode: '/account/api/captcha/',
+                username: '',
+                password: '',
+                captcha: ''
+            },
+            methods: {
+                login() {
+                    fetch('/account/api/login/', {
+                        method: 'post',
+                        body: JSON.stringify({
+                            'username': this.username,
+                            'password': this.password,
+                            'captcha': this.captcha
+                        }),
+                        headers: {
+                            'content-type': 'application/json',
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        }
+                    }).then(resp => resp.json()).then(json => {
+                        if (json.code === 10000) {
+                            location.href = '/'
+                        } else {
+                            alert(json.mesg),
+                            this.imgCode += '?',
+                            this.username = '',
+                            this.password = '',
+                            this.captcha = ''
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>
