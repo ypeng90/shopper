@@ -5,28 +5,68 @@
         <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
         <title>Simple Map</title>
         <style>
-            #products, #cart, #products_all {
+            #products_all, #inventory_header, #inventory_detail {
                 border-collapse: collapse;
                 width: 100%;
             }
-
-            #products td, #products th, #cart td, #cart th, #products_all td, #products_all th {
-                text-align: center;
-                border: 1px solid #ddd;
-                padding: 1px;
-            }
-
-<!--            #products tr: nth-child(even) {background-color: #f2f2f2;}-->
-<!--            #cart tr: nth-child(even) {background-color: #f2f2f2;}-->
-
-<!--            #products tr: hover {background-color: #ddd;}-->
-<!--            #cart tr: hover {background-color: #ddd;}-->
-
-            #products th, #products_all th, #cart th {
+            #products_all th, #inventory_header th {
                 padding-top: 6px;
                 padding-bottom: 6px;
                 background-color: #4CAF50;
                 color: white;
+                font-size: 24px;
+                text-align: center;
+                border: 1px solid #ddd;
+            }
+            #products_all td {
+                padding-top: 3px;
+                padding-bottom: 3px;
+                background-color: #F7F1F8;
+                color: black;
+                font-size: 20px;
+                text-align: center;
+                border: 1px solid #ddd;
+            }
+            #inventory_detail th {
+                padding-top: 6px;
+                padding-bottom: 6px;
+                background-color: #D2ECDD;
+                color: blue;
+                font-size: 22px;
+                text-align: center;
+            }
+            #inventory_detail td {
+                padding-top: 3px;
+                padding-bottom: 3px;
+                background-color: #F7F1F8;
+                color: black;
+                font-size: 20px;
+                text-align: center;
+            }
+            .button {
+                background-color: #16C4E9;
+                border: 1px solid orange;
+                box-shadow: -3px 3px orange, -2px 2px orange, -1px 1px orange;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: block;
+                font-size: 30px;
+                margin: auto;
+                cursor: pointer;
+            }
+            .button_small {
+              background-color: #025769;
+              border: none;
+              color: white;
+              padding: 4px 8px;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;
+              font-size: 20px;
+              margin: auto;
+              cursor: pointer;
             }
         </style>
     </head>
@@ -35,11 +75,13 @@
 
         <!--Show all products-->
         <div id='bulk' style="max-width: 954px; margin-left: auto; margin-right: auto">
-            <button type="button" @click.prevent="toggle" style="display: block; margin: auto">My Products</button>
+            <button type="button"
+                    @click.prevent="toggle"
+                    class="button">My Products</button>
             <div v-if="enabled">
                 {% verbatim %}
-                <p v-if="message">{{ message }}</p>
                 <br>
+                <p v-if="message" style="text-align: center; font-size: 20px; color: purple">{{ message }}</p>
                 <table id="products_all">
                     <tr>
                         <th>SKU</th>
@@ -70,37 +112,95 @@
 
         <!--Add new SKU-->
         <div id='add' style="max-width: 954px; margin-left: auto; margin-right: auto">
-            <button type="button" @click.prevent="toggle" style="display: block; margin: auto">Add New SKU</button>
+            <button type="button"
+                    @click.prevent="toggle"
+                    class="button">Add Product</button>
             <div v-if="enabled">
                 {% verbatim %}
-                <p v-if="message">{{ message }}</p>
-                <div class="input">
-                    <label>Keyword</label>
+                <br>
+                <p v-if="message" style="text-align: center; font-size: 20px; color: purple">{{ message }}</p>
+                <div class="input" style="text-align: center">
+                    <label style="font-size: 20px; font-weight: bold">Keyword</label>
+                    &nbsp;&nbsp;
                     <input type="text" v-model="keyword" minlength="9"
-                           maxlength="12" placeholder="8-digit SKU, 9-digit DPCI or 12/13-digit UPC" size="45">
-                    <a v-if="keyword" href="" @click.prevent="search">Search</a>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
+                           maxlength="12" placeholder="8-digit SKU, 9-digit DPCI or 12/13-digit UPC" size="35">
+                    &nbsp;&nbsp;
+                    <a v-if="keyword" href="" @click.prevent="search"
+                       style="font-size: 20px; font-weight: bold">Search</a>
+                    &nbsp;&nbsp;
                     <a v-if="keyword" :href="'https://www.target.com/s?searchTerm=' + keyword"
-                       target="_blank">Manual</a>
+                       target="_blank" style="font-size: 20px; font-weight: bold">Manual</a>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <span v-if="Object.keys(product).length">Matched!</span>
-                    <span v-if="fetched == 1 && !Object.keys(product).length">No match.</span>
+                    <span v-if="Object.keys(product).length"
+                          style="font-size: 20px; color: green">Matched!</span>
+                    <span v-if="fetched == 1 && !Object.keys(product).length"
+                          style="font-size: 20px; color: red">No match.</span>
                 </div>
-                <div>
-                </div>
-                <div v-if="Object.keys(product).length">
-                    <label>SKU</label>
-                    <input type="text" v-model="product.sku" size="20" readonly>
+                <div v-if="Object.keys(product).length" style="text-align: center">
                     <br>
-                    <label>Name</label>
-                    <input type="text" v-model="product.name" size="64">
-                    <div class="button">
-                        <input type="submit" value="Submit" @click.prevent="add">
-                        <input type="reset" value="Reset" @click.prevent="clear">
+                    <hr style="max-width: 948px; margin-left: auto; margin-right: auto">
+                    <label style="font-size: 20px; font-weight: bold">SKU</label>
+                    <input type="text" v-model="product.sku" size="20" readonly style="font-size: 18px">
+                    <br>
+                    <br>
+                    <label style="font-size: 20px; font-weight: bold">Name</label>
+                    <input type="text" v-model="product.name" size="64" style="font-size: 18px">
+                    <br>
+                    <br>
+                    <div>
+                        <input type="submit" value="Submit" @click.prevent="add" class="button_small">
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="reset" value="Reset" @click.prevent="clear" class="button_small">
                     </div>
                 </div>
                 {% endverbatim %}
-                <hr style="max-width: 948px; margin-left: auto; margin-right: auto">
+            </div>
+        </div>
+
+        <br>
+        <br>
+
+        <!--Show all inventory-->
+        <div id='inventory' style="max-width: 954px; margin-left: auto; margin-right: auto">
+            <button type="button"
+                    @click.prevent="toggle"
+                    class="button">Inventory</button>
+            <div v-if="enabled">
+                {% verbatim %}
+                <p v-if="message" style="text-align: center; font-size: 20px; color: purple">{{ message }}</p>
+                <br>
+                <div class="input" style="text-align: center">
+                    <label style="font-size: 20px; font-weight: bold">Zipcode</label>
+                    &nbsp;&nbsp;
+                    <input type="text" v-model="zipcode" minlength="5"
+                           maxlength="5" placeholder="5-digit zipcode" size="9">
+                    &nbsp;&nbsp;
+                    <input type="submit" value="Check" @click.prevent="list" class="button_small">
+                </div>
+                <table id="inventory_header">
+                    <tr>
+                        <th style="width:20%">SKU</th>
+                        <th style="width:70%">Name</th>
+                        <th style="width:10%">Quantity</th>
+                    </tr>
+                </table>
+                <table id="inventory_detail">
+                    <tr v-for="store in stores">
+                        <td>
+                            <table style="width:100%">
+                                <tr>
+                                    <th colspan="3">{{store.name}}</th>
+                                </tr>
+                                <tr v-for="product in store.products">
+                                    <td style="width:20%">{{product.sku}}</td>
+                                    <td style="width:70%">{{product.name}}</td>
+                                    <td style="width:10%">{{product.quantity}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                {% endverbatim %}
             </div>
         </div>
 
@@ -232,6 +332,44 @@
                         this.keyword = '',
                         this.fetched = 0,
                         this.product = {}
+                    }
+                }
+            })
+        </script>
+
+        <script>
+            var inventory = new Vue({
+                el: '#inventory',
+                data: {
+                    enabled: 0,
+                    message: '',
+                    zipcode: '',
+                    stores: []
+                },
+                methods: {
+                    toggle() {
+                        this.enabled = this.enabled ^ 1,
+                        this.message = ''
+                    },
+                    list() {
+                        fetch('/api/list_inventory/', {
+                            method: 'post',
+                            body: JSON.stringify({
+                                'zipcode': this.zipcode
+                            }),
+                            headers: {
+                                'content-type': 'application/json',
+                                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                            }
+                        })
+                        .then(resp => resp.json())
+                        .then(json => {
+                            if (json.authenticated) {
+                                this.stores = json.stores
+                            } else {
+                                location.href = '/account/login/'
+                            }
+                        })
                     }
                 }
             })

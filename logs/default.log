@@ -1,0 +1,2640 @@
+2022-04-01 19:16:19.644 | ERROR    | shopper.utils:run:72 - MySQLHandle : DELETE FROM inventory WHERE userid = %s
+Traceback (most recent call last):
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 890, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000211B34DA670>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 932, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x00000211B34DA3A0>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    │        │    └ (<socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr...
+    │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    └ <bound method ThreadingMixIn.process_request_thread of <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+    │    │              │        └ ('127.0.0.1', 11866)
+    │    │              └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <function BaseServer.finish_request at 0x00000211B5E980D0>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    │    │                   │        │               └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │    │                   │        └ ('127.0.0.1', 11866)
+    │    │                   └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <class 'django.core.servers.basehttp.WSGIRequestHandler'>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 747, in __init__
+    self.handle()
+    │    └ <function WSGIRequestHandler.handle at 0x00000211B6525550>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 204, in handle
+    self.handle_one_request()
+    │    └ <function WSGIRequestHandler.handle_one_request at 0x00000211B65255E0>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 227, in handle_one_request
+    handler.run(self.server.get_app())
+    │       │   │    │      └ <function WSGIServer.get_app at 0x00000211B6524940>
+    │       │   │    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │       │   └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+    │       └ <function BaseHandler.run at 0x00000211B6512940>
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+
+  File "C:\Users\Public\anaconda3\lib\wsgiref\handlers.py", line 137, in run
+    self.result = application(self.environ, self.start_response)
+    │    │        │           │    │        │    └ <function BaseHandler.start_response at 0x00000211B6512CA0>
+    │    │        │           │    │        └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+    │    │        │           │    └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+    │    │        │           └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+    │    │        └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+    │    └ None
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\contrib\staticfiles\handlers.py", line 80, in __call__
+    return self.application(environ, start_response)
+           │    │           │        └ <bound method BaseHandler.start_response of <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>>
+           │    │           └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+           │    └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+           └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\wsgi.py", line 132, in __call__
+    response = self.get_response(request)
+               │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function BaseHandler.get_response at 0x00000211B64C5550>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 140, in get_response
+    response = self._middleware_chain(request)
+               │    │                 └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BEE0>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BCA0>
+               │           └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BC10>
+               │           └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BB80>
+               │           └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BAF0>
+               │           └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B8B0>
+               │           └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B700>
+               │           └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function BaseHandler._get_response at 0x00000211B718B820>
+               │           └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <bound method BaseHandler._get_response of <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               │                │         │                └ {}
+               │                │         └ ()
+               │                └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <function list_all_inventory at 0x00000211B67B2160>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\views.py", line 104, in list_all_inventory
+    info = ScraperTarget.list_all_inventory(userid, zipcode)
+           │             │                  │       └ '92128'
+           │             │                  └ 70672147
+           │             └ <staticmethod object at 0x00000211B6787760>
+           └ <class 'shopper.scraper.ScraperTarget'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 140, in list_all_inventory
+    ScraperBase.delete_all_inventory(userid)
+    │           │                    └ 70672147
+    │           └ <staticmethod object at 0x00000211B6787730>
+    └ <class 'shopper.scraper.ScraperBase'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 133, in delete_all_inventory
+    ScraperMySQLInterface.delete_all_inventory(userid)
+    │                     │                    └ 70672147
+    │                     └ <classmethod object at 0x00000211B6787A00>
+    └ <class 'shopper.scraper.ScraperMySQLInterface'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 341, in delete_all_inventory
+    result = db.run(query, userid, commit=True)
+             │  │   │      └ 70672147
+             │  │   └ 'DELETE FROM inventory WHERE userid = %s'
+             │  └ <function MySQLHandle.run at 0x00000211B67881F0>
+             └ <shopper.utils.MySQLHandle object at 0x00000211B74029A0>
+
+> File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\utils.py", line 65, in run
+    cur.execute(query, data)
+    │   │       │      └ 70672147
+    │   │       └ 'DELETE FROM inventory WHERE userid = %s'
+    │   └ <function BaseCursor.execute at 0x00000211B712ECA0>
+    └ <MySQLdb.cursors.Cursor object at 0x00000211B7402D90>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\MySQLdb\cursors.py", line 199, in execute
+    args = tuple(map(db.literal, args))
+                     │  │        └ 70672147
+                     │  └ <function Connection.literal at 0x00000211B715CCA0>
+                     └ <_mysql.connection open to 'localhost' at 00000211B6869CC0>
+
+TypeError: 'int' object is not iterable
+2022-04-01 19:16:19.644 | ERROR    | shopper.utils:run:72 - MySQLHandle : DELETE FROM inventory WHERE userid = %s
+Traceback (most recent call last):
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 890, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000211B34DA670>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 932, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x00000211B34DA3A0>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    │        │    └ (<socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr...
+    │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    └ <bound method ThreadingMixIn.process_request_thread of <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+    │    │              │        └ ('127.0.0.1', 11866)
+    │    │              └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <function BaseServer.finish_request at 0x00000211B5E980D0>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    │    │                   │        │               └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │    │                   │        └ ('127.0.0.1', 11866)
+    │    │                   └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <class 'django.core.servers.basehttp.WSGIRequestHandler'>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 747, in __init__
+    self.handle()
+    │    └ <function WSGIRequestHandler.handle at 0x00000211B6525550>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 204, in handle
+    self.handle_one_request()
+    │    └ <function WSGIRequestHandler.handle_one_request at 0x00000211B65255E0>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 227, in handle_one_request
+    handler.run(self.server.get_app())
+    │       │   │    │      └ <function WSGIServer.get_app at 0x00000211B6524940>
+    │       │   │    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │       │   └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+    │       └ <function BaseHandler.run at 0x00000211B6512940>
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+
+  File "C:\Users\Public\anaconda3\lib\wsgiref\handlers.py", line 137, in run
+    self.result = application(self.environ, self.start_response)
+    │    │        │           │    │        │    └ <function BaseHandler.start_response at 0x00000211B6512CA0>
+    │    │        │           │    │        └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+    │    │        │           │    └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+    │    │        │           └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+    │    │        └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+    │    └ None
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\contrib\staticfiles\handlers.py", line 80, in __call__
+    return self.application(environ, start_response)
+           │    │           │        └ <bound method BaseHandler.start_response of <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>>
+           │    │           └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+           │    └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+           └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\wsgi.py", line 132, in __call__
+    response = self.get_response(request)
+               │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function BaseHandler.get_response at 0x00000211B64C5550>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 140, in get_response
+    response = self._middleware_chain(request)
+               │    │                 └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BEE0>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BCA0>
+               │           └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BC10>
+               │           └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BB80>
+               │           └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BAF0>
+               │           └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B8B0>
+               │           └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B700>
+               │           └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function BaseHandler._get_response at 0x00000211B718B820>
+               │           └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <bound method BaseHandler._get_response of <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               │                │         │                └ {}
+               │                │         └ ()
+               │                └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <function list_all_inventory at 0x00000211B67B2160>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\views.py", line 104, in list_all_inventory
+    info = ScraperTarget.list_all_inventory(userid, zipcode)
+           │             │                  │       └ '92128'
+           │             │                  └ 70672147
+           │             └ <staticmethod object at 0x00000211B6787760>
+           └ <class 'shopper.scraper.ScraperTarget'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 140, in list_all_inventory
+    ScraperBase.delete_all_inventory(userid)
+    │           │                    └ 70672147
+    │           └ <staticmethod object at 0x00000211B6787730>
+    └ <class 'shopper.scraper.ScraperBase'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 133, in delete_all_inventory
+    ScraperMySQLInterface.delete_all_inventory(userid)
+    │                     │                    └ 70672147
+    │                     └ <classmethod object at 0x00000211B6787A00>
+    └ <class 'shopper.scraper.ScraperMySQLInterface'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 341, in delete_all_inventory
+    result = db.run(query, userid, commit=True)
+             │  │   │      └ 70672147
+             │  │   └ 'DELETE FROM inventory WHERE userid = %s'
+             │  └ <function MySQLHandle.run at 0x00000211B67881F0>
+             └ <shopper.utils.MySQLHandle object at 0x00000211B74029A0>
+
+> File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\utils.py", line 65, in run
+    cur.execute(query, data)
+    │   │       │      └ 70672147
+    │   │       └ 'DELETE FROM inventory WHERE userid = %s'
+    │   └ <function BaseCursor.execute at 0x00000211B712ECA0>
+    └ <MySQLdb.cursors.Cursor object at 0x00000211B7402D90>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\MySQLdb\cursors.py", line 199, in execute
+    args = tuple(map(db.literal, args))
+                     │  │        └ 70672147
+                     │  └ <function Connection.literal at 0x00000211B715CCA0>
+                     └ <_mysql.connection open to 'localhost' at 00000211B6869CC0>
+
+TypeError: 'int' object is not iterable
+2022-04-01 19:16:19.644 | ERROR    | shopper.utils:run:72 - MySQLHandle : DELETE FROM inventory WHERE userid = %s
+Traceback (most recent call last):
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 890, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000211B34DA670>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 932, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x00000211B34DA3A0>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    │        │    └ (<socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr...
+    │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    └ <bound method ThreadingMixIn.process_request_thread of <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+    │    │              │        └ ('127.0.0.1', 11866)
+    │    │              └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <function BaseServer.finish_request at 0x00000211B5E980D0>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    │    │                   │        │               └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │    │                   │        └ ('127.0.0.1', 11866)
+    │    │                   └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <class 'django.core.servers.basehttp.WSGIRequestHandler'>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 747, in __init__
+    self.handle()
+    │    └ <function WSGIRequestHandler.handle at 0x00000211B6525550>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 204, in handle
+    self.handle_one_request()
+    │    └ <function WSGIRequestHandler.handle_one_request at 0x00000211B65255E0>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 227, in handle_one_request
+    handler.run(self.server.get_app())
+    │       │   │    │      └ <function WSGIServer.get_app at 0x00000211B6524940>
+    │       │   │    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │       │   └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+    │       └ <function BaseHandler.run at 0x00000211B6512940>
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+
+  File "C:\Users\Public\anaconda3\lib\wsgiref\handlers.py", line 137, in run
+    self.result = application(self.environ, self.start_response)
+    │    │        │           │    │        │    └ <function BaseHandler.start_response at 0x00000211B6512CA0>
+    │    │        │           │    │        └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+    │    │        │           │    └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+    │    │        │           └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+    │    │        └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+    │    └ None
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\contrib\staticfiles\handlers.py", line 80, in __call__
+    return self.application(environ, start_response)
+           │    │           │        └ <bound method BaseHandler.start_response of <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>>
+           │    │           └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+           │    └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+           └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\wsgi.py", line 132, in __call__
+    response = self.get_response(request)
+               │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function BaseHandler.get_response at 0x00000211B64C5550>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 140, in get_response
+    response = self._middleware_chain(request)
+               │    │                 └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BEE0>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BCA0>
+               │           └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BC10>
+               │           └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BB80>
+               │           └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BAF0>
+               │           └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B8B0>
+               │           └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B700>
+               │           └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function BaseHandler._get_response at 0x00000211B718B820>
+               │           └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <bound method BaseHandler._get_response of <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               │                │         │                └ {}
+               │                │         └ ()
+               │                └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <function list_all_inventory at 0x00000211B67B2160>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\views.py", line 104, in list_all_inventory
+    info = ScraperTarget.list_all_inventory(userid, zipcode)
+           │             │                  │       └ '92128'
+           │             │                  └ 70672147
+           │             └ <staticmethod object at 0x00000211B6787760>
+           └ <class 'shopper.scraper.ScraperTarget'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 140, in list_all_inventory
+    ScraperBase.delete_all_inventory(userid)
+    │           │                    └ 70672147
+    │           └ <staticmethod object at 0x00000211B6787730>
+    └ <class 'shopper.scraper.ScraperBase'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 133, in delete_all_inventory
+    ScraperMySQLInterface.delete_all_inventory(userid)
+    │                     │                    └ 70672147
+    │                     └ <classmethod object at 0x00000211B6787A00>
+    └ <class 'shopper.scraper.ScraperMySQLInterface'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 341, in delete_all_inventory
+    result = db.run(query, userid, commit=True)
+             │  │   │      └ 70672147
+             │  │   └ 'DELETE FROM inventory WHERE userid = %s'
+             │  └ <function MySQLHandle.run at 0x00000211B67881F0>
+             └ <shopper.utils.MySQLHandle object at 0x00000211B74029A0>
+
+> File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\utils.py", line 65, in run
+    cur.execute(query, data)
+    │   │       │      └ 70672147
+    │   │       └ 'DELETE FROM inventory WHERE userid = %s'
+    │   └ <function BaseCursor.execute at 0x00000211B712ECA0>
+    └ <MySQLdb.cursors.Cursor object at 0x00000211B7402D90>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\MySQLdb\cursors.py", line 199, in execute
+    args = tuple(map(db.literal, args))
+                     │  │        └ 70672147
+                     │  └ <function Connection.literal at 0x00000211B715CCA0>
+                     └ <_mysql.connection open to 'localhost' at 00000211B6869CC0>
+
+TypeError: 'int' object is not iterable
+2022-04-01 19:16:19.644 | ERROR    | shopper.utils:run:72 - MySQLHandle : DELETE FROM inventory WHERE userid = %s
+Traceback (most recent call last):
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 890, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000211B34DA670>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 932, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x00000211B34DA3A0>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    │        │    └ (<socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr...
+    │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    └ <bound method ThreadingMixIn.process_request_thread of <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+    │    │              │        └ ('127.0.0.1', 11866)
+    │    │              └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <function BaseServer.finish_request at 0x00000211B5E980D0>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    │    │                   │        │               └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │    │                   │        └ ('127.0.0.1', 11866)
+    │    │                   └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <class 'django.core.servers.basehttp.WSGIRequestHandler'>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 747, in __init__
+    self.handle()
+    │    └ <function WSGIRequestHandler.handle at 0x00000211B6525550>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 204, in handle
+    self.handle_one_request()
+    │    └ <function WSGIRequestHandler.handle_one_request at 0x00000211B65255E0>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 227, in handle_one_request
+    handler.run(self.server.get_app())
+    │       │   │    │      └ <function WSGIServer.get_app at 0x00000211B6524940>
+    │       │   │    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │       │   └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+    │       └ <function BaseHandler.run at 0x00000211B6512940>
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+
+  File "C:\Users\Public\anaconda3\lib\wsgiref\handlers.py", line 137, in run
+    self.result = application(self.environ, self.start_response)
+    │    │        │           │    │        │    └ <function BaseHandler.start_response at 0x00000211B6512CA0>
+    │    │        │           │    │        └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+    │    │        │           │    └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+    │    │        │           └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+    │    │        └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+    │    └ None
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\contrib\staticfiles\handlers.py", line 80, in __call__
+    return self.application(environ, start_response)
+           │    │           │        └ <bound method BaseHandler.start_response of <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>>
+           │    │           └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+           │    └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+           └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\wsgi.py", line 132, in __call__
+    response = self.get_response(request)
+               │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function BaseHandler.get_response at 0x00000211B64C5550>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 140, in get_response
+    response = self._middleware_chain(request)
+               │    │                 └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BEE0>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BCA0>
+               │           └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BC10>
+               │           └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BB80>
+               │           └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BAF0>
+               │           └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B8B0>
+               │           └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B700>
+               │           └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function BaseHandler._get_response at 0x00000211B718B820>
+               │           └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <bound method BaseHandler._get_response of <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               │                │         │                └ {}
+               │                │         └ ()
+               │                └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <function list_all_inventory at 0x00000211B67B2160>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\views.py", line 104, in list_all_inventory
+    info = ScraperTarget.list_all_inventory(userid, zipcode)
+           │             │                  │       └ '92128'
+           │             │                  └ 70672147
+           │             └ <staticmethod object at 0x00000211B6787760>
+           └ <class 'shopper.scraper.ScraperTarget'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 140, in list_all_inventory
+    ScraperBase.delete_all_inventory(userid)
+    │           │                    └ 70672147
+    │           └ <staticmethod object at 0x00000211B6787730>
+    └ <class 'shopper.scraper.ScraperBase'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 133, in delete_all_inventory
+    ScraperMySQLInterface.delete_all_inventory(userid)
+    │                     │                    └ 70672147
+    │                     └ <classmethod object at 0x00000211B6787A00>
+    └ <class 'shopper.scraper.ScraperMySQLInterface'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 341, in delete_all_inventory
+    result = db.run(query, userid, commit=True)
+             │  │   │      └ 70672147
+             │  │   └ 'DELETE FROM inventory WHERE userid = %s'
+             │  └ <function MySQLHandle.run at 0x00000211B67881F0>
+             └ <shopper.utils.MySQLHandle object at 0x00000211B74029A0>
+
+> File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\utils.py", line 65, in run
+    cur.execute(query, data)
+    │   │       │      └ 70672147
+    │   │       └ 'DELETE FROM inventory WHERE userid = %s'
+    │   └ <function BaseCursor.execute at 0x00000211B712ECA0>
+    └ <MySQLdb.cursors.Cursor object at 0x00000211B7402D90>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\MySQLdb\cursors.py", line 199, in execute
+    args = tuple(map(db.literal, args))
+                     │  │        └ 70672147
+                     │  └ <function Connection.literal at 0x00000211B715CCA0>
+                     └ <_mysql.connection open to 'localhost' at 00000211B6869CC0>
+
+TypeError: 'int' object is not iterable
+2022-04-01 19:16:19.644 | ERROR    | shopper.utils:run:72 - MySQLHandle : DELETE FROM inventory WHERE userid = %s
+Traceback (most recent call last):
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 890, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000211B34DA670>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 932, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x00000211B34DA3A0>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    │        │    └ (<socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr...
+    │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    └ <bound method ThreadingMixIn.process_request_thread of <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+    │    │              │        └ ('127.0.0.1', 11866)
+    │    │              └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <function BaseServer.finish_request at 0x00000211B5E980D0>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    │    │                   │        │               └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │    │                   │        └ ('127.0.0.1', 11866)
+    │    │                   └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <class 'django.core.servers.basehttp.WSGIRequestHandler'>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 747, in __init__
+    self.handle()
+    │    └ <function WSGIRequestHandler.handle at 0x00000211B6525550>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 204, in handle
+    self.handle_one_request()
+    │    └ <function WSGIRequestHandler.handle_one_request at 0x00000211B65255E0>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 227, in handle_one_request
+    handler.run(self.server.get_app())
+    │       │   │    │      └ <function WSGIServer.get_app at 0x00000211B6524940>
+    │       │   │    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │       │   └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+    │       └ <function BaseHandler.run at 0x00000211B6512940>
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+
+  File "C:\Users\Public\anaconda3\lib\wsgiref\handlers.py", line 137, in run
+    self.result = application(self.environ, self.start_response)
+    │    │        │           │    │        │    └ <function BaseHandler.start_response at 0x00000211B6512CA0>
+    │    │        │           │    │        └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+    │    │        │           │    └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+    │    │        │           └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+    │    │        └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+    │    └ None
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\contrib\staticfiles\handlers.py", line 80, in __call__
+    return self.application(environ, start_response)
+           │    │           │        └ <bound method BaseHandler.start_response of <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>>
+           │    │           └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+           │    └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+           └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\wsgi.py", line 132, in __call__
+    response = self.get_response(request)
+               │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function BaseHandler.get_response at 0x00000211B64C5550>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 140, in get_response
+    response = self._middleware_chain(request)
+               │    │                 └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BEE0>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BCA0>
+               │           └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BC10>
+               │           └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BB80>
+               │           └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BAF0>
+               │           └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B8B0>
+               │           └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B700>
+               │           └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function BaseHandler._get_response at 0x00000211B718B820>
+               │           └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <bound method BaseHandler._get_response of <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               │                │         │                └ {}
+               │                │         └ ()
+               │                └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <function list_all_inventory at 0x00000211B67B2160>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\views.py", line 104, in list_all_inventory
+    info = ScraperTarget.list_all_inventory(userid, zipcode)
+           │             │                  │       └ '92128'
+           │             │                  └ 70672147
+           │             └ <staticmethod object at 0x00000211B6787760>
+           └ <class 'shopper.scraper.ScraperTarget'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 140, in list_all_inventory
+    ScraperBase.delete_all_inventory(userid)
+    │           │                    └ 70672147
+    │           └ <staticmethod object at 0x00000211B6787730>
+    └ <class 'shopper.scraper.ScraperBase'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 133, in delete_all_inventory
+    ScraperMySQLInterface.delete_all_inventory(userid)
+    │                     │                    └ 70672147
+    │                     └ <classmethod object at 0x00000211B6787A00>
+    └ <class 'shopper.scraper.ScraperMySQLInterface'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 341, in delete_all_inventory
+    result = db.run(query, userid, commit=True)
+             │  │   │      └ 70672147
+             │  │   └ 'DELETE FROM inventory WHERE userid = %s'
+             │  └ <function MySQLHandle.run at 0x00000211B67881F0>
+             └ <shopper.utils.MySQLHandle object at 0x00000211B74029A0>
+
+> File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\utils.py", line 65, in run
+    cur.execute(query, data)
+    │   │       │      └ 70672147
+    │   │       └ 'DELETE FROM inventory WHERE userid = %s'
+    │   └ <function BaseCursor.execute at 0x00000211B712ECA0>
+    └ <MySQLdb.cursors.Cursor object at 0x00000211B7402D90>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\MySQLdb\cursors.py", line 199, in execute
+    args = tuple(map(db.literal, args))
+                     │  │        └ 70672147
+                     │  └ <function Connection.literal at 0x00000211B715CCA0>
+                     └ <_mysql.connection open to 'localhost' at 00000211B6869CC0>
+
+TypeError: 'int' object is not iterable
+2022-04-01 19:16:19.644 | ERROR    | shopper.utils:run:72 - MySQLHandle : DELETE FROM inventory WHERE userid = %s
+Traceback (most recent call last):
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 890, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000211B34DA670>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 932, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x00000211B34DA3A0>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    │        │    └ (<socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr...
+    │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    └ <bound method ThreadingMixIn.process_request_thread of <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+    │    │              │        └ ('127.0.0.1', 11866)
+    │    │              └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <function BaseServer.finish_request at 0x00000211B5E980D0>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    │    │                   │        │               └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │    │                   │        └ ('127.0.0.1', 11866)
+    │    │                   └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <class 'django.core.servers.basehttp.WSGIRequestHandler'>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 747, in __init__
+    self.handle()
+    │    └ <function WSGIRequestHandler.handle at 0x00000211B6525550>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 204, in handle
+    self.handle_one_request()
+    │    └ <function WSGIRequestHandler.handle_one_request at 0x00000211B65255E0>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 227, in handle_one_request
+    handler.run(self.server.get_app())
+    │       │   │    │      └ <function WSGIServer.get_app at 0x00000211B6524940>
+    │       │   │    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │       │   └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+    │       └ <function BaseHandler.run at 0x00000211B6512940>
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+
+  File "C:\Users\Public\anaconda3\lib\wsgiref\handlers.py", line 137, in run
+    self.result = application(self.environ, self.start_response)
+    │    │        │           │    │        │    └ <function BaseHandler.start_response at 0x00000211B6512CA0>
+    │    │        │           │    │        └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+    │    │        │           │    └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+    │    │        │           └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+    │    │        └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+    │    └ None
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\contrib\staticfiles\handlers.py", line 80, in __call__
+    return self.application(environ, start_response)
+           │    │           │        └ <bound method BaseHandler.start_response of <django.core.servers.basehttp.ServerHandler object at 0x00000211B72DD9A0>>
+           │    │           └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+           │    └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+           └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\wsgi.py", line 132, in __call__
+    response = self.get_response(request)
+               │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function BaseHandler.get_response at 0x00000211B64C5550>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 140, in get_response
+    response = self._middleware_chain(request)
+               │    │                 └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BEE0>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BCA0>
+               │           └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BC10>
+               │           └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BB80>
+               │           └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BAF0>
+               │           └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B8B0>
+               │           └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B700>
+               │           └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function BaseHandler._get_response at 0x00000211B718B820>
+               │           └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <bound method BaseHandler._get_response of <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               │                │         │                └ {}
+               │                │         └ ()
+               │                └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <function list_all_inventory at 0x00000211B67B2160>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\views.py", line 104, in list_all_inventory
+    info = ScraperTarget.list_all_inventory(userid, zipcode)
+           │             │                  │       └ '92128'
+           │             │                  └ 70672147
+           │             └ <staticmethod object at 0x00000211B6787760>
+           └ <class 'shopper.scraper.ScraperTarget'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 140, in list_all_inventory
+    ScraperBase.delete_all_inventory(userid)
+    │           │                    └ 70672147
+    │           └ <staticmethod object at 0x00000211B6787730>
+    └ <class 'shopper.scraper.ScraperBase'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 133, in delete_all_inventory
+    ScraperMySQLInterface.delete_all_inventory(userid)
+    │                     │                    └ 70672147
+    │                     └ <classmethod object at 0x00000211B6787A00>
+    └ <class 'shopper.scraper.ScraperMySQLInterface'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 341, in delete_all_inventory
+    result = db.run(query, userid, commit=True)
+             │  │   │      └ 70672147
+             │  │   └ 'DELETE FROM inventory WHERE userid = %s'
+             │  └ <function MySQLHandle.run at 0x00000211B67881F0>
+             └ <shopper.utils.MySQLHandle object at 0x00000211B74029A0>
+
+> File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\utils.py", line 65, in run
+    cur.execute(query, data)
+    │   │       │      └ 70672147
+    │   │       └ 'DELETE FROM inventory WHERE userid = %s'
+    │   └ <function BaseCursor.execute at 0x00000211B712ECA0>
+    └ <MySQLdb.cursors.Cursor object at 0x00000211B7402D90>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\MySQLdb\cursors.py", line 199, in execute
+    args = tuple(map(db.literal, args))
+                     │  │        └ 70672147
+                     │  └ <function Connection.literal at 0x00000211B715CCA0>
+                     └ <_mysql.connection open to 'localhost' at 00000211B6869CC0>
+
+TypeError: 'int' object is not iterable
+2022-04-01 19:16:29.695 | ERROR    | shopper.utils:run:72 - MySQLHandle : DELETE FROM inventory WHERE userid = %s
+Traceback (most recent call last):
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 890, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000211B34DA670>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 932, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x00000211B34DA3A0>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    │        │    └ (<socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr...
+    │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    └ <bound method ThreadingMixIn.process_request_thread of <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+    │    │              │        └ ('127.0.0.1', 11866)
+    │    │              └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <function BaseServer.finish_request at 0x00000211B5E980D0>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    │    │                   │        │               └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │    │                   │        └ ('127.0.0.1', 11866)
+    │    │                   └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <class 'django.core.servers.basehttp.WSGIRequestHandler'>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 747, in __init__
+    self.handle()
+    │    └ <function WSGIRequestHandler.handle at 0x00000211B6525550>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 204, in handle
+    self.handle_one_request()
+    │    └ <function WSGIRequestHandler.handle_one_request at 0x00000211B65255E0>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 227, in handle_one_request
+    handler.run(self.server.get_app())
+    │       │   │    │      └ <function WSGIServer.get_app at 0x00000211B6524940>
+    │       │   │    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │       │   └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+    │       └ <function BaseHandler.run at 0x00000211B6512940>
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+
+  File "C:\Users\Public\anaconda3\lib\wsgiref\handlers.py", line 137, in run
+    self.result = application(self.environ, self.start_response)
+    │    │        │           │    │        │    └ <function BaseHandler.start_response at 0x00000211B6512CA0>
+    │    │        │           │    │        └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+    │    │        │           │    └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+    │    │        │           └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+    │    │        └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+    │    └ None
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\contrib\staticfiles\handlers.py", line 80, in __call__
+    return self.application(environ, start_response)
+           │    │           │        └ <bound method BaseHandler.start_response of <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>>
+           │    │           └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+           │    └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+           └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\wsgi.py", line 132, in __call__
+    response = self.get_response(request)
+               │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function BaseHandler.get_response at 0x00000211B64C5550>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 140, in get_response
+    response = self._middleware_chain(request)
+               │    │                 └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BEE0>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BCA0>
+               │           └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BC10>
+               │           └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BB80>
+               │           └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BAF0>
+               │           └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B8B0>
+               │           └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B700>
+               │           └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function BaseHandler._get_response at 0x00000211B718B820>
+               │           └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <bound method BaseHandler._get_response of <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               │                │         │                └ {}
+               │                │         └ ()
+               │                └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <function list_all_inventory at 0x00000211B67B2160>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\views.py", line 104, in list_all_inventory
+    info = ScraperTarget.list_all_inventory(userid, zipcode)
+           │             │                  │       └ '92128'
+           │             │                  └ 70672147
+           │             └ <staticmethod object at 0x00000211B6787760>
+           └ <class 'shopper.scraper.ScraperTarget'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 140, in list_all_inventory
+    ScraperBase.delete_all_inventory(userid)
+    │           │                    └ 70672147
+    │           └ <staticmethod object at 0x00000211B6787730>
+    └ <class 'shopper.scraper.ScraperBase'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 133, in delete_all_inventory
+    ScraperMySQLInterface.delete_all_inventory(userid)
+    │                     │                    └ 70672147
+    │                     └ <classmethod object at 0x00000211B6787A00>
+    └ <class 'shopper.scraper.ScraperMySQLInterface'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 341, in delete_all_inventory
+    result = db.run(query, userid, commit=True)
+             │  │   │      └ 70672147
+             │  │   └ 'DELETE FROM inventory WHERE userid = %s'
+             │  └ <function MySQLHandle.run at 0x00000211B67881F0>
+             └ <shopper.utils.MySQLHandle object at 0x00000211B72F3EE0>
+
+> File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\utils.py", line 65, in run
+    cur.execute(query, data)
+    │   │       │      └ 70672147
+    │   │       └ 'DELETE FROM inventory WHERE userid = %s'
+    │   └ <function BaseCursor.execute at 0x00000211B712ECA0>
+    └ <MySQLdb.cursors.Cursor object at 0x00000211B72F3D90>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\MySQLdb\cursors.py", line 199, in execute
+    args = tuple(map(db.literal, args))
+                     │  │        └ 70672147
+                     │  └ <function Connection.literal at 0x00000211B715CCA0>
+                     └ <_mysql.connection open to 'localhost' at 00000211B6978630>
+
+TypeError: 'int' object is not iterable
+2022-04-01 19:16:29.695 | ERROR    | shopper.utils:run:72 - MySQLHandle : DELETE FROM inventory WHERE userid = %s
+Traceback (most recent call last):
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 890, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000211B34DA670>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 932, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x00000211B34DA3A0>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    │        │    └ (<socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr...
+    │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    └ <bound method ThreadingMixIn.process_request_thread of <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+    │    │              │        └ ('127.0.0.1', 11866)
+    │    │              └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <function BaseServer.finish_request at 0x00000211B5E980D0>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    │    │                   │        │               └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │    │                   │        └ ('127.0.0.1', 11866)
+    │    │                   └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <class 'django.core.servers.basehttp.WSGIRequestHandler'>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 747, in __init__
+    self.handle()
+    │    └ <function WSGIRequestHandler.handle at 0x00000211B6525550>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 204, in handle
+    self.handle_one_request()
+    │    └ <function WSGIRequestHandler.handle_one_request at 0x00000211B65255E0>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 227, in handle_one_request
+    handler.run(self.server.get_app())
+    │       │   │    │      └ <function WSGIServer.get_app at 0x00000211B6524940>
+    │       │   │    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │       │   └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+    │       └ <function BaseHandler.run at 0x00000211B6512940>
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+
+  File "C:\Users\Public\anaconda3\lib\wsgiref\handlers.py", line 137, in run
+    self.result = application(self.environ, self.start_response)
+    │    │        │           │    │        │    └ <function BaseHandler.start_response at 0x00000211B6512CA0>
+    │    │        │           │    │        └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+    │    │        │           │    └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+    │    │        │           └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+    │    │        └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+    │    └ None
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\contrib\staticfiles\handlers.py", line 80, in __call__
+    return self.application(environ, start_response)
+           │    │           │        └ <bound method BaseHandler.start_response of <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>>
+           │    │           └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+           │    └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+           └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\wsgi.py", line 132, in __call__
+    response = self.get_response(request)
+               │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function BaseHandler.get_response at 0x00000211B64C5550>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 140, in get_response
+    response = self._middleware_chain(request)
+               │    │                 └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BEE0>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BCA0>
+               │           └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BC10>
+               │           └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BB80>
+               │           └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BAF0>
+               │           └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B8B0>
+               │           └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B700>
+               │           └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function BaseHandler._get_response at 0x00000211B718B820>
+               │           └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <bound method BaseHandler._get_response of <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               │                │         │                └ {}
+               │                │         └ ()
+               │                └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <function list_all_inventory at 0x00000211B67B2160>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\views.py", line 104, in list_all_inventory
+    info = ScraperTarget.list_all_inventory(userid, zipcode)
+           │             │                  │       └ '92128'
+           │             │                  └ 70672147
+           │             └ <staticmethod object at 0x00000211B6787760>
+           └ <class 'shopper.scraper.ScraperTarget'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 140, in list_all_inventory
+    ScraperBase.delete_all_inventory(userid)
+    │           │                    └ 70672147
+    │           └ <staticmethod object at 0x00000211B6787730>
+    └ <class 'shopper.scraper.ScraperBase'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 133, in delete_all_inventory
+    ScraperMySQLInterface.delete_all_inventory(userid)
+    │                     │                    └ 70672147
+    │                     └ <classmethod object at 0x00000211B6787A00>
+    └ <class 'shopper.scraper.ScraperMySQLInterface'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 341, in delete_all_inventory
+    result = db.run(query, userid, commit=True)
+             │  │   │      └ 70672147
+             │  │   └ 'DELETE FROM inventory WHERE userid = %s'
+             │  └ <function MySQLHandle.run at 0x00000211B67881F0>
+             └ <shopper.utils.MySQLHandle object at 0x00000211B72F3EE0>
+
+> File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\utils.py", line 65, in run
+    cur.execute(query, data)
+    │   │       │      └ 70672147
+    │   │       └ 'DELETE FROM inventory WHERE userid = %s'
+    │   └ <function BaseCursor.execute at 0x00000211B712ECA0>
+    └ <MySQLdb.cursors.Cursor object at 0x00000211B72F3D90>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\MySQLdb\cursors.py", line 199, in execute
+    args = tuple(map(db.literal, args))
+                     │  │        └ 70672147
+                     │  └ <function Connection.literal at 0x00000211B715CCA0>
+                     └ <_mysql.connection open to 'localhost' at 00000211B6978630>
+
+TypeError: 'int' object is not iterable
+2022-04-01 19:16:29.695 | ERROR    | shopper.utils:run:72 - MySQLHandle : DELETE FROM inventory WHERE userid = %s
+Traceback (most recent call last):
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 890, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000211B34DA670>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 932, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x00000211B34DA3A0>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    │        │    └ (<socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr...
+    │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    └ <bound method ThreadingMixIn.process_request_thread of <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+    │    │              │        └ ('127.0.0.1', 11866)
+    │    │              └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <function BaseServer.finish_request at 0x00000211B5E980D0>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    │    │                   │        │               └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │    │                   │        └ ('127.0.0.1', 11866)
+    │    │                   └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <class 'django.core.servers.basehttp.WSGIRequestHandler'>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 747, in __init__
+    self.handle()
+    │    └ <function WSGIRequestHandler.handle at 0x00000211B6525550>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 204, in handle
+    self.handle_one_request()
+    │    └ <function WSGIRequestHandler.handle_one_request at 0x00000211B65255E0>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 227, in handle_one_request
+    handler.run(self.server.get_app())
+    │       │   │    │      └ <function WSGIServer.get_app at 0x00000211B6524940>
+    │       │   │    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │       │   └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+    │       └ <function BaseHandler.run at 0x00000211B6512940>
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+
+  File "C:\Users\Public\anaconda3\lib\wsgiref\handlers.py", line 137, in run
+    self.result = application(self.environ, self.start_response)
+    │    │        │           │    │        │    └ <function BaseHandler.start_response at 0x00000211B6512CA0>
+    │    │        │           │    │        └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+    │    │        │           │    └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+    │    │        │           └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+    │    │        └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+    │    └ None
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\contrib\staticfiles\handlers.py", line 80, in __call__
+    return self.application(environ, start_response)
+           │    │           │        └ <bound method BaseHandler.start_response of <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>>
+           │    │           └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+           │    └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+           └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\wsgi.py", line 132, in __call__
+    response = self.get_response(request)
+               │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function BaseHandler.get_response at 0x00000211B64C5550>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 140, in get_response
+    response = self._middleware_chain(request)
+               │    │                 └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BEE0>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BCA0>
+               │           └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BC10>
+               │           └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BB80>
+               │           └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BAF0>
+               │           └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B8B0>
+               │           └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B700>
+               │           └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function BaseHandler._get_response at 0x00000211B718B820>
+               │           └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <bound method BaseHandler._get_response of <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               │                │         │                └ {}
+               │                │         └ ()
+               │                └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <function list_all_inventory at 0x00000211B67B2160>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\views.py", line 104, in list_all_inventory
+    info = ScraperTarget.list_all_inventory(userid, zipcode)
+           │             │                  │       └ '92128'
+           │             │                  └ 70672147
+           │             └ <staticmethod object at 0x00000211B6787760>
+           └ <class 'shopper.scraper.ScraperTarget'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 140, in list_all_inventory
+    ScraperBase.delete_all_inventory(userid)
+    │           │                    └ 70672147
+    │           └ <staticmethod object at 0x00000211B6787730>
+    └ <class 'shopper.scraper.ScraperBase'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 133, in delete_all_inventory
+    ScraperMySQLInterface.delete_all_inventory(userid)
+    │                     │                    └ 70672147
+    │                     └ <classmethod object at 0x00000211B6787A00>
+    └ <class 'shopper.scraper.ScraperMySQLInterface'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 341, in delete_all_inventory
+    result = db.run(query, userid, commit=True)
+             │  │   │      └ 70672147
+             │  │   └ 'DELETE FROM inventory WHERE userid = %s'
+             │  └ <function MySQLHandle.run at 0x00000211B67881F0>
+             └ <shopper.utils.MySQLHandle object at 0x00000211B72F3EE0>
+
+> File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\utils.py", line 65, in run
+    cur.execute(query, data)
+    │   │       │      └ 70672147
+    │   │       └ 'DELETE FROM inventory WHERE userid = %s'
+    │   └ <function BaseCursor.execute at 0x00000211B712ECA0>
+    └ <MySQLdb.cursors.Cursor object at 0x00000211B72F3D90>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\MySQLdb\cursors.py", line 199, in execute
+    args = tuple(map(db.literal, args))
+                     │  │        └ 70672147
+                     │  └ <function Connection.literal at 0x00000211B715CCA0>
+                     └ <_mysql.connection open to 'localhost' at 00000211B6978630>
+
+TypeError: 'int' object is not iterable
+2022-04-01 19:16:29.695 | ERROR    | shopper.utils:run:72 - MySQLHandle : DELETE FROM inventory WHERE userid = %s
+Traceback (most recent call last):
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 890, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000211B34DA670>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 932, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x00000211B34DA3A0>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    │        │    └ (<socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr...
+    │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    └ <bound method ThreadingMixIn.process_request_thread of <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+    │    │              │        └ ('127.0.0.1', 11866)
+    │    │              └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <function BaseServer.finish_request at 0x00000211B5E980D0>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    │    │                   │        │               └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │    │                   │        └ ('127.0.0.1', 11866)
+    │    │                   └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <class 'django.core.servers.basehttp.WSGIRequestHandler'>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 747, in __init__
+    self.handle()
+    │    └ <function WSGIRequestHandler.handle at 0x00000211B6525550>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 204, in handle
+    self.handle_one_request()
+    │    └ <function WSGIRequestHandler.handle_one_request at 0x00000211B65255E0>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 227, in handle_one_request
+    handler.run(self.server.get_app())
+    │       │   │    │      └ <function WSGIServer.get_app at 0x00000211B6524940>
+    │       │   │    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │       │   └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+    │       └ <function BaseHandler.run at 0x00000211B6512940>
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+
+  File "C:\Users\Public\anaconda3\lib\wsgiref\handlers.py", line 137, in run
+    self.result = application(self.environ, self.start_response)
+    │    │        │           │    │        │    └ <function BaseHandler.start_response at 0x00000211B6512CA0>
+    │    │        │           │    │        └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+    │    │        │           │    └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+    │    │        │           └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+    │    │        └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+    │    └ None
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\contrib\staticfiles\handlers.py", line 80, in __call__
+    return self.application(environ, start_response)
+           │    │           │        └ <bound method BaseHandler.start_response of <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>>
+           │    │           └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+           │    └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+           └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\wsgi.py", line 132, in __call__
+    response = self.get_response(request)
+               │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function BaseHandler.get_response at 0x00000211B64C5550>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 140, in get_response
+    response = self._middleware_chain(request)
+               │    │                 └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BEE0>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BCA0>
+               │           └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BC10>
+               │           └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BB80>
+               │           └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BAF0>
+               │           └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B8B0>
+               │           └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B700>
+               │           └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function BaseHandler._get_response at 0x00000211B718B820>
+               │           └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <bound method BaseHandler._get_response of <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               │                │         │                └ {}
+               │                │         └ ()
+               │                └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <function list_all_inventory at 0x00000211B67B2160>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\views.py", line 104, in list_all_inventory
+    info = ScraperTarget.list_all_inventory(userid, zipcode)
+           │             │                  │       └ '92128'
+           │             │                  └ 70672147
+           │             └ <staticmethod object at 0x00000211B6787760>
+           └ <class 'shopper.scraper.ScraperTarget'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 140, in list_all_inventory
+    ScraperBase.delete_all_inventory(userid)
+    │           │                    └ 70672147
+    │           └ <staticmethod object at 0x00000211B6787730>
+    └ <class 'shopper.scraper.ScraperBase'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 133, in delete_all_inventory
+    ScraperMySQLInterface.delete_all_inventory(userid)
+    │                     │                    └ 70672147
+    │                     └ <classmethod object at 0x00000211B6787A00>
+    └ <class 'shopper.scraper.ScraperMySQLInterface'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 341, in delete_all_inventory
+    result = db.run(query, userid, commit=True)
+             │  │   │      └ 70672147
+             │  │   └ 'DELETE FROM inventory WHERE userid = %s'
+             │  └ <function MySQLHandle.run at 0x00000211B67881F0>
+             └ <shopper.utils.MySQLHandle object at 0x00000211B72F3EE0>
+
+> File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\utils.py", line 65, in run
+    cur.execute(query, data)
+    │   │       │      └ 70672147
+    │   │       └ 'DELETE FROM inventory WHERE userid = %s'
+    │   └ <function BaseCursor.execute at 0x00000211B712ECA0>
+    └ <MySQLdb.cursors.Cursor object at 0x00000211B72F3D90>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\MySQLdb\cursors.py", line 199, in execute
+    args = tuple(map(db.literal, args))
+                     │  │        └ 70672147
+                     │  └ <function Connection.literal at 0x00000211B715CCA0>
+                     └ <_mysql.connection open to 'localhost' at 00000211B6978630>
+
+TypeError: 'int' object is not iterable
+2022-04-01 19:16:29.695 | ERROR    | shopper.utils:run:72 - MySQLHandle : DELETE FROM inventory WHERE userid = %s
+Traceback (most recent call last):
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 890, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000211B34DA670>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 932, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x00000211B34DA3A0>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    │        │    └ (<socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr...
+    │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    └ <bound method ThreadingMixIn.process_request_thread of <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+    │    │              │        └ ('127.0.0.1', 11866)
+    │    │              └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <function BaseServer.finish_request at 0x00000211B5E980D0>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    │    │                   │        │               └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │    │                   │        └ ('127.0.0.1', 11866)
+    │    │                   └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <class 'django.core.servers.basehttp.WSGIRequestHandler'>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 747, in __init__
+    self.handle()
+    │    └ <function WSGIRequestHandler.handle at 0x00000211B6525550>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 204, in handle
+    self.handle_one_request()
+    │    └ <function WSGIRequestHandler.handle_one_request at 0x00000211B65255E0>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 227, in handle_one_request
+    handler.run(self.server.get_app())
+    │       │   │    │      └ <function WSGIServer.get_app at 0x00000211B6524940>
+    │       │   │    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │       │   └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+    │       └ <function BaseHandler.run at 0x00000211B6512940>
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+
+  File "C:\Users\Public\anaconda3\lib\wsgiref\handlers.py", line 137, in run
+    self.result = application(self.environ, self.start_response)
+    │    │        │           │    │        │    └ <function BaseHandler.start_response at 0x00000211B6512CA0>
+    │    │        │           │    │        └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+    │    │        │           │    └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+    │    │        │           └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+    │    │        └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+    │    └ None
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\contrib\staticfiles\handlers.py", line 80, in __call__
+    return self.application(environ, start_response)
+           │    │           │        └ <bound method BaseHandler.start_response of <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>>
+           │    │           └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+           │    └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+           └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\wsgi.py", line 132, in __call__
+    response = self.get_response(request)
+               │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function BaseHandler.get_response at 0x00000211B64C5550>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 140, in get_response
+    response = self._middleware_chain(request)
+               │    │                 └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BEE0>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BCA0>
+               │           └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BC10>
+               │           └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BB80>
+               │           └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BAF0>
+               │           └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B8B0>
+               │           └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B700>
+               │           └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function BaseHandler._get_response at 0x00000211B718B820>
+               │           └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <bound method BaseHandler._get_response of <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               │                │         │                └ {}
+               │                │         └ ()
+               │                └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <function list_all_inventory at 0x00000211B67B2160>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\views.py", line 104, in list_all_inventory
+    info = ScraperTarget.list_all_inventory(userid, zipcode)
+           │             │                  │       └ '92128'
+           │             │                  └ 70672147
+           │             └ <staticmethod object at 0x00000211B6787760>
+           └ <class 'shopper.scraper.ScraperTarget'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 140, in list_all_inventory
+    ScraperBase.delete_all_inventory(userid)
+    │           │                    └ 70672147
+    │           └ <staticmethod object at 0x00000211B6787730>
+    └ <class 'shopper.scraper.ScraperBase'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 133, in delete_all_inventory
+    ScraperMySQLInterface.delete_all_inventory(userid)
+    │                     │                    └ 70672147
+    │                     └ <classmethod object at 0x00000211B6787A00>
+    └ <class 'shopper.scraper.ScraperMySQLInterface'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 341, in delete_all_inventory
+    result = db.run(query, userid, commit=True)
+             │  │   │      └ 70672147
+             │  │   └ 'DELETE FROM inventory WHERE userid = %s'
+             │  └ <function MySQLHandle.run at 0x00000211B67881F0>
+             └ <shopper.utils.MySQLHandle object at 0x00000211B72F3EE0>
+
+> File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\utils.py", line 65, in run
+    cur.execute(query, data)
+    │   │       │      └ 70672147
+    │   │       └ 'DELETE FROM inventory WHERE userid = %s'
+    │   └ <function BaseCursor.execute at 0x00000211B712ECA0>
+    └ <MySQLdb.cursors.Cursor object at 0x00000211B72F3D90>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\MySQLdb\cursors.py", line 199, in execute
+    args = tuple(map(db.literal, args))
+                     │  │        └ 70672147
+                     │  └ <function Connection.literal at 0x00000211B715CCA0>
+                     └ <_mysql.connection open to 'localhost' at 00000211B6978630>
+
+TypeError: 'int' object is not iterable
+2022-04-01 19:16:29.695 | ERROR    | shopper.utils:run:72 - MySQLHandle : DELETE FROM inventory WHERE userid = %s
+Traceback (most recent call last):
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 890, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000211B34DA670>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 932, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x00000211B34DA3A0>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    │        │    └ (<socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr...
+    │    │        └ <Thread(Thread-1, started daemon 10416)>
+    │    └ <bound method ThreadingMixIn.process_request_thread of <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>>
+    └ <Thread(Thread-1, started daemon 10416)>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+    │    │              │        └ ('127.0.0.1', 11866)
+    │    │              └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <function BaseServer.finish_request at 0x00000211B5E980D0>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    │    │                   │        │               └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │    │                   │        └ ('127.0.0.1', 11866)
+    │    │                   └ <socket.socket fd=1116, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 8000), raddr=...
+    │    └ <class 'django.core.servers.basehttp.WSGIRequestHandler'>
+    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+
+  File "C:\Users\Public\anaconda3\lib\socketserver.py", line 747, in __init__
+    self.handle()
+    │    └ <function WSGIRequestHandler.handle at 0x00000211B6525550>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 204, in handle
+    self.handle_one_request()
+    │    └ <function WSGIRequestHandler.handle_one_request at 0x00000211B65255E0>
+    └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\servers\basehttp.py", line 227, in handle_one_request
+    handler.run(self.server.get_app())
+    │       │   │    │      └ <function WSGIServer.get_app at 0x00000211B6524940>
+    │       │   │    └ <django.core.servers.basehttp.WSGIServer object at 0x00000211B712D850>
+    │       │   └ <django.core.servers.basehttp.WSGIRequestHandler object at 0x00000211B72AD1C0>
+    │       └ <function BaseHandler.run at 0x00000211B6512940>
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+
+  File "C:\Users\Public\anaconda3\lib\wsgiref\handlers.py", line 137, in run
+    self.result = application(self.environ, self.start_response)
+    │    │        │           │    │        │    └ <function BaseHandler.start_response at 0x00000211B6512CA0>
+    │    │        │           │    │        └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+    │    │        │           │    └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+    │    │        │           └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+    │    │        └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+    │    └ None
+    └ <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\contrib\staticfiles\handlers.py", line 80, in __call__
+    return self.application(environ, start_response)
+           │    │           │        └ <bound method BaseHandler.start_response of <django.core.servers.basehttp.ServerHandler object at 0x00000211B7094340>>
+           │    │           └ {'ALLUSERSPROFILE': 'C:\\ProgramData', 'APPDATA': 'C:\\Users\\Tom Peng\\AppData\\Roaming', 'CHOCOLATEYINSTALL': 'C:\\ProgramD...
+           │    └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+           └ <django.contrib.staticfiles.handlers.StaticFilesHandler object at 0x00000211B7156D00>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\wsgi.py", line 132, in __call__
+    response = self.get_response(request)
+               │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function BaseHandler.get_response at 0x00000211B64C5550>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 140, in get_response
+    response = self._middleware_chain(request)
+               │    │                 └ <WSGIRequest: POST '/api/list_inventory/'>
+               │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BEE0>
+               └ <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BCA0>
+               │           └ <SecurityMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BC10>
+               │           └ <SessionMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BB80>
+               │           └ <CommonMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718BAF0>
+               │           └ <CsrfViewMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B8B0>
+               │           └ <AuthenticationMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function convert_exception_to_response.<locals>.inner at 0x00000211B718B700>
+               │           └ <MessageMiddleware get_response=convert_exception_to_response.<locals>.inner>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\utils\deprecation.py", line 134, in __call__
+    response = response or self.get_response(request)
+               │           │    │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               │           │    └ <function BaseHandler._get_response at 0x00000211B718B820>
+               │           └ <XFrameOptionsMiddleware get_response=BaseHandler._get_response>
+               └ None
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               │            └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <bound method BaseHandler._get_response of <django.core.handlers.wsgi.WSGIHandler object at 0x00000211B5E58AC0>>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               │                │         │                └ {}
+               │                │         └ ()
+               │                └ <WSGIRequest: POST '/api/list_inventory/'>
+               └ <function list_all_inventory at 0x00000211B67B2160>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\views.py", line 104, in list_all_inventory
+    info = ScraperTarget.list_all_inventory(userid, zipcode)
+           │             │                  │       └ '92128'
+           │             │                  └ 70672147
+           │             └ <staticmethod object at 0x00000211B6787760>
+           └ <class 'shopper.scraper.ScraperTarget'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 140, in list_all_inventory
+    ScraperBase.delete_all_inventory(userid)
+    │           │                    └ 70672147
+    │           └ <staticmethod object at 0x00000211B6787730>
+    └ <class 'shopper.scraper.ScraperBase'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 133, in delete_all_inventory
+    ScraperMySQLInterface.delete_all_inventory(userid)
+    │                     │                    └ 70672147
+    │                     └ <classmethod object at 0x00000211B6787A00>
+    └ <class 'shopper.scraper.ScraperMySQLInterface'>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\scraper.py", line 341, in delete_all_inventory
+    result = db.run(query, userid, commit=True)
+             │  │   │      └ 70672147
+             │  │   └ 'DELETE FROM inventory WHERE userid = %s'
+             │  └ <function MySQLHandle.run at 0x00000211B67881F0>
+             └ <shopper.utils.MySQLHandle object at 0x00000211B72F3EE0>
+
+> File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\shopper\utils.py", line 65, in run
+    cur.execute(query, data)
+    │   │       │      └ 70672147
+    │   │       └ 'DELETE FROM inventory WHERE userid = %s'
+    │   └ <function BaseCursor.execute at 0x00000211B712ECA0>
+    └ <MySQLdb.cursors.Cursor object at 0x00000211B72F3D90>
+
+  File "C:\Users\Tom Peng\OneDrive\Documents\Projects\shopper\.env\lib\site-packages\MySQLdb\cursors.py", line 199, in execute
+    args = tuple(map(db.literal, args))
+                     │  │        └ 70672147
+                     │  └ <function Connection.literal at 0x00000211B715CCA0>
+                     └ <_mysql.connection open to 'localhost' at 00000211B6978630>
+
+TypeError: 'int' object is not iterable

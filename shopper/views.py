@@ -71,17 +71,10 @@ def list_all_products(request):
     if userid == 0:
         return JsonResponse({"authenticated": False, "products": []})
 
-    result = ScraperTarget.list_all_products(userid)
-    if result is None:
+    info = ScraperTarget.list_all_products(userid)
+    if info is None:
         print("Server Error")
-        return JsonResponse({"authenticated": True, "products": []})
-
-    info = []
-    for sku, name, store, track in result:
-        info.append({"sku": sku,
-                     "name": name,
-                     "store": store.upper(),
-                     "track": track})
+        info = []
     return JsonResponse({"authenticated": True, "products": info})
 
 
@@ -102,48 +95,14 @@ def update_product(request):
     return JsonResponse({"authenticated": True, "message": message})
 
 
-# def show_summary(request):
-#     data = utils.get_store_summary()
-#     return JsonResponse({'summary': json.loads(data) if data else []})
-#
-#
-# def show_detail(request):
-#     data = json.loads(request.body)
-#     store, location_id = data.get('store'), data.get('location_id')
-#     return JsonResponse({'detail': utils.get_store_detail(store, location_id)})
+def list_all_inventory(request):
+    userid = get_userid(request)
+    if userid == 0:
+        return JsonResponse({"authenticated": False, "stores": []})
 
-
-# def set_product(request):
-#     data = json.loads(request.body)
-#     store, location_id, sku = data.get('store'), data.get('location_id'), data.get('sku')
-#     price, track, display = round(Decimal(data.get('price')), 2), int(data.get('track')), int(data.get('display'))
-#     offset, note = int(data.get('offset')), data.get('note')
-#     messages = []
-#     p = models.Products.objects.filter(sku=sku, store=store)
-#     if price != p[0].price:
-#         p.update(price=price)
-#         messages.append(f'Price has been updated for {sku}.')
-#     if track != p[0].track:
-#         # No use to run utils.get_single_quantity_from_website(store, sku) here because
-#         # sku with track=0 in the beginning doesn't show in the form to get updated at all.
-#         p.update(track=track)
-#         messages.append(f'Track has been updated for {sku}.')
-#     if display != p[0].display:
-#         p.update(display=display)
-#         messages.append(f'Display has been updated for {sku}.')
-#     extras = models.Extras.objects.filter(sku=sku, store=store, location_id=location_id)
-#     if (not extras and offset) or (extras and offset != extras[0].offset):
-#         if not extras:
-#             models.Extras.objects.create(sku=sku, store=store, location_id=location_id, offset=offset)
-#         else:
-#             extras.update(offset=offset)
-#         messages.append(f'Offset has been updated for {sku} at {location_id}.')
-#     if (not extras and note) or (extras and note != extras[0].note):
-#         if not extras:
-#             models.Extras.objects.create(sku=sku, store=store, location_id=location_id, note=note)
-#         else:
-#             extras.update(note=note)
-#         messages.append(f'Note has been updated for {sku} at {location_id}.')
-#     return JsonResponse({'messages': messages})
-
-
+    zipcode = json.loads(request.body).get("zipcode").strip()
+    info = ScraperTarget.list_all_inventory(userid, zipcode)
+    if info is None:
+        print("Server Error")
+        info = []
+    return JsonResponse({"authenticated": True, "stores": info})

@@ -26,7 +26,7 @@ logger.add("logs/default.log")
 #     quantity int NOT NULL,
 #     store char(3) NOT NULL,
 #     store_id varchar(8) NOT NULL,
-#     store_name varchar(16) NOT NULL,
+#     store_name varchar(48) NOT NULL,
 #     PRIMARY KEY (userid, sku, store, store_id)
 # );
 
@@ -104,12 +104,78 @@ class ScraperBase:
             self.response = rsp
 
     @staticmethod
-    def list_all_products(userid):
-        return ScraperMySQLInterface.list_all_products(userid)
+    def list_all_products(userid, track=False):
+        if track:
+            data = ScraperMySQLInterface.list_all_track_products(userid)
+        else:
+            data = ScraperMySQLInterface.list_all_products(userid)
+        if data is None:
+            return None
+
+        result = []
+        for sku, name, store, track in data:
+            result.append(
+                {"sku": sku,
+                 "name": name,
+                 "store": store,
+                 "track": track}
+            )
+        return result
 
     @staticmethod
     def update_product(userid, sku, store, track):
         return ScraperMySQLInterface.update_product(userid, sku, store, track)
+
+    @staticmethod
+    def add_product(userid, sku, name, store):
+        name = StrAlnumSpaceConverter(name).value
+        return ScraperMySQLInterface.add_product(userid, sku, name, store)
+
+    @staticmethod
+    def delete_all_inventory(userid):
+        ScraperMySQLInterface.delete_all_inventory(userid)
+
+    @staticmethod
+    def list_all_inventory(userid, zipcode):
+        if not zipcode.strip().isdigit() or len(zipcode) != 5:
+            return None
+
+        ScraperBase.delete_all_inventory(userid)
+        products = ScraperBase.list_all_products(userid, track=True)
+        names = dict()
+        for product in products:
+            sku = product.get("sku")
+            name = product.get("name")
+            store = product.get("store")
+            names[sku, store] = name
+            if store == "tgt":
+                ScraperTarget().get_qty_by_sku_zipcode(userid, sku, zipcode)
+
+        inventory = ScraperMySQLInterface.list_all_inventory(userid)
+        if inventory is None:
+            return None
+
+        prev = (None, None)
+        result = []
+        for sku, quantity, store, store_name in inventory:
+            if (store, store_name) != prev:
+                result.append({
+                    "store": store,
+                    "name": store_name,
+                    "products": [{
+                        "sku": sku,
+                        "name": names[sku, store],
+                        "quantity": quantity
+                    }]
+                })
+            else:
+                result[-1]["products"].append({
+                    "sku": sku,
+                    "name": names[sku, store],
+                    "quantity": quantity
+                })
+            prev = (store, store_name)
+        return result
 
 
 class ScraperTarget(ScraperBase):
@@ -138,11 +204,6 @@ class ScraperTarget(ScraperBase):
             except Exception:
                 logger.exception(f"{type(self).__name__} : {keyword}")
         return info
-
-    @staticmethod
-    def add_product(userid, sku, name, store):
-        name = StrAlnumSpaceConverter(name).value
-        return ScraperMySQLInterface.add_product(userid, sku, name, store)
 
     def get_product_info_by_sku(self, sku):
         # "81911643"
@@ -183,8 +244,8 @@ class ScraperTarget(ScraperBase):
         if self.response is not None and self.response.status_code == 200:
             try:
                 for location in self.response.json()["data"]["fulfillment_fiats"]["locations"]:
-                    store_id = str(location["store"]["store_id"])
-                    store_name = location["store"]["location_name"]
+                    store_id = StrAlnumSpaceConverter(str(location["store"]["store_id"])).value
+                    store_name = StrAlnumSpaceConverter(location["store"]["location_name"]).value
                     quantity = IntConverter(location["location_available_to_promise_quantity"]).value
                     info.append((userid, sku, quantity, "tgt", store_id, store_name))
             except Exception:
@@ -206,11 +267,23 @@ class ScraperDataInterface:
         pass
 
     @classmethod
+    def list_all_track_products(cls, userid):
+        pass
+
+    @classmethod
     def update_product(cls, userid, sku, store, track):
         pass
 
     @classmethod
     def add_inventory(cls, data):
+        pass
+
+    @classmethod
+    def delete_all_inventory(cls, userid):
+        pass
+
+    @classmethod
+    def list_all_inventory(cls, userid):
         pass
 
 
@@ -243,6 +316,17 @@ class ScraperMySQLInterface(ScraperDataInterface):
         return result
 
     @classmethod
+    def list_all_track_products(cls, userid):
+        with MySQLHandle() as db:
+            if db.conn:
+                query = "SELECT sku, name, store, track FROM products WHERE userid = %s AND track = 1"
+                result = db.run(query, (userid,))
+            else:
+                result = None
+                print("Server Error")
+        return result
+
+    @classmethod
     def update_product(cls, userid, sku, store, track):
         with MySQLHandle() as db:
             if db.conn:
@@ -262,6 +346,31 @@ class ScraperMySQLInterface(ScraperDataInterface):
                     "VALUES (%s, %s, %s, %s, %s, %s)"
                 )
                 result = db.run(query, data, commit=True, many=True)
+            else:
+                result = None
+                print("Server Error")
+        return result
+
+    @classmethod
+    def delete_all_inventory(cls, userid):
+        with MySQLHandle() as db:
+            if db.conn:
+                query = "DELETE FROM inventory WHERE userid = %s"
+                result = db.run(query, (userid,), commit=True)
+            else:
+                result = None
+                print("Server Error")
+        return result
+
+    @classmethod
+    def list_all_inventory(cls, userid):
+        with MySQLHandle() as db:
+            if db.conn:
+                query = (
+                    "SELECT sku, quantity, store, store_name FROM inventory WHERE userid = %s "
+                    "ORDER BY store, store_name, sku"
+                )
+                result = db.run(query, (userid,))
             else:
                 result = None
                 print("Server Error")
