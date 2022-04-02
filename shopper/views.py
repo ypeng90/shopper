@@ -42,11 +42,13 @@ def search_product(request):
     if store == "tgt":
         info = ScraperTarget().search_product(keyword)
         if info is None:
-            print("invalid input")
             info = dict()
+            message = "Invalid input."
         elif not info:
-            print("not found")
-    return JsonResponse({"authenticated": True, "product": info})
+            message = "Not found."
+        else:
+            message = "Found."
+    return JsonResponse({"authenticated": True, "product": info, "message": message})
 
 
 def add_product(request):
