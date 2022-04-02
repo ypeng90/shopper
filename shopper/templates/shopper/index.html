@@ -70,7 +70,7 @@
                 padding: 15px;
                 text-align: center;
                 text-decoration: none;
-                display: block;
+                display: inline-block;
                 font-size: 30px;
                 margin: auto;
                 cursor: pointer;
@@ -127,158 +127,175 @@
     <body>
         {% csrf_token %}
 
-        <!--Show all products-->
-        <div id="products" class="section">
-            <button type="button" @click.prevent="toggle" class="section_button section_button_products">
+        <div style="text-align: center">
+            <br>
+            <br>
+            <button type="button" id="firstButton" class="section_button section_button_products">
                 <img src="{% static 'shopper/products.png' %}" class="section_logo section_logo_products">
             </button>
-            <div v-if="enabled">
-                {% verbatim %}
-                <br>
-                <p v-if="message" class="msg">{{ message }}</p>
-                <p v-else class="msg"><br></p>
-                <table id="products_all">
-                    <tr>
-                        <th>SKU</th>
-                        <th>Name</th>
-                        <th>Store</th>
-                        <th>Track</th>
-                        <th>Update</th>
-                    </tr>
-                    <tr v-for="(product, index) in products" :key="index">
-                        <td>{{product.sku}}</td>
-                        <td>{{product.name}}</td>
-                        <td v-if="product.store == 'tgt'">
-                            <img src="https://retailanalysis.igd.com/portals/1/Images/retailers/Retailer%20header%20images/T/Target.png"
-                                 class="store_logo">
-                        </td>
-                        <td v-else>{{product.store}}</td>
-                        <td>
-                            <input type="checkbox" v-model="product.track"
-                                   :checked="product.track" true-value="1" false-value="0">
-                        </td>
-                        <td>
-                            <button type="button" @click.prevent="update(product)">Submit</button>
-                        </td>
-                    </tr>
-                </table>
-                {% endverbatim %}
-            </div>
-        </div>
-
-        <br>
-        <br>
-
-        <!--Add new product-->
-        <div id="add" class="section">
-            <button type="button" @click.prevent="toggle" class="section_button section_button_add">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" id="secondButton" class="section_button section_button_add">
                 <img src="{% static 'shopper/add.png' %}" class="section_logo section_logo_add">
             </button>
-            <div v-if="enabled">
-                {% verbatim %}
-                <br>
-                <p v-if="message" class="msg">{{ message }}</p>
-                <p v-else class="msg"><br></p>
-                <div class="input" style="text-align: center">
-                    <label style="font-size: 20px; font-weight: bold">Keyword</label>
-                    &nbsp;&nbsp;
-                    <input type="text" v-model="keyword" minlength="9" maxlength="12"
-                           placeholder="8-digit SKU, 9-digit DPCI or 12/13-digit UPC" size="35">
-                    &nbsp;&nbsp;
-                    <input type="button" value="Search" @click.prevent="search" class="small_button">
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a :href="'https://www.target.com/s?searchTerm=' + keyword" target="_blank">
-                        <button class="small_button">Manual</button>
-                    </a>
-                </div>
-                <div v-if="Object.keys(product).length" style="text-align: center">
-                    <br>
-                    <hr style="max-width: 948px; margin-left: auto; margin-right: auto">
-                    <br>
-                    <br>
-                    <label style="font-size: 20px; font-weight: bold">SKU</label>
-                    <input type="text" v-model="product.sku" size="20" readonly style="font-size: 18px">
-                    <br>
-                    <br>
-                    <label style="font-size: 20px; font-weight: bold">Name</label>
-                    <input type="text" v-model="product.name" size="64" style="font-size: 18px">
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <div>
-                        <input type="submit" value="Submit" @click.prevent="add" class="small_button">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="reset" value="Reset" @click.prevent="clear" class="small_button">
-                    </div>
-                </div>
-                {% endverbatim %}
-            </div>
-        </div>
-
-        <br>
-        <br>
-
-        <!--Show all inventory-->
-        <div id="inventory" class="section">
-            <button type="button" @click.prevent="toggle" class="section_button section_button_inventory">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" id="thirdButton" class="section_button section_button_inventory">
                 <img src="{% static 'shopper/inventory.png' %}" class="section_logo section_logo_inventory">
             </button>
-            <div v-if="enabled">
-                {% verbatim %}
-                <br>
-                <p v-if="message" class="msg">{{ message }}</p>
-                <p v-else class="msg"><br></p>
-                <div class="input" style="text-align: center">
-                    <label style="font-size: 20px; font-weight: bold">Zipcode</label>
-                    &nbsp;&nbsp;
-                    <input type="text" v-model="zipcode" minlength="5"
-                           maxlength="5" placeholder="5-digit zipcode" size="9">
-                    &nbsp;&nbsp;
-                    <input type="submit" value="Check" @click.prevent="list" class="small_button">
-                </div>
-                <table id="inventory_header">
-                    <tr>
-                        <th style="width:20%">SKU</th>
-                        <th style="width:70%">Name</th>
-                        <th style="width:10%">Quantity</th>
-                    </tr>
-                </table>
-                <table id="inventory_detail">
-                    <tr v-for="store in stores">
-                        <td>
-                            <table style="width:100%">
-                                <tr>
-                                    <th v-if="store.store == 'tgt'" colspan="3">
-                                        <img src="https://retailanalysis.igd.com/portals/1/Images/retailers/Retailer%20header%20images/T/Target.png"
-                                             class="store_logo">&nbsp;&nbsp;{{store.name}}
-                                    </th>
-                                    <th v-else colspan="3">
-                                        {{store.name}}
-                                    </th>
-                                </tr>
-                                <tr v-for="product in store.products">
-                                    <td style="width:20%">{{product.sku}}</td>
-                                    <td style="width:70%">{{product.name}}</td>
-                                    <td style="width:10%">{{product.quantity}}</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-                {% endverbatim %}
+        </div>
+
+        <!--Show all products-->
+        <div id="products" class="section">
+            {% verbatim %}
+            <br>
+            <p v-if="message" class="msg">{{ message }}</p>
+            <p v-else class="msg"><br></p>
+            <table id="products_all">
+                <tr>
+                    <th>SKU</th>
+                    <th>Name</th>
+                    <th>Store</th>
+                    <th>Track</th>
+                    <th>Update</th>
+                </tr>
+                <tr v-for="(product, index) in products" :key="index">
+                    <td>{{product.sku}}</td>
+                    <td>{{product.name}}</td>
+                    <td v-if="product.store == 'tgt'">
+                        <img src="https://retailanalysis.igd.com/portals/1/Images/retailers/Retailer%20header%20images/T/Target.png"
+                             class="store_logo">
+                    </td>
+                    <td v-else>{{product.store}}</td>
+                    <td>
+                        <input type="checkbox" v-model="product.track"
+                               :checked="product.track" true-value="1" false-value="0">
+                    </td>
+                    <td>
+                        <button type="button" @click.prevent="update(product)">Submit</button>
+                    </td>
+                </tr>
+            </table>
+            {% endverbatim %}
+        </div>
+
+        <!--Add new product-->
+        <div id="add" class="section" style="display: none">
+            {% verbatim %}
+            <br>
+            <p v-if="message" class="msg">{{ message }}</p>
+            <p v-else class="msg"><br></p>
+            <div class="input" style="text-align: center">
+                <label style="font-size: 20px; font-weight: bold">Keyword</label>
+                &nbsp;&nbsp;
+                <input type="text" v-model="keyword" minlength="9" maxlength="12"
+                       placeholder="8-digit SKU, 9-digit DPCI or 12/13-digit UPC" size="35">
+                &nbsp;&nbsp;
+                <input type="button" value="Search" @click.prevent="search" class="small_button">
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a :href="'https://www.target.com/s?searchTerm=' + keyword" target="_blank">
+                    <button class="small_button">Manual</button>
+                </a>
             </div>
+            <div v-if="Object.keys(product).length" style="text-align: center">
+                <br>
+                <hr style="max-width: 948px; margin-left: auto; margin-right: auto">
+                <br>
+                <br>
+                <label style="font-size: 20px; font-weight: bold">SKU</label>
+                <input type="text" v-model="product.sku" size="20" readonly style="font-size: 18px">
+                <br>
+                <br>
+                <label style="font-size: 20px; font-weight: bold">Name</label>
+                <input type="text" v-model="product.name" size="64" style="font-size: 18px">
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div>
+                    <input type="submit" value="Submit" @click.prevent="add" class="small_button">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="reset" value="Reset" @click.prevent="clear" class="small_button">
+                </div>
+            </div>
+            {% endverbatim %}
+        </div>
+
+        <!--Show all inventory-->
+        <div id="inventory" class="section" style="display: none">
+            {% verbatim %}
+            <br>
+            <p v-if="message" class="msg">{{ message }}</p>
+            <p v-else class="msg"><br></p>
+            <div class="input" style="text-align: center">
+                <label style="font-size: 20px; font-weight: bold">Zipcode</label>
+                &nbsp;&nbsp;
+                <input type="text" v-model="zipcode" minlength="5"
+                       maxlength="5" placeholder="5-digit zipcode" size="9">
+                &nbsp;&nbsp;
+                <input type="submit" value="Check" @click.prevent="list" class="small_button">
+            </div>
+            <br>
+            <table v-if="stores.length" id="inventory_header">
+                <tr>
+                    <th style="width:20%">SKU</th>
+                    <th style="width:70%">Product Name</th>
+                    <th style="width:10%">Quantity</th>
+                </tr>
+            </table>
+            <table id="inventory_detail">
+                <tr v-for="store in stores">
+                    <td>
+                        <table style="width:100%">
+                            <tr>
+                                <th v-if="store.store == 'tgt'" colspan="3">
+                                    <img src="https://retailanalysis.igd.com/portals/1/Images/retailers/Retailer%20header%20images/T/Target.png"
+                                         class="store_logo">&nbsp;&nbsp;{{store.name}}
+                                </th>
+                                <th v-else colspan="3">
+                                    {{store.name}}
+                                </th>
+                            </tr>
+                            <tr v-for="product in store.products">
+                                <td style="width:20%">{{product.sku}}</td>
+                                <td style="width:70%">{{product.name}}</td>
+                                <td style="width:10%">{{product.quantity}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            {% endverbatim %}
         </div>
 
         <script src="https://unpkg.com/vue@2.6.12/dist/vue.min.js"></script>
 
         <script>
+            document.getElementById("firstButton").addEventListener("click", () => {
+                document.getElementById("add").style.display="none";
+                document.getElementById("inventory").style.display="none";
+                document.getElementById("products").style.display="block";
+            }, false);
+
+            document.getElementById("secondButton").addEventListener("click", () => {
+                document.getElementById("products").style.display="none";
+                document.getElementById("inventory").style.display="none";
+                document.getElementById("add").style.display="block";
+            }, false);
+
+            document.getElementById("thirdButton").addEventListener("click", () => {
+                document.getElementById("products").style.display="none";
+                document.getElementById("add").style.display="none";
+                document.getElementById("inventory").style.display="block";
+            }, false);
+        </script>
+
+        <script>
             var products = new Vue({
                 el: '#products',
                 data: {
-                    enabled: 1,
                     message: '',
                     products: []
                 },
@@ -301,10 +318,6 @@
                     })
                 },
                 methods: {
-                    toggle() {
-                        this.enabled = this.enabled ^ 1,
-                        this.message = ''
-                    },
                     update(product) {
                         fetch('/api/update_product/', {
                             method: 'post',
@@ -334,7 +347,6 @@
                 el: '#add',
                 data: {
                     store: 'tgt',
-                    enabled: 0,
                     message: '',
                     keyword: '',
                     fetched: 0,
@@ -346,10 +358,6 @@
                         this.keyword = '',
                         this.fetched = 0,
                         this.product = {}
-                    },
-                    toggle() {
-                        this.enabled = this.enabled ^ 1,
-                        this.clear()
                     },
                     search() {
                         this.message = '',
@@ -406,16 +414,11 @@
             var inventory = new Vue({
                 el: '#inventory',
                 data: {
-                    enabled: 0,
                     message: '',
                     zipcode: '',
                     stores: []
                 },
                 methods: {
-                    toggle() {
-                        this.enabled = this.enabled ^ 1,
-                        this.message = ''
-                    },
                     list() {
                         fetch('/api/list_inventory/', {
                             method: 'post',
