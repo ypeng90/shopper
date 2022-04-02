@@ -103,80 +103,6 @@ class ScraperBase:
         else:
             self.response = rsp
 
-    @staticmethod
-    def list_all_products(userid, track=False):
-        if track:
-            data = ScraperMySQLInterface.list_all_track_products(userid)
-        else:
-            data = ScraperMySQLInterface.list_all_products(userid)
-        if data is None:
-            return None
-
-        result = []
-        for sku, name, store, track in data:
-            result.append(
-                {"sku": sku,
-                 "name": name,
-                 "store": store,
-                 "track": track}
-            )
-        return result
-
-    @staticmethod
-    def update_product(userid, sku, store, track):
-        return ScraperMySQLInterface.update_product(userid, sku, store, track)
-
-    @staticmethod
-    def add_product(userid, sku, name, store):
-        name = StrAlnumSpaceConverter(name).value
-        return ScraperMySQLInterface.add_product(userid, sku, name, store)
-
-    @staticmethod
-    def delete_all_inventory(userid):
-        ScraperMySQLInterface.delete_all_inventory(userid)
-
-    @staticmethod
-    def list_all_inventory(userid, zipcode):
-        if not zipcode.strip().isdigit() or len(zipcode) != 5:
-            return None
-
-        ScraperBase.delete_all_inventory(userid)
-        products = ScraperBase.list_all_products(userid, track=True)
-        names = dict()
-        for product in products:
-            sku = product.get("sku")
-            name = product.get("name")
-            store = product.get("store")
-            names[sku, store] = name
-            if store == "tgt":
-                ScraperTarget().get_qty_by_sku_zipcode(userid, sku, zipcode)
-
-        inventory = ScraperMySQLInterface.list_all_inventory(userid)
-        if inventory is None:
-            return None
-
-        prev = (None, None)
-        result = []
-        for sku, quantity, store, store_name in inventory:
-            if (store, store_name) != prev:
-                result.append({
-                    "store": store,
-                    "name": store_name,
-                    "products": [{
-                        "sku": sku,
-                        "name": names[sku, store],
-                        "quantity": quantity
-                    }]
-                })
-            else:
-                result[-1]["products"].append({
-                    "sku": sku,
-                    "name": names[sku, store],
-                    "quantity": quantity
-                })
-            prev = (store, store_name)
-        return result
-
 
 class ScraperTarget(ScraperBase):
     """Scraper for Target"""
@@ -259,83 +185,12 @@ class ScraperDataInterface:
     """Data interface for Scraper base class"""
 
     @classmethod
-    def add_product(cls, userid, sku, name, store):
-        pass
-
-    @classmethod
-    def list_all_products(cls, userid):
-        pass
-
-    @classmethod
-    def list_all_track_products(cls, userid):
-        pass
-
-    @classmethod
-    def update_product(cls, userid, sku, store, track):
-        pass
-
-    @classmethod
     def add_inventory(cls, data):
-        pass
-
-    @classmethod
-    def delete_all_inventory(cls, userid):
-        pass
-
-    @classmethod
-    def list_all_inventory(cls, userid):
         pass
 
 
 class ScraperMySQLInterface(ScraperDataInterface):
     """Data interface for Scraper implemented with MySQL"""
-
-    @classmethod
-    def add_product(cls, userid, sku, name, store):
-        with MySQLHandle() as db:
-            if db.conn:
-                query = (
-                    "INSERT IGNORE INTO products (userid, sku, name, store)"
-                    "VALUES (%s, %s, %s, %s)"
-                )
-                result = db.run(query, (userid, sku, name, store), commit=True)
-            else:
-                result = None
-                print("Server Error")
-        return result
-
-    @classmethod
-    def list_all_products(cls, userid):
-        with MySQLHandle() as db:
-            if db.conn:
-                query = "SELECT sku, name, store, track FROM products WHERE userid = %s"
-                result = db.run(query, (userid,))
-            else:
-                result = None
-                print("Server Error")
-        return result
-
-    @classmethod
-    def list_all_track_products(cls, userid):
-        with MySQLHandle() as db:
-            if db.conn:
-                query = "SELECT sku, name, store, track FROM products WHERE userid = %s AND track = 1"
-                result = db.run(query, (userid,))
-            else:
-                result = None
-                print("Server Error")
-        return result
-
-    @classmethod
-    def update_product(cls, userid, sku, store, track):
-        with MySQLHandle() as db:
-            if db.conn:
-                query = "UPDATE products SET track = %s WHERE userid = %s AND sku = %s AND store = %s"
-                result = db.run(query, (track, userid, sku, store), commit=True)
-            else:
-                result = None
-                print("Server Error")
-        return result
 
     @classmethod
     def add_inventory(cls, data):
@@ -346,31 +201,6 @@ class ScraperMySQLInterface(ScraperDataInterface):
                     "VALUES (%s, %s, %s, %s, %s, %s)"
                 )
                 result = db.run(query, data, commit=True, many=True)
-            else:
-                result = None
-                print("Server Error")
-        return result
-
-    @classmethod
-    def delete_all_inventory(cls, userid):
-        with MySQLHandle() as db:
-            if db.conn:
-                query = "DELETE FROM inventory WHERE userid = %s"
-                result = db.run(query, (userid,), commit=True)
-            else:
-                result = None
-                print("Server Error")
-        return result
-
-    @classmethod
-    def list_all_inventory(cls, userid):
-        with MySQLHandle() as db:
-            if db.conn:
-                query = (
-                    "SELECT sku, quantity, store, store_name FROM inventory WHERE userid = %s "
-                    "ORDER BY store, store_name, sku"
-                )
-                result = db.run(query, (userid,))
             else:
                 result = None
                 print("Server Error")

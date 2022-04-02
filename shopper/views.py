@@ -2,6 +2,7 @@ from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from shopper.scraper import ScraperTarget
+from shopper.shopper import Shopper
 from loguru import logger
 import json
 import jwt
@@ -56,7 +57,7 @@ def add_product(request):
     data = json.loads(request.body)
     store, product = data.get("store"), data.get("product")
     sku, name = product.get("sku"), product.get("name").strip()
-    result = ScraperTarget.add_product(userid, sku, name, store)
+    result = Shopper.add_product(userid, sku, name, store)
     if result is None:
         message = "Internal server error."
     elif result:
@@ -71,7 +72,7 @@ def list_all_products(request):
     if userid == 0:
         return JsonResponse({"authenticated": False, "products": []})
 
-    info = ScraperTarget.list_all_products(userid)
+    info = Shopper.list_all_products(userid)
     if info is None:
         print("Server Error")
         info = []
@@ -85,7 +86,7 @@ def update_product(request):
 
     data = json.loads(request.body).get("product")
     sku, store, track = data.get("sku"), data.get("store").lower(), int(data.get("track"))
-    result = ScraperTarget.update_product(userid, sku, store, track)
+    result = Shopper.update_product(userid, sku, store, track)
     if result is None:
         message = "Internal server error."
     elif result:
@@ -101,7 +102,19 @@ def list_all_inventory(request):
         return JsonResponse({"authenticated": False, "stores": []})
 
     zipcode = json.loads(request.body).get("zipcode").strip()
-    info = ScraperTarget.list_all_inventory(userid, zipcode)
+    if not zipcode.strip().isdigit() or len(zipcode) != 5:
+        print("Invalid Input")
+        return JsonResponse({"authenticated": True, "stores": []})
+
+    Shopper.delete_all_inventory(userid)
+    products = Shopper.list_all_products(userid, track=True)
+    for product in products:
+        sku = product.get("sku")
+        store = product.get("store")
+        if store == "tgt":
+            ScraperTarget().get_qty_by_sku_zipcode(userid, sku, zipcode)
+
+    info = Shopper.list_all_inventory(userid, zipcode)
     if info is None:
         print("Server Error")
         info = []
