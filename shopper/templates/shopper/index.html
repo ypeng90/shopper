@@ -3,7 +3,7 @@
 <html>
     <head>
         <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
-        <title>Simple Map</title>
+        <title>Shopper</title>
         <style>
             #products_all, #inventory_header, #inventory_detail {
                 border-collapse: collapse;
@@ -153,11 +153,11 @@
             <p v-else class="msg"><br></p>
             <table id="products_all">
                 <tr>
-                    <th>SKU</th>
-                    <th>Name</th>
-                    <th>Store</th>
-                    <th>Track</th>
-                    <th>Update</th>
+                    <th style="width:14%">SKU</th>
+                    <th style="width:62%">Name</th>
+                    <th style="width:7%">Store</th>
+                    <th style="width:8%">Track</th>
+                    <th style="width:9%">Update</th>
                 </tr>
                 <tr v-for="(product, index) in products" :key="index">
                     <td>{{product.sku}}</td>

@@ -1,88 +1,127 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>用户注册</title>
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <title>User Register</title>
     <style>
+        .section_button {
+            border: none;
+            border-radius: 45px;
+            background-color: #fff2ec;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 30px;
+            margin: auto;
+            cursor: pointer;
+        }
+        .section_logo {
+            background-color: #fff2ec;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 30px;
+            margin: auto;
+            cursor: pointer;
+            vertical-align: middle;
+            width: 120px;
+            height: 120px;
+        }
         #container {
             width: 520px;
             margin: 10px auto;
         }
         .input {
-            margin: 10px 0;
-            width: 460px;
+            display: block;
+            text-align: center;
+            margin: 1px auto;
             height: 50px;
         }
-        .input>label {
-            display: inline-block;
-            width: 180px;
-            text-align: right;
-        }
-        .input>img {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            width: 52%;
-        }
-        form+div {
-            margin-top: 20px;
-        }
-        form+div>a {
-            text-decoration: none;
-            color: darkcyan;
-            font-size: 1.2em;
-        }
-        .button {
-            width: 500px;
+        .small_button {
+            background-color: #025769;
+            border: none;
+            color: white;
+            padding: 4px 8px;
             text-align: center;
-            margin-top: 20px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 20px;
+            margin: auto;
+            cursor: pointer;
         }
         .hint {
             color: red;
             font-size: 14px;
         }
+        a, a:hover, a:visited, a:active {
+            color: inherit;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
     {% csrf_token %}
+
+    <div style="text-align: center">
+        <br>
+        <br>
+        <button type="button" class="section_button">
+            <img src="{% static 'account/register.png' %}" class="section_logo">
+        </button>
+    </div>
+
     <div id="container">
-        <h1>用户注册</h1>
         <hr>
         {% verbatim %}
         <form>
             <fieldset>
-                <legend>用户信息</legend>
+                <legend style="font-family: Trebuchet MS"><b>User Information</b></legend>
+                <br>
                 <div class="input">
-                    <label>用户名：&nbsp;</label>
+                    <label style="font-family: Courier New"><b>Username</b></label>
+                    &nbsp;&nbsp;
                     <input type="text" v-model="username">
                 </div>
                 <div class="input" v-if="username">
-                    <label>密&nbsp;&nbsp;&nbsp;&nbsp;码：&nbsp;</label>
+                    <label style="font-family: Courier New"><b>Password</b></label>
+                    &nbsp;&nbsp;
                     <input type="password" v-model="password_1">
                 </div>
                 <div class="input" v-if="password_1">
-                    <label>再输入：&nbsp;</label>
+                    <label style="font-family: Courier New"><b>Password</b></label>
+                    &nbsp;&nbsp;
                     <input type="password" v-model="password_2">
                 </div>
                 <div class="input" v-if="password_2">
-                    <img :src="imgCode" alt="" height="40">
+                    <div class="input">
+                        <label style="font-family: Courier New"><b>Captcha&nbsp;</b></label>
+                        &nbsp;&nbsp;
+                        <input type="text" v-model="captcha">
+                    </div>
                 </div>
                 <div class="input" v-if="password_2">
-                    <label>验证码：&nbsp;</label>
-                    <input type="text" v-model="captcha">
+                    <div style="text-align: center">
+                        <img :src="imgCode" alt="" style="width:264px; height:50px;">
+                    </div>
                 </div>
-            </fieldset>
-            <div class="button">
-                <input type="submit" value="注册" @click.prevent="register">
                 <div>
                     <input type="checkbox" v-model="agreement">
-                    我已经同意网站<a href="">用户协议及隐私政策</a>
+                    I agree to the <a href="">terms & conditions</a>
                 </div>
+            </fieldset>
+            <div style="text-align: center; margin-top: 15px">
+                <input type="button" value="Register" @click.prevent="register" class="small_button">
             </div>
         </form>
         {% endverbatim %}
-        <div>
-            <a href="/login/">登录</a>
+        <div style="text-align: right">
+            <a href="/account/login/"
+               style="background-color: #edffef; font-family: Trebuchet MS">Login</a>
         </div>
     </div>
     <script src="https://unpkg.com/vue@2.6.12/dist/vue.min.js"></script>
