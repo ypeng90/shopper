@@ -25,10 +25,10 @@ logger.add("logs/default.log")
 
 class Register:
     def __init__(self, name, passwd):
-        self.userid = self._generate_userid()
-        self.name = name
-        self.salt = self._generate_salt()
-        self.password = self._hash_password(passwd)
+        self._userid = self._generate_userid()
+        self._name = name
+        self._salt = self._generate_salt()
+        self._password = self._hash_password(passwd)
 
     @staticmethod
     def _generate_userid():
@@ -50,45 +50,45 @@ class Register:
         return "".join(salt)
 
     def _hash_password(self, passwd):
-        return sha256(bytes(self.salt + passwd, "utf-8")).hexdigest()
+        return sha256(bytes(self._salt + passwd, "utf-8")).hexdigest()
 
     @property
     def existing(self):
-        return bool(AccountMySQLInterface.retrieve_id_by_name(self.name))
+        return bool(AccountMySQLInterface.retrieve_id_by_name(self._name))
 
     def add(self):
         """Add to db when username not existing"""
 
-        return AccountMySQLInterface.add_new_account(self.userid, self.name, self.password, self.salt, True)
+        return AccountMySQLInterface.add_new_account(self._userid, self._name, self._password, self._salt, True)
 
 
 class Login:
     def __init__(self, name, passwd):
-        self.userid = None
-        self.name = name
-        self.password = passwd
-        self.salt = None
+        self._userid = None
+        self._name = name
+        self._salt = None
+        self._password = passwd
 
     def _get_account(self):
-        result = AccountMySQLInterface.retrieve_id_salt_by_name(self.name)
+        result = AccountMySQLInterface.retrieve_id_salt_by_name(self._name)
         if bool(result):
-            self.userid, self.salt = result[0]
+            self._userid, self._salt = result[0]
 
     def _hash_password(self):
-        return sha256(bytes(self.salt + self.password, "utf-8")).hexdigest()
+        return sha256(bytes(self._salt + self._password, "utf-8")).hexdigest()
 
     @property
     def existing(self):
         self._get_account()
-        if self.userid is None:
+        if self._userid is None:
             return False
 
-        return bool(AccountMySQLInterface.retrieve_id_by_name_passwd(self.name, self._hash_password()))
+        return bool(AccountMySQLInterface.retrieve_id_by_name_passwd(self._name, self._hash_password()))
 
     def jwt(self):
         payload = {
             "exp": timezone.now() + timedelta(days=1),
-            "userid": self.userid
+            "userid": self._userid
         }
         token = jwt.encode(payload, settings.SECRET_KEY, algorithm="HS256")
         return token

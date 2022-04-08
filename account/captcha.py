@@ -3,7 +3,6 @@
 import os
 import random
 from io import BytesIO
-from typing import Tuple
 from PIL import Image, ImageFilter
 from PIL.ImageDraw import Draw
 from PIL.ImageFont import truetype
@@ -14,11 +13,9 @@ ALL_CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 class Bezier:
     """Bezier curve class"""
     
-    tsequence: Tuple[float, ...]
-
     def __init__(self):
-        self.tsequence = tuple([t / 20.0 for t in range(21)])
-        self.beziers = {}
+        self._tsequence = tuple([t / 20.0 for t in range(21)])
+        self._beziers = {}
 
     def generate(self, n):
         """Generate with given number
@@ -29,19 +26,19 @@ class Bezier:
         Returns:
             list: list of coefficients
         """
-        if n not in self.beziers:
-            combinations = self.pascal_row(n - 1)
+        if n not in self._beziers:
+            combinations = self._pascal_row(n - 1)
             result = []
-            for t in self.tsequence:
+            for t in self._tsequence:
                 tpowers = (t ** i for i in range(n))
                 upowers = ((1 - t) ** i for i in range(n - 1, -1, -1))
                 coefs = [c * t * u for c, t, u in zip(combinations, tpowers, upowers)]
                 result.append(coefs)
-            self.beziers[n] = result
-        return self.beziers[n]
+            self._beziers[n] = result
+        return self._beziers[n]
 
     @staticmethod
-    def pascal_row(n):
+    def _pascal_row(n):
         """Generate nth row in Pascal triangle
 
         Args:
