@@ -137,10 +137,8 @@
                         if (json.code === 10000) {
                             location.href = '/'
                         } else {
-                            alert(json.mesg),
+                            alert(json.message),
                             this.imgCode += '?',
-<!--                            this.username = '',-->
-<!--                            this.password = '',-->
                             this.captcha = ''
                         }
                     })

@@ -3,32 +3,9 @@
 import requests
 from urllib3 import Retry
 from loguru import logger
-from shopper.utils import IntConverter, StrAlnumSpaceConverter, MySQLHandle
+from shopper.utils import IntConverter, StrAlnumSpaceConverter
 
 logger.add("logs/default.log")
-
-# Create directly in MySQL
-# CREATE TABLE products
-# (
-#     userid int NOT NULL,
-#     sku varchar(15) NOT NULL,
-#     name varchar(64) NOT NULL,
-#     store char(3) NOT NULL,
-#     track int NOT NULL DEFAULT 1,
-#     PRIMARY KEY (userid, sku, store)
-# );
-
-# Create directly in MySQL
-# CREATE TABLE inventory
-# (
-#     userid int NOT NULL,
-#     sku varchar(15) NOT NULL,
-#     quantity int NOT NULL,
-#     store char(3) NOT NULL,
-#     store_id varchar(8) NOT NULL,
-#     store_name varchar(48) NOT NULL,
-#     PRIMARY KEY (userid, sku, store, store_id)
-# );
 
 
 class AutoAdapter(requests.adapters.HTTPAdapter):
@@ -165,7 +142,6 @@ class ScraperTarget(ScraperBase):
         )
         self._download()
 
-        result = False
         info = []
         if self.response is not None and self.response.status_code == 200:
             try:
@@ -176,32 +152,4 @@ class ScraperTarget(ScraperBase):
                     info.append((userid, sku, quantity, "tgt", store_id, store_name))
             except Exception:
                 logger.exception(f"{type(self).__name__} : {sku} - {zipcode}")
-        if info:
-            result = ScraperMySQLInterface.add_inventory(info)
-        return result
-
-
-class ScraperDataInterface:
-    """Data interface for Scraper base class"""
-
-    @classmethod
-    def add_inventory(cls, data):
-        pass
-
-
-class ScraperMySQLInterface(ScraperDataInterface):
-    """Data interface for Scraper implemented with MySQL"""
-
-    @classmethod
-    def add_inventory(cls, data):
-        with MySQLHandle() as db:
-            if db.conn:
-                query = (
-                    "INSERT IGNORE INTO inventory (userid, sku, quantity, store, store_id, store_name)"
-                    "VALUES (%s, %s, %s, %s, %s, %s)"
-                )
-                result = db.run(query, data, commit=True, many=True)
-            else:
-                result = None
-                print("Server Error")
-        return result
+        return info

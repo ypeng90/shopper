@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
-from account.account import Register, Login, Account
+from account.account import Register, Login
 from account.captcha import Captcha
 from account.utils import StrAlnumConverter
 import json
@@ -11,25 +11,33 @@ from loguru import logger
 logger.add("logs/default.log")
 
 
-def show_home(request):
+def get_userid(request):
+    userid = 0
     token = request.session.get("jwt_token")
     try:
-        jwt.decode(token, settings.SECRET_KEY, algorithms="HS256")
+        decoded = jwt.decode(token, settings.SECRET_KEY, algorithms="HS256")
     except (jwt.InvalidTokenError, jwt.ExpiredSignatureError):
         pass
     except Exception:
         logger.exception(f"jwt.decode({token}, settings.SECRET_KEY, algorithms='HS256').")
     else:
+        userid = decoded.get("userid")
+    return userid
+
+
+def show_home(request):
+    userid = get_userid(request)
+    if userid:
         return render(request, "account/index.html")
     return redirect("login/")
 
 
 def show_login(request):
-    return render(request, 'account/login.html')
+    return render(request, "account/login.html")
 
 
 def show_register(request):
-    return render(request, 'account/register.html')
+    return render(request, "account/register.html")
 
 
 def get_captcha(request):
@@ -54,23 +62,23 @@ def register(request):
                         if not handle.existing:
                             if handle.add():
                                 return JsonResponse({
-                                    "code": 30000,
-                                    "mesg": "You have successfully registered. Redirecting..."
+                                    "code": 10000,
+                                    "message": "You have successfully registered. Redirecting..."
                                 })
-                            hint = "Registration failed due to internal error."
+                            msg = "Registration failed due to internal error."
                         else:
-                            hint = "Please choose a different username."
+                            msg = "Please choose a different username."
                     else:
-                        hint = "Please choose a password with at least 6 characters."
+                        msg = "Please choose a password with at least 6 characters."
                 else:
-                    hint = "Please match both passwords."
+                    msg = "Please match both passwords."
             else:
-                hint = "Please choose a username containing 6 to 20 letters and digits."
+                msg = "Please choose a username containing 6 to 20 letters and digits."
         else:
-            hint = "Please type in correct Captcha code."
+            msg = "Please type in correct Captcha text."
     else:
-        hint = "Please type in all required information."
-    return JsonResponse({"code": 30001, "mesg": hint})
+        msg = "Please type in all required information."
+    return JsonResponse({"code": 10001, "message": msg})
 
 
 def login(request):
@@ -86,11 +94,11 @@ def login(request):
                 # add a token: new user comes
                 # overwrite existing token: user switches account
                 request.session["jwt_token"] = token
-                return JsonResponse({"code": 10000})
+                return JsonResponse({"code": 10000, "message": ""})
             else:
-                hint = "Please type in valid username and password."
+                msg = "Please type in valid username and password."
         else:
-            hint = "Please type in valid username and password."
+            msg = "Please type in valid username and password."
     else:
-        hint = "Please type in correct Captcha code."
-    return JsonResponse({"code": 10001, "mesg": hint})
+        msg = "Please type in correct Captcha text."
+    return JsonResponse({"code": 10001, "message": msg})

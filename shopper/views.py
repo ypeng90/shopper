@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from shopper.scraper import ScraperTarget
 from shopper.shopper import Shopper
 from loguru import logger
 import json
@@ -31,24 +30,52 @@ def show_home(request):
     return redirect("account/login/")
 
 
+def list_all_products(request):
+    userid = get_userid(request)
+    if userid == 0:
+        return JsonResponse({"authenticated": False, "products": [], "message": "Not authenticated."})
+
+    msg = ""
+    info = Shopper.list_all_products(userid)
+    if info is None:
+        msg = "Server error."
+        info = []
+    return JsonResponse({"authenticated": True, "products": info, "message": msg})
+
+
+def update_product(request):
+    userid = get_userid(request)
+    if userid == 0:
+        return JsonResponse({"authenticated": False, "message": "Not authenticated."})
+
+    data = json.loads(request.body).get("product")
+    sku, store, track = data.get("sku"), data.get("store").lower(), int(data.get("track"))
+    result = Shopper.update_product(userid, sku, store, track)
+    if result is None:
+        msg = "Server error."
+    elif result:
+        msg = "Update succeeded."
+    else:
+        msg = "Update failed."
+    return JsonResponse({"authenticated": True, "message": msg})
+
+
 def search_product(request):
     userid = get_userid(request)
     if userid == 0:
-        return JsonResponse({"authenticated": False, "product": dict()})
+        return JsonResponse({"authenticated": False, "product": dict(), "message": "Not authenticated."})
 
     data = json.loads(request.body)
     store, keyword = data.get("store").strip(), data.get("keyword").strip()
-    info = dict()
-    if store == "tgt":
-        info = ScraperTarget().search_product(keyword)
-        if info is None:
-            info = dict()
-            message = "Invalid input."
-        elif not info:
-            message = "Not found."
-        else:
-            message = "Found."
-    return JsonResponse({"authenticated": True, "product": info, "message": message})
+    info = Shopper.search_product(store, keyword)
+    if info is None:
+        info = dict()
+        msg = "Invalid input."
+    elif info:
+        msg = ""
+    else:
+        msg = "Not found."
+    return JsonResponse({"authenticated": True, "product": info, "message": msg})
 
 
 def add_product(request):
@@ -61,63 +88,26 @@ def add_product(request):
     sku, name = product.get("sku"), product.get("name").strip()
     result = Shopper.add_product(userid, sku, name, store)
     if result is None:
-        message = "Internal server error."
+        msg = "Server error."
     elif result:
-        message = "Product has been added."
+        msg = "Add succeeded."
     else:
-        message = "Failed to add product."
-    return JsonResponse({"authenticated": True, "message": message})
-
-
-def list_all_products(request):
-    userid = get_userid(request)
-    if userid == 0:
-        return JsonResponse({"authenticated": False, "products": []})
-
-    info = Shopper.list_all_products(userid)
-    if info is None:
-        print("Server Error")
-        info = []
-    return JsonResponse({"authenticated": True, "products": info})
-
-
-def update_product(request):
-    userid = get_userid(request)
-    if userid == 0:
-        return JsonResponse({"authenticated": False, "message": "Not authenticated."})
-
-    data = json.loads(request.body).get("product")
-    sku, store, track = data.get("sku"), data.get("store").lower(), int(data.get("track"))
-    result = Shopper.update_product(userid, sku, store, track)
-    if result is None:
-        message = "Internal server error."
-    elif result:
-        message = "Product has been updated."
-    else:
-        message = "Failed to update product."
-    return JsonResponse({"authenticated": True, "message": message})
+        msg = "Add failed."
+    return JsonResponse({"authenticated": True, "message": msg})
 
 
 def list_all_inventory(request):
     userid = get_userid(request)
     if userid == 0:
-        return JsonResponse({"authenticated": False, "stores": []})
+        return JsonResponse({"authenticated": False, "stores": [], "message": "Not authenticated."})
 
     zipcode = json.loads(request.body).get("zipcode").strip()
     if not zipcode.strip().isdigit() or len(zipcode) != 5:
-        print("Invalid Input")
-        return JsonResponse({"authenticated": True, "stores": []})
+        return JsonResponse({"authenticated": True, "stores": [], "message": "Invalid zipcode."})
 
-    Shopper.delete_all_inventory(userid)
-    products = Shopper.list_all_products(userid, track=True)
-    for product in products:
-        sku = product.get("sku")
-        store = product.get("store")
-        if store == "tgt":
-            ScraperTarget().get_qty_by_sku_zipcode(userid, sku, zipcode)
-
+    msg = ""
     info = Shopper.list_all_inventory(userid, zipcode)
     if info is None:
-        print("Server Error")
+        msg = "Server error."
         info = []
-    return JsonResponse({"authenticated": True, "stores": info})
+    return JsonResponse({"authenticated": True, "stores": info, "message": msg})

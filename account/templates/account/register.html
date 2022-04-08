@@ -155,13 +155,11 @@
                     })
                     .then(resp => resp.json())
                     .then(json => {
-                        if (json.code === 30000) {
+                        if (json.code === 10000) {
                             location.href = '/account/login/'
                         } else {
-                            alert(json.mesg),
+                            alert(json.message),
                             this.imgCode += '?',
-<!--                            this.password_1 = '',-->
-<!--                            this.password_2 = '',-->
                             this.captcha = ''
                         }
                     })

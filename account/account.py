@@ -94,31 +94,6 @@ class Login:
         return token
 
 
-class Account:
-    def __init__(self, token):
-        self.token = token
-        self.authenticated = False
-        self.userid = None
-        self.username = None
-        self._decode()
-
-    def _decode(self):
-        try:
-            decoded = jwt.decode(self.token, settings.SECRET_KEY, algorithms="HS256")
-        except (jwt.InvalidTokenError, jwt.ExpiredSignatureError):
-            pass
-        except Exception:
-            logger.exception(f"jwt.decode({self.token}, settings.SECRET_KEY, algorithms='HS256').")
-        else:
-            self.userid = decoded.get("userid")
-
-            # userid might be invalid
-            result = AccountMySQLInterface.retrieve_name_by_id(self.userid)
-            if bool(result):
-                self.username = result[0][0]
-                self.authenticated = True
-
-
 class AccountDataInterface:
     @classmethod
     def add_new_account(cls, userid, name, password, salt, commit):

@@ -186,8 +186,16 @@
             <p v-if="message" class="msg">{{ message }}</p>
             <p v-else class="msg"><br></p>
             <div class="input" style="text-align: center">
-                <label style="font-size: 20px; font-weight: bold">Keyword</label>
+                <label style="font-size: 20px; font-weight: bold">Store</label>
+                &nbsp;
+                <select v-model="selectedStore">
+                    <option v-for="store in stores" :value="store">
+                        {{ store.name }}
+                    </option>
+                </select>
                 &nbsp;&nbsp;
+                <label style="font-size: 20px; font-weight: bold">Keyword</label>
+                &nbsp;
                 <input type="text" v-model="keyword" minlength="9" maxlength="12"
                        placeholder="8-digit SKU, 9-digit DPCI or 12/13-digit UPC" size="35">
                 &nbsp;&nbsp;
@@ -311,7 +319,8 @@
                     .then(resp => resp.json())
                     .then(json => {
                         if (json.authenticated) {
-                            this.products = json.products
+                            this.products = json.products,
+                            this.message = json.message
                         } else {
                             location.href = '/account/login/'
                         }
@@ -346,27 +355,28 @@
             var add = new Vue({
                 el: '#add',
                 data: {
-                    store: 'tgt',
+                    selectedStore: {name: 'Target', shortName: 'tgt'},
+                    stores: [
+                        {name: 'Target', shortName: 'tgt'}
+                    ],
                     message: '',
                     keyword: '',
-                    fetched: 0,
                     product: {}
                 },
                 methods: {
                     clear() {
+                        this.selectedStore = {name: 'Target', shortName: 'tgt'},
                         this.message = '',
                         this.keyword = '',
-                        this.fetched = 0,
                         this.product = {}
                     },
                     search() {
                         this.message = '',
-                        this.fetched = 0,
                         this.product = {},
                         fetch('/api/search_product/', {
                             method: 'post',
                             body: JSON.stringify({
-                                'store': this.store,
+                                'store': this.selectedStore.shortName,
                                 'keyword': this.keyword
                             }),
                             headers: {
@@ -377,7 +387,6 @@
                         .then(resp => resp.json())
                         .then(json => {
                             if (json.authenticated) {
-                                this.fetched = 1,
                                 this.product = json.product,
                                 this.message = json.message
                             } else {
@@ -389,7 +398,7 @@
                         fetch('/api/add_product/', {
                             method: 'post',
                             body: JSON.stringify({
-                                'store': this.store,
+                                'store': this.selectedStore.shortName,
                                 'product': this.product
                             }),
                             headers: {
@@ -433,7 +442,8 @@
                         .then(resp => resp.json())
                         .then(json => {
                             if (json.authenticated) {
-                                this.stores = json.stores
+                                this.stores = json.stores,
+                                this.message = json.message
                             } else {
                                 location.href = '/account/login/'
                             }

@@ -33,7 +33,7 @@ logger.add("logs/default.log")
 
 class Shopper:
     """Shopper base class"""
-
+    
     @staticmethod
     def list_all_products(userid, track=False):
         if track:
@@ -58,27 +58,52 @@ class Shopper:
         return ShopperMySQLInterface.update_product(userid, sku, store, track)
 
     @staticmethod
+    def search_product(store, keyword):
+        if store == "tgt":
+            return ScraperTarget().search_product(keyword)
+        return dict()
+
+    @staticmethod
     def add_product(userid, sku, name, store):
         name = StrAlnumSpaceConverter(name).value
         return ShopperMySQLInterface.add_product(userid, sku, name, store)
 
     @staticmethod
-    def delete_all_inventory(userid):
+    def _delete_all_inventory(userid):
         ShopperMySQLInterface.delete_all_inventory(userid)
 
     @staticmethod
-    def list_all_inventory(userid, zipcode):
+    def _get_quantity(userid, zipcode):
         products = Shopper.list_all_products(userid, track=True)
+        for product in products:
+            sku = product.get("sku")
+            store = product.get("store")
+            info = []
+            if store == "tgt":
+                info = ScraperTarget().get_qty_by_sku_zipcode(userid, sku, zipcode)
+            if info:
+                ShopperMySQLInterface.add_quantity(info)
+
+    @staticmethod
+    def list_all_inventory(userid, zipcode):
+        Shopper._delete_all_inventory(userid)
+
+        Shopper._get_quantity(userid, zipcode)
+
+        inventory = ShopperMySQLInterface.list_all_inventory(userid)
+        if inventory is None:
+            return None
+
+        products = Shopper.list_all_products(userid, track=True)
+        if products is None:
+            return None
+
         names = dict()
         for product in products:
             sku = product.get("sku")
             name = product.get("name")
             store = product.get("store")
             names[sku, store] = name
-
-        inventory = ShopperMySQLInterface.list_all_inventory(userid)
-        if inventory is None:
-            return None
 
         prev = (None, None)
         result = []
@@ -107,10 +132,6 @@ class ShopperDataInterface:
     """Data interface for Scraper base class"""
 
     @classmethod
-    def add_product(cls, userid, sku, name, store):
-        pass
-
-    @classmethod
     def list_all_products(cls, userid):
         pass
 
@@ -123,7 +144,15 @@ class ShopperDataInterface:
         pass
 
     @classmethod
+    def add_product(cls, userid, sku, name, store):
+        pass
+
+    @classmethod
     def delete_all_inventory(cls, userid):
+        pass
+
+    @classmethod
+    def add_quantity(cls, data):
         pass
 
     @classmethod
@@ -133,6 +162,36 @@ class ShopperDataInterface:
 
 class ShopperMySQLInterface(ShopperDataInterface):
     """Data interface for Scraper implemented with MySQL"""
+
+    @classmethod
+    def list_all_products(cls, userid):
+        with MySQLHandle() as db:
+            if db.conn:
+                query = "SELECT sku, name, store, track FROM products WHERE userid = %s"
+                result = db.run(query, (userid,))
+            else:
+                result = None
+        return result
+
+    @classmethod
+    def list_all_track_products(cls, userid):
+        with MySQLHandle() as db:
+            if db.conn:
+                query = "SELECT sku, name, store, track FROM products WHERE userid = %s AND track = 1"
+                result = db.run(query, (userid,))
+            else:
+                result = None
+        return result
+
+    @classmethod
+    def update_product(cls, userid, sku, store, track):
+        with MySQLHandle() as db:
+            if db.conn:
+                query = "UPDATE products SET track = %s WHERE userid = %s AND sku = %s AND store = %s"
+                result = db.run(query, (track, userid, sku, store), commit=True)
+            else:
+                result = None
+        return result
 
     @classmethod
     def add_product(cls, userid, sku, name, store):
@@ -145,40 +204,6 @@ class ShopperMySQLInterface(ShopperDataInterface):
                 result = db.run(query, (userid, sku, name, store), commit=True)
             else:
                 result = None
-                print("Server Error")
-        return result
-
-    @classmethod
-    def list_all_products(cls, userid):
-        with MySQLHandle() as db:
-            if db.conn:
-                query = "SELECT sku, name, store, track FROM products WHERE userid = %s"
-                result = db.run(query, (userid,))
-            else:
-                result = None
-                print("Server Error")
-        return result
-
-    @classmethod
-    def list_all_track_products(cls, userid):
-        with MySQLHandle() as db:
-            if db.conn:
-                query = "SELECT sku, name, store, track FROM products WHERE userid = %s AND track = 1"
-                result = db.run(query, (userid,))
-            else:
-                result = None
-                print("Server Error")
-        return result
-
-    @classmethod
-    def update_product(cls, userid, sku, store, track):
-        with MySQLHandle() as db:
-            if db.conn:
-                query = "UPDATE products SET track = %s WHERE userid = %s AND sku = %s AND store = %s"
-                result = db.run(query, (track, userid, sku, store), commit=True)
-            else:
-                result = None
-                print("Server Error")
         return result
 
     @classmethod
@@ -189,9 +214,21 @@ class ShopperMySQLInterface(ShopperDataInterface):
                 result = db.run(query, (userid,), commit=True)
             else:
                 result = None
-                print("Server Error")
         return result
 
+    @classmethod
+    def add_quantity(cls, data):
+        with MySQLHandle() as db:
+            if db.conn:
+                query = (
+                    "INSERT IGNORE INTO inventory (userid, sku, quantity, store, store_id, store_name)"
+                    "VALUES (%s, %s, %s, %s, %s, %s)"
+                )
+                result = db.run(query, data, commit=True, many=True)
+            else:
+                result = None
+        return result
+    
     @classmethod
     def list_all_inventory(cls, userid):
         with MySQLHandle() as db:
@@ -203,5 +240,4 @@ class ShopperMySQLInterface(ShopperDataInterface):
                 result = db.run(query, (userid,))
             else:
                 result = None
-                print("Server Error")
         return result
