@@ -193,6 +193,11 @@
             }, false);
         </script>
 
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+                integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+                crossorigin="anonymous">
+        </script>
+
         <script>
             var login = new Vue({
                 el: '#login',
@@ -205,30 +210,37 @@
                 },
                 methods: {
                     login() {
-                        fetch('/account/api/login/', {
-                            method: 'post',
-                            body: JSON.stringify({
+                        $.ajax('/account/api/login/', {
+                            type: 'POST',
+                            headers: {
+                                'content-type': 'application/json',
+                                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                            },
+                            data: JSON.stringify({
                                 'username': this.username,
                                 'password': this.password,
                                 'captcha': this.captcha
                             }),
-                            headers: {
-                                'content-type': 'application/json',
-                                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                            }
-                        }).then(resp => resp.json()).then(json => {
-                            if (json.code === 10000) {
-                                location.href = '/shopper/'
-                            } else {
-                                this.message = json.message,
-                                this.imgCode += '?',
-                                this.captcha = ''
-                            }
+                            dataType: 'json',
+                            success: function (data, textStatus, jqXHR) {
+                                if (data.code === 10000) {
+                                    location.href = '/shopper/'
+                                } else {
+                                    this.message = data.message,
+                                    this.imgCode += '?',
+                                    this.captcha = ''
+                                }
+                            }.bind(this),
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                    this.message = ''
+                            }.bind(this)
                         })
                     }
                 }
             })
         </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
         <script>
             var register = new Vue({
@@ -244,27 +256,27 @@
                 },
                 methods: {
                     register() {
-                        fetch('/account/api/register/', {
+                        axios({
+                            url: '/account/api/register/',
                             method: 'post',
-                            mode: 'same-origin',
-                            body: JSON.stringify({
+                            headers: {
+                                'content-type': 'application/json',
+                                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                            },
+                            data: JSON.stringify({
                                 username: this.username,
                                 password_1: this.password_1,
                                 password_2: this.password_2,
                                 agreement: this.agreement,
                                 captcha: this.captcha
                             }),
-                            headers: {
-                                'content-type': 'application/json',
-                                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                            }
+                            responseType: 'json'
                         })
-                        .then(resp => resp.json())
-                        .then(json => {
-                            if (json.code === 10000) {
+                        .then(response => {
+                            if (response.data.code === 10000) {
                                 location.href = '/account/'
                             } else {
-                                this.message = json.message,
+                                this.message = response.data.message,
                                 this.imgCode += '?',
                                 this.captcha = ''
                             }

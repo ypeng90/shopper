@@ -310,6 +310,7 @@
                 },
                 created() {
                     fetch('/shopper/api/list_all/', {
+                        mode: 'same-origin',
                         method: 'post',
                         body: '',
                         headers: {
@@ -330,6 +331,7 @@
                 methods: {
                     update(product) {
                         fetch('/shopper/api/update_product/', {
+                            mode: 'same-origin',
                             method: 'post',
                             body: JSON.stringify({
                                 'product': product
@@ -375,6 +377,7 @@
                         this.message = '',
                         this.product = {},
                         fetch('/shopper/api/search_product/', {
+                            mode: 'same-origin',
                             method: 'post',
                             body: JSON.stringify({
                                 'store': this.selectedStore.shortName,
@@ -397,6 +400,7 @@
                     },
                     add() {
                         fetch('/shopper/api/add_product/', {
+                            mode: 'same-origin',
                             method: 'post',
                             body: JSON.stringify({
                                 'store': this.selectedStore.shortName,
@@ -431,6 +435,7 @@
                 methods: {
                     list() {
                         fetch('/shopper/api/list_inventory/', {
+                            mode: 'same-origin',
                             method: 'post',
                             body: JSON.stringify({
                                 'zipcode': this.zipcode
