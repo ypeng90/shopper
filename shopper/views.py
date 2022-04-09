@@ -27,7 +27,7 @@ def show_home(request):
     userid = get_userid(request)
     if userid:
         return render(request, 'shopper/index.html')
-    return redirect("account/login/")
+    return redirect("/account/")
 
 
 def list_all_products(request):

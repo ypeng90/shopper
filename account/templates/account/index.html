@@ -1,22 +1,277 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
-    <title>User Home Page</title>
-    <style>
-        h1 {
-          text-align: center;
-        }
-    </style>
-</head>
-<body>
-    {% csrf_token %}
+    <head>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" href="{% static 'account.ico' %}" type="image/x-icon">
+        <title>Account</title>
+        <style>
+            .section {
+                max-width: 954px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .section_button {
+                border: none;
+                border-radius: 45px;
+                color: white;
+                padding: 15px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 30px;
+                margin: auto;
+                cursor: pointer;
+            }
+            .section_button_login {
+                background-color: #edffef;
+            }
+            .section_button_register {
+                background-color: #fff2ec;
+            }
+            .section_logo {
+                color: white;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 30px;
+                margin: auto;
+                cursor: pointer;
+                vertical-align: middle;
+                width: 120px;
+                height: 120px;
+            }
+            .section_logo_login {
+                background-color: #edffef;
+            }
+            .section_logo_register {
+                background-color: #fff2ec;
+            }
+            .container {
+                width: 520px;
+                margin: 10px auto;
+            }
+            .input {
+                display: block;
+                text-align: center;
+                margin: 1px auto;
+                height: 50px;
+            }
+            .small_button {
+                background-color: #025769;
+                border: none;
+                color: white;
+                padding: 4px 8px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 20px;
+                margin: auto;
+                cursor: pointer;
+            }
+            .msg {
+                text-align: center;
+                font-size: 20px;
+                color: purple;
+            }
+        </style>
+    </head>
+    <body>
+        {% csrf_token %}
 
-    <br>
-    <br>
-    <br>
-    <h1>Welcome! You are logged in.</h1>
-</body>
+        <div style="text-align: center">
+            <br>
+            <br>
+            <button type="button" id="firstButton" class="section_button section_button_login">
+                <img src="{% static 'account/login.png' %}" class="section_logo section_logo_login">
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" id="secondButton" class="section_button section_button_register">
+                <img src="{% static 'account/register.png' %}" class="section_logo section_logo_register">
+            </button>
+        </div>
+
+        <div id="login" class="container">
+            {% verbatim %}
+            <p v-if="message" class="msg">{{ message }}</p>
+            <p v-else class="msg"><br></p>
+
+            <hr>
+            <form>
+                <fieldset>
+                    <legend style="font-family: Trebuchet MS"><b>User Information</b></legend>
+                    <br>
+                    <div class="input">
+                        <label style="font-family: Courier New"><b>Username</b></label>
+                        &nbsp;&nbsp;
+                        <input type="text" v-model="username">
+                    </div>
+                    <div class="input">
+                        <label style="font-family: Courier New"><b>Password</b></label>
+                        &nbsp;&nbsp;
+                        <input type="password" v-model="password">
+                    </div>
+                    <div class="input">
+                        <label style="font-family: Courier New"><b>Captcha&nbsp;</b></label>
+                        &nbsp;&nbsp;
+                        <input type="text" v-model="captcha">
+                    </div>
+                    <div style="text-align: center">
+                        <img :src="imgCode" alt="" style="width:264px; height:50px;">
+                    </div>
+                </fieldset>
+                <div style="text-align: center; margin-top: 15px">
+                    <input type="button" value="Login" @click.prevent="login" class="small_button">
+                </div>
+            </form>
+            {% endverbatim %}
+        </div>
+
+        <div id="register" class="container" style="display: none">
+            {% verbatim %}
+            <p v-if="message" class="msg">{{ message }}</p>
+            <p v-else class="msg"><br></p>
+
+            <hr>
+            <form>
+                <fieldset>
+                    <legend style="font-family: Trebuchet MS"><b>User Information</b></legend>
+                    <br>
+                    <div class="input">
+                        <label style="font-family: Courier New"><b>Username</b></label>
+                        &nbsp;&nbsp;
+                        <input type="text" v-model="username">
+                    </div>
+                    <div class="input" v-if="username">
+                        <label style="font-family: Courier New"><b>Password</b></label>
+                        &nbsp;&nbsp;
+                        <input type="password" v-model="password_1">
+                    </div>
+                    <div class="input" v-if="password_1">
+                        <label style="font-family: Courier New"><b>Password</b></label>
+                        &nbsp;&nbsp;
+                        <input type="password" v-model="password_2">
+                    </div>
+                    <div class="input" v-if="password_2">
+                        <div class="input">
+                            <label style="font-family: Courier New"><b>Captcha&nbsp;</b></label>
+                            &nbsp;&nbsp;
+                            <input type="text" v-model="captcha">
+                        </div>
+                    </div>
+                    <div class="input" v-if="password_2">
+                        <div style="text-align: center">
+                            <img :src="imgCode" alt="" style="width:264px; height:50px;">
+                        </div>
+                    </div>
+                    <div>
+                        <input type="checkbox" v-model="agreement">
+                        I agree to the <a href="">terms & conditions</a>
+                    </div>
+                </fieldset>
+                <div style="text-align: center; margin-top: 15px">
+                    <input type="button" value="Register" @click.prevent="register" class="small_button">
+                </div>
+            </form>
+            {% endverbatim %}
+        </div>
+
+        <script src="https://unpkg.com/vue@2.6.12/dist/vue.min.js"></script>
+
+        <script>
+            document.getElementById("firstButton").addEventListener("click", () => {
+                document.getElementById("register").style.display="none";
+                document.getElementById("login").style.display="block";
+            }, false);
+
+            document.getElementById("secondButton").addEventListener("click", () => {
+                document.getElementById("login").style.display="none";
+                document.getElementById("register").style.display="block";
+            }, false);
+        </script>
+
+        <script>
+            var login = new Vue({
+                el: '#login',
+                data: {
+                    imgCode: '/account/api/captcha/',
+                    username: '',
+                    password: '',
+                    captcha: '',
+                    message: ''
+                },
+                methods: {
+                    login() {
+                        fetch('/account/api/login/', {
+                            method: 'post',
+                            body: JSON.stringify({
+                                'username': this.username,
+                                'password': this.password,
+                                'captcha': this.captcha
+                            }),
+                            headers: {
+                                'content-type': 'application/json',
+                                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                            }
+                        }).then(resp => resp.json()).then(json => {
+                            if (json.code === 10000) {
+                                location.href = '/shopper/'
+                            } else {
+                                this.message = json.message,
+                                this.imgCode += '?',
+                                this.captcha = ''
+                            }
+                        })
+                    }
+                }
+            })
+        </script>
+
+        <script>
+            var register = new Vue({
+                el: '#register',
+                data: {
+                    imgCode: '/account/api/captcha/',
+                    username: '',
+                    password_1: '',
+                    password_2: '',
+                    agreement: '',
+                    captcha: '',
+                    message: ''
+                },
+                methods: {
+                    register() {
+                        fetch('/account/api/register/', {
+                            method: 'post',
+                            mode: 'same-origin',
+                            body: JSON.stringify({
+                                username: this.username,
+                                password_1: this.password_1,
+                                password_2: this.password_2,
+                                agreement: this.agreement,
+                                captcha: this.captcha
+                            }),
+                            headers: {
+                                'content-type': 'application/json',
+                                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                            }
+                        })
+                        .then(resp => resp.json())
+                        .then(json => {
+                            if (json.code === 10000) {
+                                location.href = '/account/'
+                            } else {
+                                this.message = json.message,
+                                this.imgCode += '?',
+                                this.captcha = ''
+                            }
+                        })
+                    }
+                }
+            })
+        </script>
+    </body>
 </html>

@@ -28,16 +28,8 @@ def get_userid(request):
 def show_home(request):
     userid = get_userid(request)
     if userid:
-        return render(request, "account/index.html")
-    return redirect("login/")
-
-
-def show_login(request):
-    return render(request, "account/login.html")
-
-
-def show_register(request):
-    return render(request, "account/register.html")
+        return redirect("/shopper/")
+    return render(request, "account/index.html")
 
 
 def get_captcha(request):

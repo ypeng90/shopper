@@ -1,8 +1,9 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" href="{% static 'shopper.ico' %}" type="image/x-icon">
         <title>Shopper</title>
         <style>
             #products_all, #inventory_header, #inventory_detail {
@@ -308,7 +309,7 @@
                     products: []
                 },
                 created() {
-                    fetch('/api/list_all/', {
+                    fetch('/shopper/api/list_all/', {
                         method: 'post',
                         body: '',
                         headers: {
@@ -328,7 +329,7 @@
                 },
                 methods: {
                     update(product) {
-                        fetch('/api/update_product/', {
+                        fetch('/shopper/api/update_product/', {
                             method: 'post',
                             body: JSON.stringify({
                                 'product': product
@@ -373,7 +374,7 @@
                     search() {
                         this.message = '',
                         this.product = {},
-                        fetch('/api/search_product/', {
+                        fetch('/shopper/api/search_product/', {
                             method: 'post',
                             body: JSON.stringify({
                                 'store': this.selectedStore.shortName,
@@ -395,7 +396,7 @@
                         })
                     },
                     add() {
-                        fetch('/api/add_product/', {
+                        fetch('/shopper/api/add_product/', {
                             method: 'post',
                             body: JSON.stringify({
                                 'store': this.selectedStore.shortName,
@@ -429,7 +430,7 @@
                 },
                 methods: {
                     list() {
-                        fetch('/api/list_inventory/', {
+                        fetch('/shopper/api/list_inventory/', {
                             method: 'post',
                             body: JSON.stringify({
                                 'zipcode': this.zipcode
