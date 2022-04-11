@@ -1,9 +1,9 @@
-# Single-page Web Application for Local Shopping
+# Django based Local Shopping Planning Web Service
 
 ## Main Features
 
-- A flexible plug-in architecture to collect and present product inventory info.
-- An account management system using self-implemented and fully customizable Captcha.
+- A flexible plug-in architecture for a local shopping planning service.
+- A user authentication system using self-implemented and fully customizable Captcha.
 - Security procedures to manage authorization and prevent malicious attacks.
 
 ## Architecture
