@@ -42,8 +42,8 @@ class Register:
 
     @staticmethod
     def _generate_salt():
-        hashed = sha256(bytes(datetime.utcnow().isoformat(), "utf-8")).hexdigest()
-        random.seed(datetime.utcnow())
+        hashed = sha256(bytes(datetime.utcnow().isoformat() + settings.SECRET_KEY, "utf-8")).hexdigest()
+        random.seed(datetime.utcnow().isoformat() + settings.SECRET_KEY)
         salt = []
         for _ in range(4):
             salt.append(hashed[random.randint(0, 63)])
