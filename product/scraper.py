@@ -3,7 +3,7 @@
 import requests
 from urllib3 import Retry
 from loguru import logger
-from shopper.utils import IntConverter, StrAlnumSpaceConverter
+from product.utils import IntConverter, StrAlnumSpaceConverter
 
 logger.add("logs/default.log")
 
@@ -135,7 +135,7 @@ class ScraperTarget(ScraperBase):
                 logger.exception(f"{type(self).__name__} : {sku}")
         return info
 
-    def get_qty_by_sku_zipcode(self, userid, sku, zipcode):
+    def get_qty_by_sku_zipcode(self, sku, zipcode):
         # "81911643", "12011"
         if not sku.isdigit() or len(sku) != 8 or not zipcode.isdigit() or len(zipcode) != 5:
             return None
@@ -143,7 +143,7 @@ class ScraperTarget(ScraperBase):
         self._url = (
             "https://redsky.target.com/redsky_aggregations/v1/web_platform/fiats_v1?"
             f"key=9f36aeafbe60771e321a7cc95a78140772ab3e96&tcin={sku}&nearby={zipcode}"
-            "&radius=50&limit=20&include_only_available_stores=true&requested_quantity=1"
+            "&radius=50&limit=20&include_only_available_stores=true&requested_quantity=0"
         )
         self._download()
 
@@ -152,9 +152,33 @@ class ScraperTarget(ScraperBase):
             try:
                 for location in self._response.json()["data"]["fulfillment_fiats"]["locations"]:
                     store_id = StrAlnumSpaceConverter(str(location["store"]["store_id"])).value
-                    store_name = StrAlnumSpaceConverter(location["store"]["location_name"]).value
+                    # store_name = StrAlnumSpaceConverter(location["store"]["location_name"]).value
                     quantity = IntConverter(location["location_available_to_promise_quantity"]).value
-                    info.append((userid, sku, quantity, "tgt", store_id, store_name))
+                    info.append((sku, quantity, "tgt", store_id))
             except Exception:
                 logger.exception(f"{type(self).__name__} : {sku} - {zipcode}")
+        return info
+
+    def get_stores_by_zipcode(self, zipcode):
+        self._url = (
+            "https://api.target.com/location_proximities/v1/nearby_locations?limit=20"
+            f"&unit=mile&within=100&place={zipcode}"
+            "&type=store&key=8df66ea1e1fc070a6ea99e942431c9cd67a80f02"
+        )
+        self._download()
+        info = []
+        if self._response is not None and self._response.status_code == 200:
+            try:
+                for location in self._response.json()["locations"]:
+                    store_id = StrAlnumSpaceConverter(str(location["location_id"])).value
+                    name = StrAlnumSpaceConverter(location["location_names"][0]["name"]).value
+                    address = StrAlnumSpaceConverter(location["address"]["address_line1"]).value
+                    city = StrAlnumSpaceConverter(location["address"]["city"]).value
+                    state = StrAlnumSpaceConverter(location["address"]["state"]).value
+                    postal_code = StrAlnumSpaceConverter(location["address"]["postal_code"].split("-")[0]).value
+                    latitude = location["geographic_specifications"]["latitude"]
+                    longitude = location["geographic_specifications"]["longitude"]
+                    info.append(("tgt", store_id, name, address, city, state, postal_code, latitude, longitude))
+            except Exception:
+                logger.exception(f"{type(self).__name__} : {zipcode}")
         return info

@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from shopper.shopper import Shopper
+from product.product import Product
 from loguru import logger
 import json
 import jwt
@@ -26,7 +26,7 @@ def get_userid(request):
 def show_home(request):
     userid = get_userid(request)
     if userid:
-        return render(request, 'shopper/index.html')
+        return render(request, 'product/index.html')
     return redirect("/account/")
 
 
@@ -36,7 +36,7 @@ def list_all_products(request):
         return JsonResponse({"authenticated": False, "products": [], "message": "Not authenticated."})
 
     msg = ""
-    info = Shopper.list_all_products(userid)
+    info = Product.list_all_products(userid)
     if info is None:
         msg = "Server error."
         info = []
@@ -50,7 +50,7 @@ def update_product(request):
 
     data = json.loads(request.body).get("product")
     sku, store, track = data.get("sku"), data.get("store").lower(), int(data.get("track"))
-    result = Shopper.update_product(userid, sku, store, track)
+    result = Product.update_product(userid, sku, store, track)
     if result is None:
         msg = "Server error."
     elif result:
@@ -67,7 +67,7 @@ def search_product(request):
 
     data = json.loads(request.body)
     store, keyword = data.get("store").strip(), data.get("keyword").strip()
-    info = Shopper.search_product(store, keyword)
+    info = Product.search_product(store, keyword)
     if info is None:
         info = dict()
         msg = "Invalid input."
@@ -86,7 +86,7 @@ def add_product(request):
     data = json.loads(request.body)
     store, product = data.get("store"), data.get("product")
     sku, name = product.get("sku"), product.get("name").strip()
-    result = Shopper.add_product(userid, sku, name, store)
+    result = Product.add_product(userid, sku, name, store)
     if result is None:
         msg = "Server error."
     elif result:
@@ -106,7 +106,7 @@ def list_all_inventory(request):
         return JsonResponse({"authenticated": True, "stores": [], "message": "Invalid zipcode."})
 
     msg = ""
-    info = Shopper.list_all_inventory(userid, zipcode)
+    info = Product.list_all_inventory(userid, zipcode)
     if info is None:
         msg = "Server error."
         info = []
