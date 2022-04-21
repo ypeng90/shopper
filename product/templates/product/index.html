@@ -3,127 +3,17 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <link rel="shortcut icon" href="{% static 'shopper.ico' %}" type="image/x-icon">
+        <link rel="shortcut icon" href="{% static 'product/shopper.ico' %}" type="image/x-icon">
+        <link rel="stylesheet" type="text/css" href="{% static 'product/style.css' %}">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+              integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+              crossorigin=""/>
+        <script src="https://unpkg.com/vue@3"></script>
+        <!-- Make sure you put this AFTER Leaflet's CSS -->
+        <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+                integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+                crossorigin=""></script>
         <title>Shopper</title>
-        <style>
-            #products_all, #inventory_header, #inventory_detail {
-                border-collapse: collapse;
-                width: 100%;
-            }
-            #products_all th {
-                padding-top: 6px;
-                padding-bottom: 6px;
-                background-color: #edffef;
-                color: #5ca066;
-                font-size: 24px;
-                text-align: center;
-                border: 1px solid #ddd;
-            }
-            #products_all td {
-                padding-top: 3px;
-                padding-bottom: 3px;
-                background-color: #ecfbff;
-                color: #3e7e89;
-                font-size: 20px;
-                text-align: center;
-                border: 1px solid #ddd;
-            }
-            #inventory_header th {
-                padding-top: 6px;
-                padding-bottom: 6px;
-                background-color: #fff2ec;
-                color: #977363;
-                font-size: 24px;
-                text-align: center;
-                vertical-align: middle;
-            }
-            #inventory_detail th {
-                padding-top: 3px;
-                padding-bottom: 3px;
-                background-color: #fff2ec;
-                color: #977363;
-                font-size: 22px;
-                text-align: center;
-            }
-            #inventory_detail td {
-                padding-top: 3px;
-                padding-bottom: 3px;
-                background-color: #ecfbff;
-                color: #3e7e89;
-                font-size: 20px;
-                text-align: center;
-            }
-            .store_logo {
-                display: inline-block;
-                vertical-align: middle;
-                width: 25px;
-                height: 25px;
-            }
-            .section {
-                max-width: 954px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .section_button {
-                border: none;
-                border-radius: 45px;
-                color: white;
-                padding: 15px;
-                text-align: center;
-                text-decoration: none;
-                display: inline-block;
-                font-size: 30px;
-                margin: auto;
-                cursor: pointer;
-            }
-            .section_button_products {
-                background-color: #edffef;
-            }
-            .section_button_add {
-                background-color: #f4f2ff;
-            }
-            .section_button_inventory {
-                background-color: #fff2ec;
-            }
-            .section_logo {
-                color: white;
-                text-align: center;
-                text-decoration: none;
-                display: inline-block;
-                font-size: 30px;
-                margin: auto;
-                cursor: pointer;
-                vertical-align: middle;
-                width: 120px;
-                height: 120px;
-            }
-            .section_logo_products {
-                background-color: #edffef;
-            }
-            .section_logo_add {
-                background-color: #f4f2ff;
-            }
-            .section_logo_inventory {
-                background-color: #fff2ec;
-            }
-            .small_button {
-                background-color: #025769;
-                border: none;
-                color: white;
-                padding: 4px 8px;
-                text-align: center;
-                text-decoration: none;
-                display: inline-block;
-                font-size: 20px;
-                margin: auto;
-                cursor: pointer;
-            }
-            .msg {
-                text-align: center;
-                font-size: 20px;
-                color: purple;
-            }
-        </style>
     </head>
     <body>
         {% csrf_token %}
@@ -245,41 +135,49 @@
                        maxlength="5" placeholder="5-digit zipcode" size="9">
                 &nbsp;&nbsp;
                 <input type="submit" value="Check" @click.prevent="list" class="small_button">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label class="switch">
+                    <input type="checkbox" class="switch-input" v-model="listView"
+                           true-value="1" false-value="0">
+                    <span class="switch-label" data-on="List" data-off="List"></span>
+                    <span class="switch-handle"></span>
+                </label>
             </div>
             <br>
-            <table v-if="stores.length" id="inventory_header">
-                <tr>
-                    <th style="width:20%">SKU</th>
-                    <th style="width:70%">Product Name</th>
-                    <th style="width:10%">Quantity</th>
-                </tr>
-            </table>
-            <table id="inventory_detail">
-                <tr v-for="store in stores">
-                    <td>
-                        <table style="width:100%">
-                            <tr>
-                                <th v-if="store.store == 'tgt'" colspan="3">
-                                    <img src="https://retailanalysis.igd.com/portals/1/Images/retailers/Retailer%20header%20images/T/Target.png"
-                                         class="store_logo">&nbsp;&nbsp;{{store.name}}
-                                </th>
-                                <th v-else colspan="3">
-                                    {{store.name}}
-                                </th>
-                            </tr>
-                            <tr v-for="product in store.products">
-                                <td style="width:20%">{{product.sku}}</td>
-                                <td style="width:70%">{{product.name}}</td>
-                                <td style="width:10%">{{product.quantity}}</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
+            <div id="mapContainer"></div>
+            <div v-if="listView == 1">
+                <table v-if="stores.length != 0" id="inventory_header">
+                    <tr>
+                        <th style="width:20%">SKU</th>
+                        <th style="width:70%">Product Name</th>
+                        <th style="width:10%">Quantity</th>
+                    </tr>
+                </table>
+                <table id="inventory_detail">
+                    <tr v-for="store in stores">
+                        <td>
+                            <table style="width:100%">
+                                <tr>
+                                    <th v-if="store.properties.store == 'tgt'" colspan="3">
+                                        <img src="https://retailanalysis.igd.com/portals/1/Images/retailers/Retailer%20header%20images/T/Target.png"
+                                             class="store_logo">&nbsp;&nbsp;{{store.properties.name}}
+                                    </th>
+                                    <th v-else colspan="3">
+                                        {{store.name}}
+                                    </th>
+                                </tr>
+                                <tr v-for="product in store.properties.products">
+                                    <td style="width:20%">{{product.sku}}</td>
+                                    <td style="width:70%">{{product.name}}</td>
+                                    <td style="width:10%">{{product.quantity}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
             {% endverbatim %}
         </div>
-
-        <script src="https://unpkg.com/vue@3"></script>
 
         <script>
             document.getElementById("firstButton").addEventListener("click", () => {
@@ -298,6 +196,7 @@
                 document.getElementById("products").style.display="none";
                 document.getElementById("add").style.display="none";
                 document.getElementById("inventory").style.display="block";
+                window.dispatchEvent(new Event("resize"));
             }, false);
         </script>
 
@@ -434,10 +333,49 @@
                     return {
                         message: '',
                         zipcode: '',
-                        stores: []
+                        listView: 0,
+                        stores: [],
+                        map: null,
+                        geoLayer: null,
+                        details: []
                     }
                 },
+                mounted() {
+                    this.initMap()
+                },
                 methods: {
+                    initMap() {
+                        this.map = L.map('mapContainer').setView([39.8283459,-98.5794797], 4),
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; <a href="https://openstreetmap.org/copyright">\
+                                         OpenStreetMap contributors</a>',
+                            maxZoom: 19
+                        }).addTo(this.map)
+                    },
+                    updateMap() {
+                        this.geoLayer = L.geoJSON({
+                                'type': 'FeatureCollection',
+                                'features': this.stores
+                            }, {
+                            onEachFeature: function (feature, layer) {
+                                this.details = [],
+                                this.details.push('<p style="text-align: center"><b>Target ' +
+                                    feature.properties.name + '</b><br>' +
+                                    feature.properties.address + '<p>'),
+                                this.details.push('&emsp;&emsp;&emsp;&emsp;&emsp;<b>*****In-stock Products*****</b>'),
+                                feature.properties.products.forEach(p => {
+                                    if (p.quantity > 0) {
+                                        this.details.push('<b>SKU</b>: ' + p.sku +
+                                            '&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;' +
+                                            '<b>Quantity</b>: ' + p.quantity.toString()),
+                                        this.details.push('<b>Name</b>: ' + p.name)
+                                    }
+                                }),
+                                layer.bindPopup(this.details.join('<br>'))
+                            }
+                        }).addTo(this.map),
+                        this.map.fitBounds(this.geoLayer.getBounds())
+                    },
                     list() {
                         fetch('/shopper/api/list_inventory/', {
                             mode: 'same-origin',
@@ -454,7 +392,8 @@
                         .then(json => {
                             if (json.authenticated) {
                                 this.stores = json.stores,
-                                this.message = json.message
+                                this.message = json.message,
+                                this.updateMap()
                             } else {
                                 location.href = '/account/login/'
                             }
@@ -465,5 +404,6 @@
 
             inventory.mount('#inventory')
         </script>
+
     </body>
 </html>

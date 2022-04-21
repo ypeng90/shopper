@@ -42,6 +42,8 @@ logger.add("logs/default.log")
 # );
 
 # Create directly in MySQL
+# MySQL uses POINT(lat, long)
+# GeoJSON uses "coordinates": [long, lat]
 # CREATE TABLE stores
 # (
 #     store char(3) NOT NULL,
@@ -151,11 +153,7 @@ class Product:
         data = ProductMySQLInterface.list_all_inventory(userid, zipcode)
         if data is None:
             return None
-
-        result = []
-        for item in data:
-            result.append(json.loads(item[0]))
-        return result
+        return json.loads(data[0][0]) if data else []
 
 
 class ProductDataInterface:
@@ -359,11 +357,18 @@ class ProductMySQLInterface(ProductDataInterface):
         with MySQLHandle() as db:
             if db.conn:
                 query = """
-                    SELECT json_object(
-                        'store', p.store,
-                        'name', s.store_name,
-                        'address', s.address,
-                        'products', p.products
+                    SELECT json_arrayagg(
+                        json_object(
+                            'type', 'Feature',
+                            'geometry', s.location,
+                            'properties', json_object(
+                                'store', p.store,
+                                'name', s.store_name,
+                                'address', s.address,
+                                'total', p.total,
+                                'products', p.products
+                            )
+                        )
                     )
                     FROM
                     (
@@ -373,7 +378,7 @@ class ProductMySQLInterface(ProductDataInterface):
                                 'name', p.name,
                                 'quantity', q.quantity
                             )
-                        ) AS products, q.store AS store, q.store_id AS store_id
+                        ) AS products, sum(q.quantity) AS total, q.store AS store, q.store_id AS store_id
                         FROM
                         (
                             SELECT sku, quantity, store, store_id
@@ -398,11 +403,13 @@ class ProductMySQLInterface(ProductDataInterface):
                     INNER JOIN
                     (
                         SELECT store, store_id, store_name, 
-                            CONCAT(address, ', ', city, ', ', state, ' ', zipcode) AS address
+                            CONCAT(address, ', ', city, ', ', state, ' ', zipcode) AS address,
+                            ST_AsGeoJSON(location) AS location
                         FROM stores
                     ) s
                     ON p.store = s.store AND p.store_id = s.store_id
                 """
+                # 70672147, 92128
                 result = db.run(query, (userid, zipcode))
             else:
                 result = None
