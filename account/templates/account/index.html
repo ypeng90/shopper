@@ -179,7 +179,14 @@
             {% endverbatim %}
         </div>
 
-        <script src="https://unpkg.com/vue@2.6.12/dist/vue.min.js"></script>
+        <script src="https://unpkg.com/vue@3"></script>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+                integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+                crossorigin="anonymous">
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
         <script>
             document.getElementById("firstButton").addEventListener("click", () => {
@@ -193,20 +200,18 @@
             }, false);
         </script>
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-                integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-                crossorigin="anonymous">
-        </script>
-
         <script>
-            var login = new Vue({
-                el: '#login',
-                data: {
-                    imgCode: '/account/api/captcha/',
-                    username: '',
-                    password: '',
-                    captcha: '',
-                    message: ''
+            const { createApp } = Vue
+
+            const login = createApp({
+                data() {
+                    return {
+                        imgCode: '/account/api/captcha/',
+                        username: '',
+                        password: '',
+                        captcha: '',
+                        message: ''
+                    }
                 },
                 methods: {
                     login() {
@@ -238,21 +243,20 @@
                     }
                 }
             })
-        </script>
 
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+            login.mount('#login')
 
-        <script>
-            var register = new Vue({
-                el: '#register',
-                data: {
-                    imgCode: '/account/api/captcha/',
-                    username: '',
-                    password_1: '',
-                    password_2: '',
-                    agreement: '',
-                    captcha: '',
-                    message: ''
+            const register = createApp({
+                data() {
+                    return {
+                        imgCode: '/account/api/captcha/',
+                        username: '',
+                        password_1: '',
+                        password_2: '',
+                        agreement: '',
+                        captcha: '',
+                        message: ''
+                    }
                 },
                 methods: {
                     register() {
@@ -284,6 +288,8 @@
                     }
                 }
             })
+
+            register.mount('#register')
         </script>
     </body>
 </html>

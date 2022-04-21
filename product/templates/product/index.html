@@ -132,17 +132,17 @@
             <br>
             <br>
             <button type="button" id="firstButton" class="section_button section_button_products">
-                <img src="{% static 'shopper/products.png' %}" class="section_logo section_logo_products">
+                <img src="{% static 'product/products.png' %}" class="section_logo section_logo_products">
             </button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button type="button" id="secondButton" class="section_button section_button_add">
-                <img src="{% static 'shopper/add.png' %}" class="section_logo section_logo_add">
+                <img src="{% static 'product/add.png' %}" class="section_logo section_logo_add">
             </button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button type="button" id="thirdButton" class="section_button section_button_inventory">
-                <img src="{% static 'shopper/inventory.png' %}" class="section_logo section_logo_inventory">
+                <img src="{% static 'product/inventory.png' %}" class="section_logo section_logo_inventory">
             </button>
         </div>
 
@@ -170,7 +170,7 @@
                     <td v-else>{{product.store}}</td>
                     <td>
                         <input type="checkbox" v-model="product.track"
-                               :checked="product.track" true-value="1" false-value="0">
+                               true-value="1" false-value="0">
                     </td>
                     <td>
                         <button type="button" @click.prevent="update(product)">Submit</button>
@@ -279,7 +279,7 @@
             {% endverbatim %}
         </div>
 
-        <script src="https://unpkg.com/vue@2.6.12/dist/vue.min.js"></script>
+        <script src="https://unpkg.com/vue@3"></script>
 
         <script>
             document.getElementById("firstButton").addEventListener("click", () => {
@@ -302,11 +302,14 @@
         </script>
 
         <script>
-            var products = new Vue({
-                el: '#products',
-                data: {
-                    message: '',
-                    products: []
+            const { createApp } = Vue
+
+            const products = createApp({
+                data() {
+                    return {
+                        message: '',
+                        products: []
+                    }
                 },
                 created() {
                     fetch('/shopper/api/list_all/', {
@@ -352,19 +355,20 @@
                     }
                 }
             })
-        </script>
 
-        <script>
-            var add = new Vue({
-                el: '#add',
-                data: {
-                    selectedStore: {name: 'Target', shortName: 'tgt'},
-                    stores: [
-                        {name: 'Target', shortName: 'tgt'}
-                    ],
-                    message: '',
-                    keyword: '',
-                    product: {}
+            products.mount('#products')
+
+            const add = createApp({
+                data() {
+                    return {
+                        selectedStore: {name: 'Target', shortName: 'tgt'},
+                        stores: [
+                            {name: 'Target', shortName: 'tgt'}
+                        ],
+                        message: '',
+                        keyword: '',
+                        product: {}
+                    }
                 },
                 methods: {
                     clear() {
@@ -422,15 +426,16 @@
                     }
                 }
             })
-        </script>
 
-        <script>
-            var inventory = new Vue({
-                el: '#inventory',
-                data: {
-                    message: '',
-                    zipcode: '',
-                    stores: []
+            add.mount('#add')
+
+            const inventory = createApp({
+                data() {
+                    return {
+                        message: '',
+                        zipcode: '',
+                        stores: []
+                    }
                 },
                 methods: {
                     list() {
@@ -457,6 +462,8 @@
                     }
                 }
             })
+
+            inventory.mount('#inventory')
         </script>
     </body>
 </html>
