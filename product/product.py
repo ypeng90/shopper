@@ -1,14 +1,19 @@
 """Product Module"""
 
+from django.conf import settings
 from product.scraper import ScraperTarget
-from product.utils import StrAlnumSpaceConverter, MySQLHandle
+import importlib.util
 import json
 from loguru import logger
+import os
 from time import sleep
 
 
 logger.add("logs/default.log")
 
+spec = importlib.util.spec_from_file_location("utils", os.path.join(settings.BASE_DIR, "shopper\\utils.py"))
+utils = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(utils)
 
 # Create directly in MySQL
 # CREATE TABLE products
@@ -92,7 +97,7 @@ class Product:
 
     @staticmethod
     def add_product(userid, sku, name, store):
-        name = StrAlnumSpaceConverter(name).value
+        name = utils.StrAlnumSpaceConverter(name).value
         return ProductMySQLInterface.add_product(userid, sku, name, store)
 
     @staticmethod
@@ -213,7 +218,7 @@ class ProductMySQLInterface(ProductDataInterface):
 
     @classmethod
     def list_all_products(cls, userid):
-        with MySQLHandle() as db:
+        with utils.MySQLHandle() as db:
             if db.conn:
                 query = "SELECT sku, name, store, track FROM products WHERE userid = %s"
                 result = db.run(query, (userid,))
@@ -223,7 +228,7 @@ class ProductMySQLInterface(ProductDataInterface):
 
     @classmethod
     def list_all_track_products(cls, userid):
-        with MySQLHandle() as db:
+        with utils.MySQLHandle() as db:
             if db.conn:
                 query = "SELECT sku, name, store, track FROM products WHERE userid = %s AND track = 1"
                 result = db.run(query, (userid,))
@@ -233,7 +238,7 @@ class ProductMySQLInterface(ProductDataInterface):
 
     @classmethod
     def update_product(cls, userid, sku, store, track):
-        with MySQLHandle() as db:
+        with utils.MySQLHandle() as db:
             if db.conn:
                 query = "UPDATE products SET track = %s WHERE userid = %s AND sku = %s AND store = %s"
                 result = db.run(query, (track, userid, sku, store), commit=True)
@@ -243,7 +248,7 @@ class ProductMySQLInterface(ProductDataInterface):
 
     @classmethod
     def add_product(cls, userid, sku, name, store):
-        with MySQLHandle() as db:
+        with utils.MySQLHandle() as db:
             if db.conn:
                 query = (
                     "INSERT IGNORE INTO products (userid, sku, name, store) "
@@ -256,7 +261,7 @@ class ProductMySQLInterface(ProductDataInterface):
 
     @classmethod
     def delete_all_inventory(cls, userid):
-        with MySQLHandle() as db:
+        with utils.MySQLHandle() as db:
             if db.conn:
                 query = "DELETE FROM inventory WHERE userid = %s"
                 result = db.run(query, (userid,), commit=True)
@@ -266,7 +271,7 @@ class ProductMySQLInterface(ProductDataInterface):
 
     @classmethod
     def get_mapping_by_zipcode_store(cls, store, zipcode):
-        with MySQLHandle() as db:
+        with utils.MySQLHandle() as db:
             if db.conn:
                 query = "SELECT * FROM zipcode_stores_mapping WHERE store = %s AND zipcode = %s"
                 result = db.run(query, (store, zipcode))
@@ -276,7 +281,7 @@ class ProductMySQLInterface(ProductDataInterface):
 
     @classmethod
     def add_stores(cls, data):
-        with MySQLHandle() as db:
+        with utils.MySQLHandle() as db:
             if db.conn:
                 query = (
                     "INSERT IGNORE INTO stores (store, store_id, store_name, address, city, state, zipcode, location) "
@@ -289,7 +294,7 @@ class ProductMySQLInterface(ProductDataInterface):
 
     @classmethod
     def add_zipcode_stores_mapping(cls, data):
-        with MySQLHandle() as db:
+        with utils.MySQLHandle() as db:
             if db.conn:
                 query = (
                     "INSERT IGNORE INTO zipcode_stores_mapping (store, zipcode, store_id) "
@@ -302,7 +307,7 @@ class ProductMySQLInterface(ProductDataInterface):
 
     @classmethod
     def count_store_with_latest(cls, sku, store, zipcode):
-        with MySQLHandle() as db:
+        with utils.MySQLHandle() as db:
             if db.conn:
                 query = """
                     SELECT count(got.store_id)
@@ -327,7 +332,7 @@ class ProductMySQLInterface(ProductDataInterface):
 
     @classmethod
     def list_store_by_store_zipcode(cls, store, zipcode):
-        with MySQLHandle() as db:
+        with utils.MySQLHandle() as db:
             if db.conn:
                 query = "SELECT * FROM stores WHERE store = %s AND zipcode = %s LIMIT 1"
                 result = db.run(query, (store, zipcode))
@@ -337,7 +342,7 @@ class ProductMySQLInterface(ProductDataInterface):
 
     @classmethod
     def add_quantity(cls, data):
-        with MySQLHandle() as db:
+        with utils.MySQLHandle() as db:
             if db.conn:
                 # When MySQL handles `ON DUPLICATE KEY UPDATE`, it does not update `check_time` even
                 # `ON UPDATE` is requested for `check_time` if new_val == old_val, i.e., no change
@@ -354,7 +359,7 @@ class ProductMySQLInterface(ProductDataInterface):
     
     @classmethod
     def list_all_inventory(cls, userid, zipcode):
-        with MySQLHandle() as db:
+        with utils.MySQLHandle() as db:
             if db.conn:
                 query = """
                     SELECT json_arrayagg(

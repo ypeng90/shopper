@@ -2,14 +2,19 @@
 
 from django.conf import settings
 from django.utils import timezone
-from account.utils import MySQLHandle
 from datetime import datetime, timedelta
 from hashlib import sha256
+import importlib.util
 import jwt
 from loguru import logger
 import random
+import os
 
 logger.add("logs/default.log")
+
+spec = importlib.util.spec_from_file_location("utils", os.path.join(settings.BASE_DIR, "shopper\\utils.py"))
+utils = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(utils)
 
 # Create directly in MySQL
 # CREATE TABLE users
@@ -122,7 +127,7 @@ class AccountMySQLInterface(AccountDataInterface):
     @classmethod
     def add_new_account(cls, userid, name, password, salt, commit):
         result = False
-        with MySQLHandle() as db:
+        with utils.MySQLHandle() as db:
             if db.conn:
                 query = (
                     "INSERT IGNORE INTO users (userid, username, password, salt)"
@@ -136,7 +141,7 @@ class AccountMySQLInterface(AccountDataInterface):
     @classmethod
     def retrieve_id_by_name(cls, name):
         result = ()
-        with MySQLHandle() as db:
+        with utils.MySQLHandle() as db:
             if db.conn:
                 query = "SELECT userid FROM users WHERE username = %s"
                 result = db.run(query, (name,))
@@ -147,7 +152,7 @@ class AccountMySQLInterface(AccountDataInterface):
     @classmethod
     def retrieve_id_salt_by_name(cls, name):
         result = ()
-        with MySQLHandle() as db:
+        with utils.MySQLHandle() as db:
             if db.conn:
                 query = "SELECT userid, salt FROM users WHERE username = %s"
                 result = db.run(query, (name,))
@@ -158,7 +163,7 @@ class AccountMySQLInterface(AccountDataInterface):
     @classmethod
     def retrieve_id_by_name_passwd(cls, name, passwd):
         result = ()
-        with MySQLHandle() as db:
+        with utils.MySQLHandle() as db:
             if db.conn:
                 query = "SELECT userid FROM users WHERE username = %s AND password = %s"
                 result = db.run(query, (name, passwd))
@@ -169,7 +174,7 @@ class AccountMySQLInterface(AccountDataInterface):
     @classmethod
     def retrieve_name_by_id(cls, userid):
         result = ()
-        with MySQLHandle() as db:
+        with utils.MySQLHandle() as db:
             if db.conn:
                 query = "SELECT username FROM users WHERE userid = %s"
                 result = db.run(query, (userid,))

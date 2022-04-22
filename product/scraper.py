@@ -1,11 +1,17 @@
 """A Simple Web Scraper Module"""
 
+from django.conf import settings
+import importlib.util
+from loguru import logger
+import os
 import requests
 from urllib3 import Retry
-from loguru import logger
-from product.utils import IntConverter, StrAlnumSpaceConverter
 
 logger.add("logs/default.log")
+
+spec = importlib.util.spec_from_file_location("utils", os.path.join(settings.BASE_DIR, "shopper\\utils.py"))
+utils = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(utils)
 
 
 class AutoAdapter(requests.adapters.HTTPAdapter):
@@ -104,8 +110,8 @@ class ScraperTarget(ScraperBase):
         if self._response is not None and self._response.status_code == 200:
             try:
                 data = self._response.json()["data"]["search"]["products"][0]
-                sku = IntConverter(data["tcin"]).value
-                name = StrAlnumSpaceConverter(data["item"]["product_description"]["title"]).value[:64]
+                sku = utils.IntConverter(data["tcin"]).value
+                name = utils.StrAlnumSpaceConverter(data["item"]["product_description"]["title"]).value[:64]
                 info = {"sku": sku, "name": name}
             except IndexError:
                 pass
@@ -151,9 +157,9 @@ class ScraperTarget(ScraperBase):
         if self._response is not None and self._response.status_code == 200:
             try:
                 for location in self._response.json()["data"]["fulfillment_fiats"]["locations"]:
-                    store_id = StrAlnumSpaceConverter(str(location["store"]["store_id"])).value
-                    # store_name = StrAlnumSpaceConverter(location["store"]["location_name"]).value
-                    quantity = IntConverter(location["location_available_to_promise_quantity"]).value
+                    store_id = utils.StrAlnumSpaceConverter(str(location["store"]["store_id"])).value
+                    # store_name = utils.StrAlnumSpaceConverter(location["store"]["location_name"]).value
+                    quantity = utils.IntConverter(location["location_available_to_promise_quantity"]).value
                     info.append((sku, quantity, "tgt", store_id))
             except Exception:
                 logger.exception(f"{type(self).__name__} : {sku} - {zipcode}")
@@ -170,12 +176,12 @@ class ScraperTarget(ScraperBase):
         if self._response is not None and self._response.status_code == 200:
             try:
                 for location in self._response.json()["locations"]:
-                    store_id = StrAlnumSpaceConverter(str(location["location_id"])).value
-                    name = StrAlnumSpaceConverter(location["location_names"][0]["name"]).value
-                    address = StrAlnumSpaceConverter(location["address"]["address_line1"]).value
-                    city = StrAlnumSpaceConverter(location["address"]["city"]).value
-                    state = StrAlnumSpaceConverter(location["address"]["state"]).value
-                    postal_code = StrAlnumSpaceConverter(location["address"]["postal_code"].split("-")[0]).value
+                    store_id = utils.StrAlnumSpaceConverter(str(location["location_id"])).value
+                    name = utils.StrAlnumSpaceConverter(location["location_names"][0]["name"]).value
+                    address = utils.StrAlnumSpaceConverter(location["address"]["address_line1"]).value
+                    city = utils.StrAlnumSpaceConverter(location["address"]["city"]).value
+                    state = utils.StrAlnumSpaceConverter(location["address"]["state"]).value
+                    postal_code = utils.StrAlnumSpaceConverter(location["address"]["postal_code"].split("-")[0]).value
                     latitude = location["geographic_specifications"]["latitude"]
                     longitude = location["geographic_specifications"]["longitude"]
                     info.append(("tgt", store_id, name, address, city, state, postal_code, latitude, longitude))

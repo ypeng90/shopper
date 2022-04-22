@@ -3,12 +3,17 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from account.account import Register, Login
 from account.captcha import Captcha
-from account.utils import StrAlnumConverter
+import importlib.util
 import json
 import jwt
 from loguru import logger
+import os
 
 logger.add("logs/default.log")
+
+spec = importlib.util.spec_from_file_location("utils", os.path.join(settings.BASE_DIR, "shopper\\utils.py"))
+utils = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(utils)
 
 
 def get_userid(request):
@@ -79,7 +84,7 @@ def login(request):
     if captcha == request.session.get("captcha"):
         username = data.get("username").strip()
         password = data.get("password")
-        if 5 < len(username) < 21 and username == StrAlnumConverter(username).value and password:
+        if 5 < len(username) < 21 and username == utils.StrAlnumConverter(username).value and password:
             handle = Login(username, password)
             if handle.existing:
                 token = handle.jwt()
