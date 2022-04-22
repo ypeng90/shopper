@@ -3,17 +3,19 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <title>Shopper</title>
         <link rel="shortcut icon" href="{% static 'product/shopper.ico' %}" type="image/x-icon">
         <link rel="stylesheet" type="text/css" href="{% static 'product/style.css' %}">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
               integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
               crossorigin=""/>
+
         <script src="https://unpkg.com/vue@3"></script>
+
         <!-- Make sure you put this AFTER Leaflet's CSS -->
         <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
                 integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
                 crossorigin=""></script>
-        <title>Shopper</title>
     </head>
     <body>
         {% csrf_token %}
@@ -179,231 +181,7 @@
             {% endverbatim %}
         </div>
 
-        <script>
-            document.getElementById("firstButton").addEventListener("click", () => {
-                document.getElementById("add").style.display="none";
-                document.getElementById("inventory").style.display="none";
-                document.getElementById("products").style.display="block";
-            }, false);
-
-            document.getElementById("secondButton").addEventListener("click", () => {
-                document.getElementById("products").style.display="none";
-                document.getElementById("inventory").style.display="none";
-                document.getElementById("add").style.display="block";
-            }, false);
-
-            document.getElementById("thirdButton").addEventListener("click", () => {
-                document.getElementById("products").style.display="none";
-                document.getElementById("add").style.display="none";
-                document.getElementById("inventory").style.display="block";
-                window.dispatchEvent(new Event("resize"));
-            }, false);
-        </script>
-
-        <script>
-            const { createApp } = Vue
-
-            const products = createApp({
-                data() {
-                    return {
-                        message: '',
-                        products: []
-                    }
-                },
-                created() {
-                    fetch('/shopper/api/list_all/', {
-                        mode: 'same-origin',
-                        method: 'post',
-                        body: '',
-                        headers: {
-                            'content-type': 'application/json',
-                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                        }
-                    })
-                    .then(resp => resp.json())
-                    .then(json => {
-                        if (json.authenticated) {
-                            this.products = json.products,
-                            this.message = json.message
-                        } else {
-                            location.href = '/account/login/'
-                        }
-                    })
-                },
-                methods: {
-                    update(product) {
-                        fetch('/shopper/api/update_product/', {
-                            mode: 'same-origin',
-                            method: 'post',
-                            body: JSON.stringify({
-                                'product': product
-                            }),
-                            headers: {
-                                'content-type': 'application/json',
-                                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                            }
-                        })
-                        .then(resp => resp.json())
-                        .then(json => {
-                            if (json.authenticated) {
-                                this.message = json.message
-                            } else {
-                                location.href = '/account/login/'
-                            }
-                        })
-                    }
-                }
-            })
-
-            products.mount('#products')
-
-            const add = createApp({
-                data() {
-                    return {
-                        selectedStore: {name: 'Target', shortName: 'tgt'},
-                        stores: [
-                            {name: 'Target', shortName: 'tgt'}
-                        ],
-                        message: '',
-                        keyword: '',
-                        product: {}
-                    }
-                },
-                methods: {
-                    clear() {
-                        this.selectedStore = {name: 'Target', shortName: 'tgt'},
-                        this.message = '',
-                        this.keyword = '',
-                        this.product = {}
-                    },
-                    search() {
-                        this.message = '',
-                        this.product = {},
-                        fetch('/shopper/api/search_product/', {
-                            mode: 'same-origin',
-                            method: 'post',
-                            body: JSON.stringify({
-                                'store': this.selectedStore.shortName,
-                                'keyword': this.keyword
-                            }),
-                            headers: {
-                                'content-type': 'application/json',
-                                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                            }
-                        })
-                        .then(resp => resp.json())
-                        .then(json => {
-                            if (json.authenticated) {
-                                this.product = json.product,
-                                this.message = json.message
-                            } else {
-                                location.href = '/account/login/'
-                            }
-                        })
-                    },
-                    add() {
-                        fetch('/shopper/api/add_product/', {
-                            mode: 'same-origin',
-                            method: 'post',
-                            body: JSON.stringify({
-                                'store': this.selectedStore.shortName,
-                                'product': this.product
-                            }),
-                            headers: {
-                                'content-type': 'application/json',
-                                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                            }
-                        })
-                        .then(resp => resp.json())
-                        .then(json => {
-                            if (json.authenticated) {
-                                this.message = json.message
-                            } else {
-                                location.href = '/account/login/'
-                            }
-                        })
-                    }
-                }
-            })
-
-            add.mount('#add')
-
-            const inventory = createApp({
-                data() {
-                    return {
-                        message: '',
-                        zipcode: '',
-                        listView: 0,
-                        stores: [],
-                        map: null,
-                        geoLayer: null,
-                        details: []
-                    }
-                },
-                mounted() {
-                    this.initMap()
-                },
-                methods: {
-                    initMap() {
-                        this.map = L.map('mapContainer').setView([39.8283459,-98.5794797], 4),
-                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                            attribution: '&copy; <a href="https://openstreetmap.org/copyright">\
-                                         OpenStreetMap contributors</a>',
-                            maxZoom: 19
-                        }).addTo(this.map)
-                    },
-                    updateMap() {
-                        this.geoLayer = L.geoJSON({
-                                'type': 'FeatureCollection',
-                                'features': this.stores
-                            }, {
-                            onEachFeature: function (feature, layer) {
-                                this.details = [],
-                                this.details.push('<p style="text-align: center"><b>Target ' +
-                                    feature.properties.name + '</b><br>' +
-                                    feature.properties.address + '<p>'),
-                                this.details.push('&emsp;&emsp;&emsp;&emsp;&emsp;<b>*****In-stock Products*****</b>'),
-                                feature.properties.products.forEach(p => {
-                                    if (p.quantity > 0) {
-                                        this.details.push('<b>SKU</b>: ' + p.sku +
-                                            '&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;' +
-                                            '<b>Quantity</b>: ' + p.quantity.toString()),
-                                        this.details.push('<b>Name</b>: ' + p.name)
-                                    }
-                                }),
-                                layer.bindPopup(this.details.join('<br>'))
-                            }
-                        }).addTo(this.map),
-                        this.map.fitBounds(this.geoLayer.getBounds())
-                    },
-                    list() {
-                        fetch('/shopper/api/list_inventory/', {
-                            mode: 'same-origin',
-                            method: 'post',
-                            body: JSON.stringify({
-                                'zipcode': this.zipcode
-                            }),
-                            headers: {
-                                'content-type': 'application/json',
-                                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                            }
-                        })
-                        .then(resp => resp.json())
-                        .then(json => {
-                            if (json.authenticated) {
-                                this.stores = json.stores,
-                                this.message = json.message,
-                                this.updateMap()
-                            } else {
-                                location.href = '/account/login/'
-                            }
-                        })
-                    }
-                }
-            })
-
-            inventory.mount('#inventory')
-        </script>
+        <script src="{% static 'product/product.js' %}"></script>
 
     </body>
 </html>
