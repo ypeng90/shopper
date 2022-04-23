@@ -9,7 +9,9 @@ from urllib3 import Retry
 
 logger.add("logs/default.log")
 
-spec = importlib.util.spec_from_file_location("utils", os.path.join(settings.BASE_DIR, "shopper\\utils.py"))
+spec = importlib.util.spec_from_file_location("utils",
+                                              os.path.join(settings.BASE_DIR,
+                                                           "shopper/utils.py"))
 utils = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(utils)
 

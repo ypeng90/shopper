@@ -20,7 +20,7 @@ class MySQLHandle:
             host="localhost",
             username="hellokitty",
             password="Hellokitty.618",
-            dbname="local_shopper"
+            dbname="shopper"
     ):
         self.host = host
         self.username = username

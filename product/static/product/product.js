@@ -182,7 +182,7 @@ const inventory = createApp({
                     feature.properties.products.forEach(p => {
                         if (p.quantity > 0) {
                             this.details.push('<b>SKU</b>: ' + p.sku +
-                                '&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;' +
+                                '&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;' +
                                 '<b>Quantity</b>: ' + p.quantity.toString()),
                             this.details.push('<b>Name</b>: ' + p.name)
                         }
