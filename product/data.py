@@ -70,6 +70,10 @@ class ProductDataInterface:
         pass
 
     @classmethod
+    def update_zipcode(cls, userid, zipcode):
+        pass
+
+    @classmethod
     def list_all_products(cls, userid):
         pass
 
@@ -127,6 +131,16 @@ class ProductMySQLInterface(ProductDataInterface):
             if db.conn:
                 query = "SELECT zipcode FROM users WHERE userid = %s"
                 result = db.run(query, (userid,))
+            else:
+                result = None
+        return result
+
+    @classmethod
+    def update_zipcode(cls, userid, zipcode):
+        with utils.MySQLHandle() as db:
+            if db.conn:
+                query = "UPDATE users SET zipcode = %s WHERE userid = %s"
+                result = db.run(query, (zipcode, userid), commit=True)
             else:
                 result = None
         return result

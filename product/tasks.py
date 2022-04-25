@@ -48,7 +48,7 @@ def get_quantity_from_store(self, count, sku, store, zipcode):
     # procedures
     acks_late=True,
     # select queue
-    queue="slow",
+    queue="celery",
 )
 def add_quantity_to_db(info):
     if info:
@@ -75,13 +75,14 @@ def count_quantity(sku, store, zipcode):
     expires=datetime.utcnow() + timedelta(minutes=5),
     timelimit=(25, 30),
     acks_late=True,
+    queue="fast",
 )
 def count_get_add_quantity(sku, store, zipcode):
     chain(
         count_quantity.s(sku, store, zipcode),
         get_quantity_from_store.s(sku, store, zipcode),
         add_quantity_to_db.s()
-    )()
+    ).delay()
 
 
 @shared_task(
@@ -114,7 +115,21 @@ def get_quantity_per_product(zipcode_products):
     for product in products:
         sku = product["sku"]
         store = product["store"]
-        count_get_add_quantity(sku, store, zipcode)
+        count_get_add_quantity.delay(sku, store, zipcode)
+
+
+@shared_task(
+    utc=True,
+    expires=datetime.utcnow() + timedelta(minutes=5),
+    timelimit=(25, 30),
+    acks_late=True,
+    queue="fast",
+)
+def preload(userid):
+    chain(
+        get_tracked_products.s(userid),
+        get_quantity_per_product.s()
+    ).delay()
 
 
 @shared_task(
@@ -123,8 +138,5 @@ def get_quantity_per_product(zipcode_products):
     timelimit=(25, 30),
     acks_late=True,
 )
-def preload(userid):
-    chain(
-        get_tracked_products.s(userid),
-        get_quantity_per_product.s()
-    )()
+def update_zipcode(userid, zipcode):
+    ProductMySQLInterface.update_zipcode(userid, zipcode)

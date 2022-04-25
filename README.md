@@ -2,9 +2,12 @@
 
 ## Main Features
 
-- A flexible plug-in architecture for a local shopping planning service.
-- A user authentication system using self-implemented and fully customizable Captcha.
-- Security procedures to manage authorization and prevent malicious attacks.
+- Developed a web service with Python, Django, MySQL, Redis, Vue.js, and Leaflet.
+- Implemented a MVC backend with Django, GeoDjango, MySQL, and JWT, and an asynchronous task queue with Celery, RabbitMQ, and Redis.
+- Developed an AJAX based frontend with interactive map using Vue.js, GeoJSON, and Leaflet.
+- Implemented a fully customizable Captcha with Pillow for user authentication.
+- Developed a web scraper with Requests and urllib3 to collect local inventory information.
+- Implemented security procedures to manage authorization and prevent malicious attacks.
 
 ## Architecture
 
@@ -22,9 +25,9 @@
 
 ![Class Diagram Account](./docs/class_diagram_account.png?raw=true)
 
-#### Shopper
+#### Product
 
-![Class Diagram Shopper](./docs/class_diagram_shopper.png?raw=true)
+![Class Diagram Product](./docs/class_diagram_product.png?raw=true)
 
 ## Security Procedures
 

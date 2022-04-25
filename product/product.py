@@ -46,6 +46,11 @@ class Product:
         return ProductMySQLInterface.add_product(userid, sku, name, store)
 
     @staticmethod
+    def update_zipcode(userid, zipcode):
+        # update zipcode asynchronously
+        tasks.update_zipcode.delay(userid, zipcode)
+
+    @staticmethod
     def _delete_all_inventory(userid):
         ProductMySQLInterface.delete_all_inventory(userid)
 

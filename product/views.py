@@ -105,6 +105,7 @@ def list_all_inventory(request):
     zipcode = json.loads(request.body).get("zipcode").strip()
     if not zipcode.strip().isdigit() or len(zipcode) != 5:
         return JsonResponse({"authenticated": True, "stores": [], "message": "Invalid zipcode."})
+    Product.update_zipcode(userid, zipcode)
 
     msg = ""
     info = Product.list_all_inventory(userid, zipcode)
