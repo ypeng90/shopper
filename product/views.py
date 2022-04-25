@@ -26,6 +26,7 @@ def get_userid(request):
 def show_home(request):
     userid = get_userid(request)
     if userid:
+        Product.preload(userid)
         return render(request, 'product/index.html')
     return redirect("/account/")
 
