@@ -2,6 +2,7 @@
 
 from django.conf import settings
 from django.utils import timezone
+from account.data import AccountMySQLInterface
 from datetime import datetime, timedelta
 from hashlib import sha256
 import importlib.util

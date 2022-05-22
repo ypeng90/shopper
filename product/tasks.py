@@ -92,12 +92,12 @@ def count_get_add_quantity(sku, store, zipcode):
     acks_late=True,
 )
 def get_tracked_products(userid):
-    zipcode = "00000"
+    zipcode = ""
     products = []
     data = ProductMySQLInterface.get_zipcode(userid)
     if data:
         zipcode = data[0][0]
-    if zipcode != "00000":
+    if zipcode:
         data = ProductMySQLInterface.list_all_track_products(userid)
         if data:
             products = json.loads(data[0][0])

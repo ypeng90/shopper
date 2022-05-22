@@ -97,6 +97,21 @@ def add_product(request):
     return JsonResponse({"authenticated": True, "message": msg})
 
 
+def get_zipcode(request):
+    userid = get_userid(request)
+    if userid == 0:
+        return JsonResponse({"authenticated": False, "zipcode": "", "message": "Not authenticated."})
+
+    zipcode = ""
+    msg = ""
+    info = Product.get_zipcode(userid)
+    if info is None:
+        msg = "Server error."
+    elif info:
+        zipcode = info[0][0]
+    return JsonResponse({"authenticated": True, "zipcode": zipcode, "message": msg})
+
+
 def list_all_inventory(request):
     userid = get_userid(request)
     if userid == 0:

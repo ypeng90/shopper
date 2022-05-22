@@ -25,6 +25,13 @@ spec.loader.exec_module(utils)
 #     PRIMARY KEY (userid, sku, store)
 # );
 
+# CREATE TABLE zipcodes
+# (
+#     userid int NOT NULL,
+#     zipcode char(5) NOT NULL DEFAULT '00000',
+#     PRIMARY KEY (userid)
+# );
+
 # Create directly in MySQL
 # CREATE TABLE inventory
 # (
@@ -129,7 +136,7 @@ class ProductMySQLInterface(ProductDataInterface):
     def get_zipcode(cls, userid):
         with utils.MySQLHandle() as db:
             if db.conn:
-                query = "SELECT zipcode FROM users WHERE userid = %s"
+                query = "SELECT zipcode FROM zipcodes WHERE userid = %s"
                 result = db.run(query, (userid,))
             else:
                 result = None
@@ -139,8 +146,12 @@ class ProductMySQLInterface(ProductDataInterface):
     def update_zipcode(cls, userid, zipcode):
         with utils.MySQLHandle() as db:
             if db.conn:
-                query = "UPDATE users SET zipcode = %s WHERE userid = %s"
-                result = db.run(query, (zipcode, userid), commit=True)
+                query = (
+                    "INSERT INTO zipcodes (userid, zipcode) "
+                    "VALUES (%s, %s) "
+                    "ON DUPLICATE KEY UPDATE zipcode=VALUES(zipcode)"
+                )
+                result = db.run(query, (userid, zipcode), commit=True)
             else:
                 result = None
         return result
