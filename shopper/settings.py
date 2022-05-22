@@ -209,8 +209,9 @@ CSRF_USE_SESSIONS = True
 # # result_expires.
 # celery -A shopper beat -l info ...
 
-# Not necessary, celery automatically uses TIME_ZONE.
-# CELERY_TIMEZONE = TIME_ZONE
+# Let celery use TIME_ZONE, otherwise setting expires
+# might cause immediate revoking.
+CELERY_TIMEZONE = TIME_ZONE
 
 # Overall soft time limit: 9 minutes. SoftTimeLimitExceeded
 # exception will be raised so that certain procedure can

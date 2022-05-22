@@ -46,6 +46,10 @@ class Product:
         return ProductMySQLInterface.add_product(userid, sku, name, store)
 
     @staticmethod
+    def get_zipcode(userid):
+        return ProductMySQLInterface.get_zipcode(userid)
+
+    @staticmethod
     def update_zipcode(userid, zipcode):
         # update zipcode asynchronously
         tasks.update_zipcode.delay(userid, zipcode)

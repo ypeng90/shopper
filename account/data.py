@@ -21,7 +21,6 @@ spec.loader.exec_module(utils)
 #     password char(64) NOT NULL,
 #     salt char(4) NOT NULL,
 #     reg_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-#     zipcode char(5) NOT NULL DEFAULT '00000',
 #     PRIMARY KEY (userid)
 # );
 

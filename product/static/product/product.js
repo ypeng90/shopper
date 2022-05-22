@@ -156,6 +156,9 @@ const inventory = createApp({
             details: []
         }
     },
+    created() {
+        this.getZipcode()
+    },
     mounted() {
         this.initMap()
     },
@@ -191,6 +194,26 @@ const inventory = createApp({
                 }
             }).addTo(this.map),
             this.map.fitBounds(this.geoLayer.getBounds())
+        },
+        getZipcode() {
+            fetch('/shopper/api/get_zipcode/', {
+                mode: 'same-origin',
+                method: 'post',
+                body: '',
+                headers: {
+                    'content-type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(resp => resp.json())
+            .then(json => {
+                if (json.authenticated) {
+                    this.zipcode = json.zipcode,
+                    this.message = json.message
+                } else {
+                    location.href = '/account/login/'
+                }
+            })
         },
         list() {
             fetch('/shopper/api/list_inventory/', {

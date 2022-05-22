@@ -10,5 +10,6 @@ urlpatterns = [
     path("api/add_product/", views.add_product),
     path("api/list_all/", views.list_all_products),
     path("api/update_product/", views.update_product),
+    path("api/get_zipcode/", views.get_zipcode),
     path("api/list_inventory/", views.list_all_inventory),
 ]
