@@ -1,0 +1,51 @@
+#Codes and static resources are copied. Rebuild is needed
+#for any change.
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8
+    container_name: account-db
+    restart: on-failure
+    command: --authentication_policy=mysql_native_password
+    # Creates folders if not existing on compose up.
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    env_file:
+      - ./.env.prod
+    cap_add:
+      # CAP_SYS_NICE to enable MySQL to handle thread
+      # priorities, no more "mbind: Operation not permitted"
+      - SYS_NICE
+  web:
+    build:
+      context: ./account
+      dockerfile: Dockerfile.prod
+    image: account-web
+    container_name: account-web
+    restart: on-failure
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - static:/home/app/staticfiles
+    env_file:
+      - ./.env.prod
+    depends_on:
+      - db
+  nginx:
+    build: ./nginx
+    image: account-nginx
+    container_name: account-nginx
+    restart: on-failure
+    volumes:
+      - static:/home/app/staticfiles
+    ports:
+      - 8080:8080
+    depends_on:
+      - web
+
+volumes:
+  static:
+
+networks:
+  default:
+    name: account

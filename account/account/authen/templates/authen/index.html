@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Account</title>
+        <link rel="shortcut icon" href="{% static 'authen/authen.ico' %}" type="image/x-icon">
+        <link rel="stylesheet" type="text/css" href="{% static 'authen/style.css' %}">
+
+        <script src="https://unpkg.com/vue@3"></script>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+                integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+                crossorigin="anonymous">
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    </head>
+    <body>
+        {% csrf_token %}
+
+        <div style="text-align: center">
+            <br>
+            <br>
+            <button type="button" id="firstButton" class="section_button section_button_login">
+                <img src="{% static 'authen/login.png' %}" class="section_logo section_logo_login">
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" id="secondButton" class="section_button section_button_register">
+                <img src="{% static 'authen/register.png' %}" class="section_logo section_logo_register">
+            </button>
+        </div>
+
+        <div id="login" class="container">
+            {% verbatim %}
+            <p v-if="message" class="msg">{{ message }}</p>
+            <p v-else class="msg"><br></p>
+
+            <hr>
+            <form>
+                <fieldset>
+                    <legend style="font-family: Trebuchet MS"><b>User Information</b></legend>
+                    <br>
+                    <div class="input">
+                        <label style="font-family: Courier New"><b>Username</b></label>
+                        &nbsp;&nbsp;
+                        <input type="text" v-model="username">
+                    </div>
+                    <div class="input">
+                        <label style="font-family: Courier New"><b>Password</b></label>
+                        &nbsp;&nbsp;
+                        <input type="password" v-model="password">
+                    </div>
+                    <div class="input">
+                        <label style="font-family: Courier New"><b>Captcha&nbsp;</b></label>
+                        &nbsp;&nbsp;
+                        <input type="text" v-model="captcha">
+                    </div>
+                    <div style="text-align: center">
+                        <img :src="imgCode" alt="" style="width:264px; height:50px;">
+                    </div>
+                </fieldset>
+                <div style="text-align: center; margin-top: 15px">
+                    <input type="button" value="Login" @click.prevent="login" class="small_button">
+                </div>
+            </form>
+            {% endverbatim %}
+        </div>
+
+        <div id="register" class="container" style="display: none">
+            {% verbatim %}
+            <p v-if="message" class="msg">{{ message }}</p>
+            <p v-else class="msg"><br></p>
+
+            <hr>
+            <form>
+                <fieldset>
+                    <legend style="font-family: Trebuchet MS"><b>User Information</b></legend>
+                    <br>
+                    <div class="input">
+                        <label style="font-family: Courier New"><b>Username</b></label>
+                        &nbsp;&nbsp;
+                        <input type="text" v-model="username">
+                    </div>
+                    <div class="input" v-if="username">
+                        <label style="font-family: Courier New"><b>Password</b></label>
+                        &nbsp;&nbsp;
+                        <input type="password" v-model="password_1">
+                    </div>
+                    <div class="input" v-if="password_1">
+                        <label style="font-family: Courier New"><b>Password</b></label>
+                        &nbsp;&nbsp;
+                        <input type="password" v-model="password_2">
+                    </div>
+                    <div class="input" v-if="password_2">
+                        <div class="input">
+                            <label style="font-family: Courier New"><b>Captcha&nbsp;</b></label>
+                            &nbsp;&nbsp;
+                            <input type="text" v-model="captcha">
+                        </div>
+                    </div>
+                    <div class="input" v-if="password_2">
+                        <div style="text-align: center">
+                            <img :src="imgCode" alt="" style="width:264px; height:50px;">
+                        </div>
+                    </div>
+                    <div>
+                        <input type="checkbox" v-model="agreement">
+                        I agree to the <a href="">terms & conditions</a>
+                    </div>
+                </fieldset>
+                <div style="text-align: center; margin-top: 15px">
+                    <input type="button" value="Register" @click.prevent="register" class="small_button">
+                </div>
+            </form>
+            {% endverbatim %}
+        </div>
+
+        <script src="{% static 'authen/authen.js' %}"></script>
+
+    </body>
+</html>

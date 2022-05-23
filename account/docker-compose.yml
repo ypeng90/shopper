@@ -1,0 +1,46 @@
+#Codes and static resources are mounted. No rebuild is needed
+#for changes of codes and static resources.
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8
+    container_name: account-db
+    restart: on-failure
+    command: --authentication_policy=mysql_native_password
+    # Creates folders if not existing on compose up.
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    env_file:
+      - ./.env.dev
+    cap_add:
+      # CAP_SYS_NICE to enable MySQL to handle thread
+      # priorities, no more "mbind: Operation not permitted"
+      - SYS_NICE
+  web:
+    build: ./account
+    image: account-web
+    container_name: account-web
+    restart: on-failure
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./account:/home/app
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+  nginx:
+    build: ./nginx
+    image: account-nginx
+    container_name: account-nginx
+    restart: on-failure
+    volumes:
+      - ./account/staticfiles:/home/app/staticfiles
+    ports:
+      - 8080:8080
+    depends_on:
+      - web
+
+networks:
+  default:
+    name: account

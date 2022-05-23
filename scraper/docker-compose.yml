@@ -1,0 +1,21 @@
+#Codes and static resources are mounted. No rebuild is needed
+#for changes of codes and static resources.
+version: "3.9"
+
+services:
+  web:
+    build: ./scraper
+    image: scraper-web
+    container_name: scraper-web
+    restart: on-failure
+    command: sh -c "python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./scraper:/home/app
+    env_file:
+      - ./.env.dev
+    ports:
+      - 8001:8000
+
+networks:
+  default:
+    name: scraper

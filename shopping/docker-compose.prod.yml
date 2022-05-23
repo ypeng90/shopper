@@ -1,0 +1,82 @@
+#Codes and static resources are copied. Rebuild is needed
+#for any change.
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8
+    container_name: shopping-db
+    restart: on-failure
+    command: --authentication_policy=mysql_native_password
+    # Creates folders if not existing on compose up.
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    env_file:
+      - ./.env.prod
+    cap_add:
+      # CAP_SYS_NICE to enable MySQL to handle thread
+      # priorities, no more "mbind: Operation not permitted"
+      - SYS_NICE
+  rabbit:
+    image: rabbitmq:3.10
+    container_name: shopping-rabbit
+    restart: on-failure
+    env_file:
+      - ./.env.prod
+  redis:
+    image: redis:7.0
+    container_name: shopping-redis
+    restart: on-failure
+    env_file:
+      - ./.env.prod
+  web:
+    build:
+      context: ./shopping
+      dockerfile: Dockerfile.prod
+    image: shopping-web
+    container_name: shopping-web
+    restart: on-failure
+    command: sh -c "./wait-for db:3306 && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - static:/home/app/staticfiles
+    env_file:
+      - ./.env.prod
+    depends_on:
+      - db
+    networks:
+      - default
+      - scraper
+  worker:
+    image: shopping-web
+    container_name: shopping-worker
+    restart: on-failure
+    command: sh -c "./wait-for rabbit:5672 && ./wait-for redis:6379 && ./wait-for web:8000 && celery -A shopping worker --concurrency=2 -l info -O fair"
+    env_file:
+      - ./.env.prod
+    depends_on:
+      - rabbit
+      - redis
+      - web
+    networks:
+      - default
+      - scraper
+  nginx:
+    build: ./nginx
+    image: shopping-nginx
+    container_name: shopping-nginx
+    restart: on-failure
+    volumes:
+      - static:/home/app/staticfiles
+    ports:
+      - 80:80
+    depends_on:
+      - web
+
+volumes:
+  static:
+
+networks:
+  default:
+    name: shopping
+  scraper:
+    name: scraper

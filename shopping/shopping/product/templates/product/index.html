@@ -1,0 +1,187 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Shopping</title>
+        <link rel="shortcut icon" href="{% static 'product/shopping.ico' %}" type="image/x-icon">
+        <link rel="stylesheet" type="text/css" href="{% static 'product/style.css' %}">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+              integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+              crossorigin=""/>
+
+        <script src="https://unpkg.com/vue@3"></script>
+
+        <!-- Make sure you put this AFTER Leaflet's CSS -->
+        <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+                integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+                crossorigin=""></script>
+    </head>
+    <body>
+        {% csrf_token %}
+
+        <div style="text-align: center">
+            <br>
+            <br>
+            <button type="button" id="firstButton" class="section_button section_button_products">
+                <img src="{% static 'product/products.png' %}" class="section_logo section_logo_products">
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" id="secondButton" class="section_button section_button_add">
+                <img src="{% static 'product/add.png' %}" class="section_logo section_logo_add">
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" id="thirdButton" class="section_button section_button_inventory">
+                <img src="{% static 'product/inventory.png' %}" class="section_logo section_logo_inventory">
+            </button>
+        </div>
+
+        <!--Show all products-->
+        <div id="products" class="section">
+            {% verbatim %}
+            <br>
+            <p v-if="message" class="msg">{{ message }}</p>
+            <p v-else class="msg"><br></p>
+            <table id="products_all">
+                <tr>
+                    <th style="width:14%">SKU</th>
+                    <th style="width:62%">Name</th>
+                    <th style="width:7%">Store</th>
+                    <th style="width:8%">Track</th>
+                    <th style="width:9%">Update</th>
+                </tr>
+                <tr v-for="(product, index) in products" :key="index">
+                    <td>{{product.sku}}</td>
+                    <td>{{product.name}}</td>
+                    <td v-if="product.store == 'tgt'">
+                        <img src="https://retailanalysis.igd.com/portals/1/Images/retailers/Retailer%20header%20images/T/Target.png"
+                             class="store_logo">
+                    </td>
+                    <td v-else>{{product.store}}</td>
+                    <td>
+                        <input type="checkbox" v-model="product.track"
+                               true-value="1" false-value="0">
+                    </td>
+                    <td>
+                        <button type="button" @click.prevent="update(product)">Submit</button>
+                    </td>
+                </tr>
+            </table>
+            {% endverbatim %}
+        </div>
+
+        <!--Add new product-->
+        <div id="add" class="section" style="display: none">
+            {% verbatim %}
+            <br>
+            <p v-if="message" class="msg">{{ message }}</p>
+            <p v-else class="msg"><br></p>
+            <div class="input" style="text-align: center">
+                <label style="font-size: 20px; font-weight: bold">Store</label>
+                &nbsp;
+                <select v-model="selectedStore">
+                    <option v-for="store in stores" :value="store">
+                        {{ store.name }}
+                    </option>
+                </select>
+                &nbsp;&nbsp;
+                <label style="font-size: 20px; font-weight: bold">Keyword</label>
+                &nbsp;
+                <input type="text" v-model="keyword" minlength="9" maxlength="12"
+                       placeholder="8-digit SKU, 9-digit DPCI or 12/13-digit UPC" size="35">
+                &nbsp;&nbsp;
+                <input type="button" value="Search" @click.prevent="search" class="small_button">
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a :href="'https://www.target.com/s?searchTerm=' + keyword" target="_blank">
+                    <button class="small_button">Manual</button>
+                </a>
+            </div>
+            <div v-if="Object.keys(product).length" style="text-align: center">
+                <br>
+                <hr style="max-width: 948px; margin-left: auto; margin-right: auto">
+                <br>
+                <br>
+                <label style="font-size: 20px; font-weight: bold">SKU</label>
+                <input type="text" v-model="product.sku" size="20" readonly style="font-size: 18px">
+                <br>
+                <br>
+                <label style="font-size: 20px; font-weight: bold">Name</label>
+                <input type="text" v-model="product.name" size="64" style="font-size: 18px">
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div>
+                    <input type="submit" value="Submit" @click.prevent="add" class="small_button">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="reset" value="Reset" @click.prevent="clear" class="small_button">
+                </div>
+            </div>
+            {% endverbatim %}
+        </div>
+
+        <!--Show all inventory-->
+        <div id="inventory" class="section" style="display: none">
+            {% verbatim %}
+            <br>
+            <p v-if="message" class="msg">{{ message }}</p>
+            <p v-else class="msg"><br></p>
+            <div class="input" style="text-align: center">
+                <label style="font-size: 20px; font-weight: bold">Zipcode</label>
+                &nbsp;&nbsp;
+                <input type="text" v-model="zipcode" minlength="5"
+                       maxlength="5" placeholder="5-digit zipcode" size="9">
+                &nbsp;&nbsp;
+                <input type="submit" value="Check" @click.prevent="list" class="small_button">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label class="switch">
+                    <input type="checkbox" class="switch-input" v-model="listView"
+                           true-value="1" false-value="0">
+                    <span class="switch-label" data-on="List" data-off="List"></span>
+                    <span class="switch-handle"></span>
+                </label>
+            </div>
+            <br>
+            <div id="mapContainer"></div>
+            <div v-if="listView == 1">
+                <table v-if="stores.length != 0" id="inventory_header">
+                    <tr>
+                        <th style="width:20%">SKU</th>
+                        <th style="width:70%">Product Name</th>
+                        <th style="width:10%">Quantity</th>
+                    </tr>
+                </table>
+                <table id="inventory_detail">
+                    <tr v-for="store in stores">
+                        <td>
+                            <table style="width:100%">
+                                <tr>
+                                    <th v-if="store.properties.store == 'tgt'" colspan="3">
+                                        <img src="https://retailanalysis.igd.com/portals/1/Images/retailers/Retailer%20header%20images/T/Target.png"
+                                             class="store_logo">&nbsp;&nbsp;{{store.properties.name}}
+                                    </th>
+                                    <th v-else colspan="3">
+                                        {{store.name}}
+                                    </th>
+                                </tr>
+                                <tr v-for="product in store.properties.products">
+                                    <td style="width:20%">{{product.sku}}</td>
+                                    <td style="width:70%">{{product.name}}</td>
+                                    <td style="width:10%">{{product.quantity}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            {% endverbatim %}
+        </div>
+
+        <script src="{% static 'product/product.js' %}"></script>
+
+    </body>
+</html>
