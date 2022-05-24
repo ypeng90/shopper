@@ -13,25 +13,25 @@
 
 ### Use Case
 
-![Use Case](./docs/use_case.png?raw=true =711x)
+<img src="./docs/use_case.png" alt="Use Case" width="711"/>
 
 ### Architecture
 
-![Architecture](./docs/architecture.png?raw=true =882x)
+<img src="./docs/architecture.png" alt="Architecture" width="882"/>
 
 ### Components
 
 #### Account
 
-![Component Account](./docs/cmp_account.png?raw=true =1041x)
+<img src="./docs/cmp_account.png" alt="Account" width="1041"/>
 
 #### Shopping
 
-![Component Shopping](./docs/cmp_shopping.png?raw=true =1281x)
+<img src="./docs/cmp_shopping.png" alt="Shopping" width="1281"/>
 
 #### Scraper
 
-![Component Scraper](./docs/cmp_sraper.png?raw=true =1041x)
+<img src="./docs/cmp_sraper.png" alt="Scraper" width="1041"/>
 
 ## Security Procedures
 
