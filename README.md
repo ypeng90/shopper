@@ -13,11 +13,11 @@
 
 ### Use Case
 
-<img src="./docs/use_case.png" alt="Use Case" width="711"/>
+<img src="./docs/use_case.png?raw=true" alt="Use Case" width="711"/>
 
 ### Architecture
 
-<img src="./docs/architecture.png" alt="Architecture" width="882"/>
+<img src="./docs/architecture.svg?raw=true" alt="Architecture" width="882"/>
 
 ### Components
 
