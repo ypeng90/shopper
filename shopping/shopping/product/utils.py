@@ -129,7 +129,7 @@ class ValueConverter:
 
 # noinspection PyBroadException
 class IntConverter(ValueConverter):
-    """Sub class to convert value to integer
+    """Subclass to convert value to integer
 
     Convert non-boolean value to Decimal object and check if Decimal == int(Decimal).
     If include_bool_str is True, also check if value is boolean value or any of "t",
@@ -209,7 +209,7 @@ class IntConverter(ValueConverter):
 
 
 class StrAlnumConverter(ValueConverter):
-    """Sub class to convert value to string with only alphabetical
+    """Subclass to convert value to string with only alphabetical
     characters and numbers
 
     Strip and replace all special characters with "".
@@ -231,7 +231,7 @@ class StrAlnumConverter(ValueConverter):
 
 
 class StrAlnumSpaceConverter(ValueConverter):
-    """Sub class to convert value to string with only alphabetical
+    """Subclass to convert value to string with only alphabetical
     characters, numbers and space
 
     Strip and replace all special characters except space with "".
