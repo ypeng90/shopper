@@ -18,7 +18,9 @@ services:
       # priorities, no more "mbind: Operation not permitted"
       - SYS_NICE
   web:
-    build: ./account
+    build:
+      context: ./account
+      dockerfile: Dockerfile
     image: account-web
     container_name: account-web
     restart: on-failure

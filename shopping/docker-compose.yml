@@ -30,7 +30,9 @@ services:
     env_file:
       - ./.env.dev
   web:
-    build: ./shopping
+    build:
+      context: ./shopping
+      dockerfile: Dockerfile
     image: shopping-web
     container_name: shopping-web
     restart: on-failure
