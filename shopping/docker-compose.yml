@@ -34,7 +34,7 @@ services:
     image: shopping-web
     container_name: shopping-web
     restart: on-failure
-    command: sh -c "./wait-for db:3306 && python manage.py makemigrations --no-input && python manage.py migrate --no-input && python manage.py collectstatic --no-input && python manage.py runserver 0.0.0.0:8000"
+    command: ["sh", "./wait-for", "db:3306", "--", "sh", "-c", "python manage.py makemigrations --no-input && python manage.py migrate --no-input && python manage.py collectstatic --no-input && python manage.py runserver 0.0.0.0:8000"]
     volumes:
       - ./shopping:/home/app
     env_file:
@@ -48,7 +48,7 @@ services:
     image: shopping-web
     container_name: shopping-worker
     restart: on-failure
-    command: sh -c "./wait-for rabbit:5672 && ./wait-for redis:6379 && ./wait-for web:8000 && celery -A shopping worker --concurrency=4 -l info -O fair"
+    command: ["sh", "./wait-for", "rabbit:5672", "--", "sh", "./wait-for", "redis:6379", "--", "sh", "./wait-for", "web:8000", "--", "sh", "-c", "celery -A shopping worker --concurrency=4 -l info -O fair"]
     volumes:
       - ./shopping:/home/app
     env_file:

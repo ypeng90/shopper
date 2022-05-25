@@ -32,4 +32,4 @@ COPY ./entrypoint.sh .
 RUN sed -i "s/\r$//g" entrypoint.sh
 RUN chmod +x entrypoint.sh
 # run entrypoint.sh
-ENTRYPOINT ["/home/app/entrypoint.sh"]
+ENTRYPOINT ["sh", "/home/app/entrypoint.sh"]
