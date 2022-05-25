@@ -1,10 +1,10 @@
 .env*
-secret
+.secret
 .coverage
 default.log
 .idea/
-__pycache__/
 .pytest_cache/
+__pycache__/
+staticfiles/
 /account/data/
 /shopping/data/
-staticfiles/
