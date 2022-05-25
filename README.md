@@ -15,11 +15,9 @@
 
 <img src="docs/use_case.png" alt="Use Case"/>
 
-### Architecture
+### Components
 
 <img src="docs/architecture.png" alt="Architecture"/>
-
-### Components
 
 #### Account
 
