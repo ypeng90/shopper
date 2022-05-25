@@ -13,25 +13,25 @@
 
 ### Use Case
 
-<img src="docs/use_case.png" alt="Use Case" width="75%"/>
+<img src="docs/use_case.png" alt="Use Case"/>
 
 ### Architecture
 
-<img src="docs/architecture.png" alt="Architecture" width="75%"/>
+<img src="docs/architecture.png" alt="Architecture"/>
 
 ### Components
 
 #### Account
 
-<img src="./docs/cmp_account.png" alt="Account" width="75%"/>
+<img src="./docs/cmp_account.png" alt="Account"/>
 
 #### Shopping
 
-<img src="./docs/cmp_shopping.png" alt="Shopping" width="75%"/>
+<img src="./docs/cmp_shopping.png" alt="Shopping"/>
 
 #### Scraper
 
-<img src="./docs/cmp_scraper.png" alt="Scraper" width="75%"/>
+<img src="./docs/cmp_scraper.png" alt="Scraper"/>
 
 ## Security Procedures
 
