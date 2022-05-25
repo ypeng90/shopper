@@ -39,8 +39,8 @@ RUN chmod +x  entrypoint.prod.sh
 # Change ownership of all files to user app.
 RUN chown -R app:app .
 
-# change to user app.
+# Change to user app.
 USER app
 
-# run entrypoint.sh
-ENTRYPOINT ["/home/app/entrypoint.prod.sh"]
+# Run entrypoint.sh.
+ENTRYPOINT ["sh", "/home/app/entrypoint.prod.sh"]

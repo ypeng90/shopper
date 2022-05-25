@@ -31,8 +31,17 @@ COPY . .
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Set up entry point.
+# Replace CR, carriage return character (\r or ^M), with ''.
+# -i: edit in place; $//g: only replace CR right before '\n'
+RUN sed -i "s/\r$//g" entrypoint.prod.sh
+RUN chmod +x entrypoint.prod.sh
+
 # Change ownership of all files to user app.
 RUN chown -R app:app .
 
 # change to user app.
 USER app
+
+# Run entrypoint.sh.
+ENTRYPOINT ["sh", "/home/app/entrypoint.prod.sh"]

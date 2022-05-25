@@ -21,6 +21,16 @@ RUN apt update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies.
-RUN pip install --upgrade pip
 COPY ./requirements.txt .
+RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Set up entry point.
+COPY ./entrypoint.sh .
+# Replace CR, carriage return character (\r or ^M), with ''.
+# -i: edit in place; $//g: only replace CR right before '\n'
+RUN sed -i "s/\r$//g" entrypoint.sh
+RUN chmod +x entrypoint.sh
+
+# Run entrypoint.sh.
+ENTRYPOINT ["sh", "/home/app/entrypoint.sh"]

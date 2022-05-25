@@ -31,5 +31,6 @@ COPY ./entrypoint.sh .
 # -i: edit in place; $//g: only replace CR right before '\n'
 RUN sed -i "s/\r$//g" entrypoint.sh
 RUN chmod +x entrypoint.sh
-# run entrypoint.sh
+
+# Run entrypoint.sh.
 ENTRYPOINT ["sh", "/home/app/entrypoint.sh"]
