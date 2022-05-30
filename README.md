@@ -19,13 +19,13 @@
 
 <img src="docs/architecture.png" alt="Architecture"/>
 
-#### Account
-
-<img src="./docs/cmp_account.png" alt="Account"/>
-
 #### Shopping
 
 <img src="./docs/cmp_shopping.png" alt="Shopping"/>
+
+#### Account
+
+<img src="./docs/cmp_account.png" alt="Account"/>
 
 #### Scraper
 
